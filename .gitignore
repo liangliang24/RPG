@@ -72,3 +72,13 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+
+#Compiled
+*.pdb
+
+#cook or pack
+*.uexp
+*.ucas
+
+

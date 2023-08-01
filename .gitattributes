@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+/Content/ParagonMinions/Characters/Global/MaterialLayers/Wood/T_TreeBark_D.uasset filter=lfs diff=lfs merge=lfs -text
+/Content/ParagonMinions/Characters/Global/MaterialLayers/Wood/T_TreeBark_N.uasset filter=lfs diff=lfs merge=lfs -text
+/Content/ParagonMinions/FX/Textures/Environment/T_RevaCliff_d.uasset filter=lfs diff=lfs merge=lfs -text
