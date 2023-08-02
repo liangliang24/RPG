@@ -12,6 +12,8 @@ class RPG_API ARItemChest : public AActor,public IRGameplayInterface
 {
 	GENERATED_BODY()
 	void Interact_Implementation(APawn* instigatorPawn) override;
+
+	bool opened;
 public:	
 	// Sets default values for this actor's properties
 	ARItemChest();

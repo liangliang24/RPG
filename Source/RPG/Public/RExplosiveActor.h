@@ -25,7 +25,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
     UStaticMeshComponent* baseMesh;
   
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
     URadialForceComponent* pulseComp;
 
 	virtual void PostInitializeComponents() override;

@@ -30,10 +30,10 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* cameraComp;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="Attack")
 	TSubclassOf<AActor> projectile;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="Attack")
 	UAnimMontage* primaryAttackAnimation;
 	
 	UPROPERTY(VisibleAnywhere)

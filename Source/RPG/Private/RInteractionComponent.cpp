@@ -25,30 +25,7 @@ void URInteractionComponent::BeginPlay()
 	
 }
 
-void URInteractionComponent::PrimaryInteract()
-{
-	FHitResult hitResult;
-	AActor* owner = GetOwner();
-	FVector eyesLocation;
-	FRotator eyesRotation;
-	owner->GetActorEyesViewPoint(eyesLocation,eyesRotation);
-	
-	FVector end = eyesLocation + (eyesRotation.Vector()*1000);
-	FCollisionObjectQueryParams objectQueryParams;
-	objectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
-	GetWorld()->LineTraceSingleByObjectType(hitResult,eyesLocation,end,objectQueryParams);
 
-	AActor* hitActor = hitResult.GetActor();
-	if (hitActor)
-	{
-		if(hitActor->Implements<URGameplayInterface>())
-		{
-			APawn* instigatorPawn = Cast<APawn>(hitActor);
-
-			IRGameplayInterface::Execute_Interact(hitActor,instigatorPawn);
-		}
-	}
-}
 
 
 // Called every frame
@@ -59,4 +36,42 @@ void URInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	// ...
 }
 
-;
+void URInteractionComponent::PrimaryInteract()
+{
+	FHitResult hitResult;
+	AActor* owner = GetOwner();
+	FVector eyesLocation;
+	FRotator eyesRotation;
+	owner->GetActorEyesViewPoint(eyesLocation, eyesRotation);
+
+	FVector end = eyesLocation + (eyesRotation.Vector() * 1000);
+	FCollisionObjectQueryParams objectQueryParams;
+	objectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+
+	//GetWorld()->LineTraceSingleByObjectType(hitResult,eyesLocation,end,objectQueryParams);
+
+	TArray<FHitResult> hits;
+	FCollisionShape collisionShape;
+	collisionShape.SetSphere(30);
+	bool hitsuccess = GetWorld()->SweepMultiByObjectType(hits, eyesLocation, end, FQuat::Identity, objectQueryParams,
+	                                                     collisionShape);
+	
+	AActor* hitActor = (hits.IsEmpty())?nullptr:hits[0].GetActor();
+	if (hitActor)
+	{
+		if (hitActor->Implements<URGameplayInterface>())
+		{
+			APawn* instigatorPawn = Cast<APawn>(hitActor);
+
+			IRGameplayInterface::Execute_Interact(hitActor, instigatorPawn);
+			DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
+		}
+	}
+	
+
+	FColor debugLineColor = hitsuccess ? (FColor::Red) : (FColor::Green);
+	DrawDebugLine(GetWorld(), eyesLocation, end, debugLineColor, false, 2, 0, 2);
+
+	
+}
+

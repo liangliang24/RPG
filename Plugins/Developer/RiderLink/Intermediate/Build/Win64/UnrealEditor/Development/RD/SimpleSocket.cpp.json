@@ -1,11 +1,11 @@
 {
     "Version": "1.1",
     "Data": {
-        "Source": "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.cpp",
+        "Source": "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\sys\\stat.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\corecrt.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\vcruntime.h",
@@ -149,12 +149,12 @@
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\um\\ws2tcpip.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\shared\\ws2ipdef.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\shared\\in6addr.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\host.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\host.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\cstdint",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\yvals_core.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\xkeycheck.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\stdint.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\stattimer.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\stattimer.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\time.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\corecrt_wtime.h"
         ],

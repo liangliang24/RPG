@@ -1,11 +1,11 @@
 {
     "Version": "1.1",
     "Data": {
-        "Source": "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\rd.cpp",
+        "Source": "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\rd.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\rd.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\rd.h",
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\logging\\logmacros.h",
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\coretypes.h",
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\hal\\platform.h",

@@ -1,11 +1,11 @@
 {
     "Version": "1.1",
     "Data": {
-        "Source": "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\base\\iserializersowner.cpp",
+        "Source": "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\base\\iserializersowner.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\base\\iserializersowner.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\base\\iserializersowner.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\unordered_set",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\yvals_core.h",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\vcruntime.h",
@@ -85,7 +85,7 @@
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\xstring",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\iosfwd",
             "c:\\program files (x86)\\microsoft visual studio\\2019\\community\\vc\\tools\\msvc\\14.29.30133\\include\\xnode_handle.h",
-            "e:\\rpg\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\rd_framework_export.h"
+            "e:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\rd_framework_export.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

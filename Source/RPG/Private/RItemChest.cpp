@@ -6,7 +6,7 @@
 
 
 // Sets default values
-ARItemChest::ARItemChest()
+ARItemChest::ARItemChest() : opened(false)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -36,6 +36,8 @@ void ARItemChest::Interact_Implementation(APawn* instigatorPawn)
 {
 	IRGameplayInterface::Interact_Implementation(instigatorPawn);
 
-	lidMesh->SetRelativeRotation(FRotator(110,0,0));
+	lidMesh->SetRelativeRotation(FRotator((opened)?(0):(110),0,0));
+
+	opened = !opened;
 }
 
