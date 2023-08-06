@@ -14,7 +14,7 @@ class URGameplayInterface : public UInterface
 };
 
 /**
- * 
+ * gameplay接口
  */
 class RPG_API IRGameplayInterface
 {
@@ -22,6 +22,9 @@ class RPG_API IRGameplayInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	/*
+	 * 交互接口
+	 */
 	UFUNCTION(BlueprintNativeEvent,BlueprintCallable)
 	void Interact(APawn* instigatorPawn);
 };
