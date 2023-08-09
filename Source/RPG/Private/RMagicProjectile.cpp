@@ -24,13 +24,15 @@ ARMagicProjectile::ARMagicProjectile()
 	projectileMovementComp->ProjectileGravityScale = 0;
 	projectileMovementComp->bRotationFollowsVelocity = true;
 	projectileMovementComp->bInitialVelocityInLocalSpace = true;
+
+	
 }
 
 // Called when the game starts or when spawned
 void ARMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	sphereComp->IgnoreActorWhenMoving(GetInstigator(),true);
 }
 
 // Called every frame

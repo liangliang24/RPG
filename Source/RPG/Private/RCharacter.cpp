@@ -73,6 +73,8 @@ void ARCharacter::SpawnProjectile()
 	FVector location =  GetMesh()->GetSocketLocation("Muzzle_01");
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	spawnParameters.Instigator = this;
+	
 	GetWorld()->SpawnActor<AActor>(projectile,location,cameraComp->GetComponentRotation(),spawnParameters);
 
 	GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);

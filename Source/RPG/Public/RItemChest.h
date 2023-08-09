@@ -37,7 +37,7 @@ protected:
 	/*
 	 * 网格体
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	UStaticMeshComponent* lidMesh;
 
 public:	
