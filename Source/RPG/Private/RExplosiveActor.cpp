@@ -2,7 +2,6 @@
 
 
 #include "RExplosiveActor.h"
-
 #include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
@@ -12,11 +11,15 @@ ARExplosiveActor::ARExplosiveActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>("baseMesh");
+	baseMesh->SetSimulatePhysics(true);
 	RootComponent = baseMesh;
 
 	pulseComp = CreateDefaultSubobject<URadialForceComponent>("pulseComp");
 	pulseComp->SetupAttachment(baseMesh);
 	
+	pulseComp->SetAutoActivate(false);
+	pulseComp->AddCollisionChannelToAffect(ECC_WorldDynamic);
+	pulseComp->bImpulseVelChange = true;
 	
 }
 
@@ -34,11 +37,7 @@ void ARExplosiveActor::PostInitializeComponents()
 	baseMesh->OnComponentHit.AddDynamic(this,&ARExplosiveActor::OnActorHit);
 }
 
-void ARExplosiveActor::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit)
-{
-	pulseComp->FireImpulse();
-}
+
 
 // Called every frame
 void ARExplosiveActor::Tick(float DeltaTime)
@@ -47,3 +46,14 @@ void ARExplosiveActor::Tick(float DeltaTime)
 
 }
 
+void ARExplosiveActor::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	pulseComp->FireImpulse();
+
+	UE_LOG(LogTemp,Log,TEXT("Pulse"));
+
+	UE_LOG(LogTemp,Warning,TEXT("OtherActor:%s,At Game Time:%f"),*GetNameSafe(OtherActor),GetWorld()->TimeSeconds);
+
+	DrawDebugString(GetWorld(),Hit.ImpactPoint,TEXT("this way"),nullptr,FColor::Red,2.0f,true);
+}
