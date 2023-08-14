@@ -74,8 +74,21 @@ void ARCharacter::SpawnProjectile()
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	spawnParameters.Instigator = this;
+	FHitResult hit;
+	FVector start = cameraComp->GetComponentLocation();
+
+	FVector end = start + cameraComp->GetComponentRotation().Vector()*10000;
+	bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility);
+	if(queryResult)
+	{
+		FRotator spawnway = (hit.ImpactPoint-location).Rotation();
+		GetWorld()->SpawnActor<AActor>(projectile,location,spawnway,spawnParameters);
+	}
+	else
+	{
+		GetWorld()->SpawnActor<AActor>(projectile,location,cameraComp->GetComponentRotation(),spawnParameters);
+	}
 	
-	GetWorld()->SpawnActor<AActor>(projectile,location,cameraComp->GetComponentRotation(),spawnParameters);
 
 	GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
 }
