@@ -26,7 +26,7 @@ void ARGideonDashProjectile::Explode_Implementation()
 	Super::Explode_Implementation();
 
 	
-	GetWorldTimerManager().ClearTimer(timeHandle_Delay);
+	
 
 	UGameplayStatics::SpawnEmitterAtLocation(this,impactVFX,GetActorLocation(),GetActorRotation());
 
@@ -38,6 +38,7 @@ void ARGideonDashProjectile::Explode_Implementation()
 	
 	//GetWorldTimerManager().SetTimer(timerHandle_Teleport,this,&ARGideonDashProjectile::teleportInstigator,teleportDelay);
 	teleportInstigator();
+	GetWorldTimerManager().ClearTimer(timeHandle_Delay);
 	
 }
 

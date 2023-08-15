@@ -18,8 +18,6 @@ ARProjectileBase::ARProjectileBase()
 	sphere->SetCollisionProfileName("Projectile");
 	sphere->OnComponentHit.AddDynamic(this,&ARProjectileBase::OnActorHit);
 	RootComponent = sphere;
-	
-
 
 	effectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
 	effectComp->SetupAttachment(RootComponent);
