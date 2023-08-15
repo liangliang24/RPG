@@ -20,7 +20,7 @@ ARMagicProjectile::ARMagicProjectile()
 
 	projectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>("projectileMovementComp");
 
-	projectileMovementComp->InitialSpeed = 1000.0f;
+	projectileMovementComp->InitialSpeed = 8000.0f;
 	projectileMovementComp->ProjectileGravityScale = 0;
 	projectileMovementComp->bRotationFollowsVelocity = true;
 	projectileMovementComp->bInitialVelocityInLocalSpace = true;

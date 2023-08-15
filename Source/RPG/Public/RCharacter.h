@@ -24,6 +24,10 @@ public:
 
 protected:
 	FTimerHandle primaryAttackHandle;
+	FTimerHandle dashTimerHandle;
+	FTimerHandle blackHoleTimerHandle;
+
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -45,6 +49,12 @@ protected:
 	 */
 	UPROPERTY(EditAnywhere,Category="Attack")
 	TSubclassOf<AActor> projectile;
+	
+	UPROPERTY(EditAnywhere,Category="Attack")
+	TSubclassOf<AActor> dashProjectile;
+
+	UPROPERTY(EditAnywhere,Category="Attack")
+	TSubclassOf<AActor> blackHoleProjectile;
 
 	/*
 	 * 普通攻击动画
@@ -66,6 +76,7 @@ protected:
 	 * 左右移动
 	 */
 	void MoveRight(float X);
+	void PrimaryAttack_Elasped();
 	/*
 	 * 普通攻击操作绑定函数
 	 */
@@ -73,12 +84,17 @@ protected:
 	/*
 	 * 普通攻击操作绑定函数（生成并发射）
 	 */
-	UFUNCTION()
-	void SpawnProjectile();
+	
+	void SpawnProjectile(TSubclassOf<AActor> classToSpawn);
 	/*
 	 * 绑定交互操作
 	 */
 	void PrimaryInteract();
+
+	void Dash_Elasped();
+	void Dash();
+	void BlackHole_Elasped();
+	void BlackHole();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
