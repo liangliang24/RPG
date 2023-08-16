@@ -48,7 +48,7 @@ void ARGideonBlackHoleProjectile::OnActorOverlap(UPrimitiveComponent* Overlapped
 
 void ARGideonBlackHoleProjectile::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay(); 
 
 	GetWorldTimerManager().SetTimer(timerHandle_Explode,this,&ARGideonBlackHoleProjectile::Explode,2.0f);
 }

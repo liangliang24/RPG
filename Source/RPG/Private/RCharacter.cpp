@@ -3,6 +3,7 @@
 
 #include "RCharacter.h"
 
+#include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -21,6 +22,7 @@ ARCharacter::ARCharacter()
 	cameraComp->SetupAttachment(springArmComp);
 
 	interactComp = CreateDefaultSubobject<URInteractionComponent>("interactComp");
+	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 

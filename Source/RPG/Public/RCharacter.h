@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class URAttributeComponent;
 class URInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
@@ -35,13 +36,13 @@ protected:
 	 * 机械臂组件
 	 * 用于连接、绑定摄像头和角色，使得连接一致
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="Components")
 	USpringArmComponent* springArmComp;
 
 	/*
 	 * 摄像机组件
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="Components")
 	UCameraComponent* cameraComp;
 
 	/*
@@ -68,6 +69,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	URInteractionComponent* interactComp;
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
+	URAttributeComponent* attributeComp;
 	/*
 	 * 前后移动
 	 */

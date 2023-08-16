@@ -3,7 +3,9 @@
 
 #include "RInteractionComponent.h"
 
+#include "RAttributeComponent.h"
 #include "RGameplayInterface.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values for this component's properties
 URInteractionComponent::URInteractionComponent()
@@ -38,12 +40,20 @@ void URInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 void URInteractionComponent::PrimaryInteract()
 {
-	FHitResult hitResult;
 	AActor* owner = GetOwner();
+	UCameraComponent* ownerCameraComp = Cast<UCameraComponent>(owner->GetComponentByClass(UCameraComponent::StaticClass()));
 	FVector eyesLocation;
 	FRotator eyesRotation;
-	owner->GetActorEyesViewPoint(eyesLocation, eyesRotation);
-
+	if(ownerCameraComp)
+	{
+		eyesLocation = ownerCameraComp->GetComponentLocation();
+		eyesRotation = ownerCameraComp->GetComponentRotation();
+	}
+	else
+	{
+		owner->GetActorEyesViewPoint(eyesLocation, eyesRotation);
+	}
+	
 	FVector end = eyesLocation + (eyesRotation.Vector() * 1000);
 	FCollisionObjectQueryParams objectQueryParams;
 	objectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
