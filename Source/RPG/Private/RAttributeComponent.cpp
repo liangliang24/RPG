@@ -8,13 +8,18 @@ URAttributeComponent::URAttributeComponent()
 {
 
 	health = 100.0f;
+	maxHealth = 100.0f;
 	// ...
 }
 
-bool URAttributeComponent::ApplyHealthChange(float delta)
+bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)
 {
+	
 	health+=delta;
 
+	if(health < 0) health = 0;
+	if(health > maxHealth) health = maxHealth;
+	OnHealthChange.Broadcast(instigatorActor,this,health,delta);
 	UE_LOG(LogTemp,Log,TEXT("Owner:%s Health:%f"),*GetNameSafe(GetOwner()),health);
 	return true;
 }

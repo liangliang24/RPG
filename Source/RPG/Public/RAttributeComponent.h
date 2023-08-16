@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "RAttributeComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, float, newHealth, float, delta);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class RPG_API URAttributeComponent : public UActorComponent
@@ -18,13 +19,17 @@ public:
 
 protected:
 
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthChanged OnHealthChange;
+	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
 	float health;
-	
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	float maxHealth;
 
 public:
 	UFUNCTION(BlueprintCallable,Category="Attributes")
-	bool ApplyHealthChange(float delta);
+	bool ApplyHealthChange(AActor* instigatorActor, float delta);
 		
 };

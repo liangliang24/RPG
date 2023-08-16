@@ -53,7 +53,7 @@ void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
 		if (attributeComp)
 		{
-			attributeComp->ApplyHealthChange(-20.0f);
+			attributeComp->ApplyHealthChange(GetInstigator(), -20.0f);
 			UE_LOG(LogTemp,Log,TEXT("Apply Damage:-20.0f"));
 			Destroy();
 		}		
