@@ -7,5 +7,6 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprint\Module.RiderBlueprint.cpp.obj"
+"E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprint\BlueprintProvider.cpp.obj"
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprint\Default.rc2.res"
 /OUT:"E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprint\UnrealEditor-RiderBlueprint.lib"

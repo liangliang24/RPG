@@ -17,10 +17,11 @@ public:
 	// Sets default values for this component's properties
 	URAttributeComponent();
 
+	UPROPERTY(BlueprintAssignable,EditAnywhere)
+	FOnHealthChanged OnHealthChange;
 protected:
 
-	UPROPERTY(BlueprintAssignable)
-	FOnHealthChanged OnHealthChange;
+	
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
 	float health;

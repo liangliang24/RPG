@@ -35,11 +35,9 @@
 /FUNCTIONPADMIN
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderLC\RiderLC.cpp.obj"
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderLC\Default.rc2.res"
-"Developer\Windows\LiveCoding\Private\External\LC_JumpToSelf.lib"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Engine\UnrealEditor-Engine.lib"
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderLink\UnrealEditor-RiderLink.lib"
-"..\Intermediate\Build\Win64\UnrealEditor\Development\LiveCoding\UnrealEditor-LiveCoding.lib"
 "E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\UnrealEditor-RD.lib"
 "delayimp.lib"
 "wininet.lib"

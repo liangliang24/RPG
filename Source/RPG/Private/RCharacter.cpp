@@ -23,7 +23,6 @@ ARCharacter::ARCharacter()
 
 	interactComp = CreateDefaultSubobject<URInteractionComponent>("interactComp");
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
-	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	springArmComp->bUsePawnControlRotation = true;

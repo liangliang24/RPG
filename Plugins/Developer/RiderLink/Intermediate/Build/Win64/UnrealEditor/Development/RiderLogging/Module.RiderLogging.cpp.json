@@ -525,6 +525,7 @@
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\internationalization\\regex.h",
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\misc\\datetime.h",
             "e:\\rpg\\plugins\\developer\\riderlink\\source\\riderlogging\\private\\rideroutputdevice.cpp",
+            "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\misc\\scopelock.h",
             "d:\\epic\\ue_5.0\\engine\\source\\runtime\\core\\public\\misc\\outputdeviceredirector.h"
         ],
         "ImportedModules": [],

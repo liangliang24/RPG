@@ -10,6 +10,7 @@
 
 
 
+
 // Sets default values
 ARMagicProjectile::ARMagicProjectile()
 {
@@ -18,6 +19,7 @@ ARMagicProjectile::ARMagicProjectile()
 	sphereComp = CreateDefaultSubobject<USphereComponent>("sphereComp");
 	RootComponent = sphereComp;
 	sphereComp->OnComponentBeginOverlap.AddDynamic(this,&ARMagicProjectile::OnActorOverlap);
+	sphereComp->OnComponentHit.AddDynamic(this,&ARMagicProjectile::ActorHit);
 	particleComp = CreateDefaultSubobject<UParticleSystemComponent>("particleComp");
 	particleComp->SetupAttachment(sphereComp);
 
@@ -38,6 +40,8 @@ void ARMagicProjectile::BeginPlay()
 	sphereComp->IgnoreActorWhenMoving(GetInstigator(),true);
 }
 
+
+
 // Called every frame
 void ARMagicProjectile::Tick(float DeltaTime)
 {
@@ -45,8 +49,8 @@ void ARMagicProjectile::Tick(float DeltaTime)
 
 }
 
-void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+
+void ARMagicProjectile::DoDamage(AActor* OtherActor)
 {
 	if(OtherActor)
 	{
@@ -58,5 +62,17 @@ void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 			Destroy();
 		}		
 	}
+}
+
+void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	DoDamage(OtherActor);
+}
+
+void ARMagicProjectile::ActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	DoDamage(OtherActor);
 }
 

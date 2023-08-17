@@ -39,19 +39,36 @@ void ARGideonBlackHoleProjectile::OnActorOverlap(UPrimitiveComponent* Overlapped
 		Explode();
 		return ;
 	}
-	
+	UE_LOG(LogTemp,Log,TEXT("OtherActor:%s"),*GetNameSafe(OtherActor));
 	if(OtherComp->IsSimulatingPhysics())
 	{
 		OtherActor->Destroy();
 	}
 }
 
+void ARGideonBlackHoleProjectile::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if(!isExplode)
+	{
+		Explode();
+		return ;
+	}
+	UE_LOG(LogTemp,Log,TEXT("OtherActor:%s"),*GetNameSafe(OtherActor));
+	OtherActor->Destroy();
+	/*if(OtherComp->IsSimulatingPhysics())
+	{
+		
+	}*/
+}
 void ARGideonBlackHoleProjectile::BeginPlay()
 {
 	Super::BeginPlay(); 
 
 	GetWorldTimerManager().SetTimer(timerHandle_Explode,this,&ARGideonBlackHoleProjectile::Explode,2.0f);
 }
+
+
 
 void ARGideonBlackHoleProjectile::Explode_Implementation()
 {
@@ -79,4 +96,5 @@ void ARGideonBlackHoleProjectile::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	sphere->OnComponentBeginOverlap.AddDynamic(this,&ARGideonBlackHoleProjectile::OnActorOverlap);
+	//sphere->OnComponentHit.AddDynamic(this,&ARGideonBlackHoleProjectile::OnActorHit);
 }

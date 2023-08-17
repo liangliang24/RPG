@@ -18,7 +18,8 @@ class RPG_API ARMagicProjectile : public AActor
 	GENERATED_BODY()
 	
 public:
-	
+	UFUNCTION()
+	void ActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	// Sets default values for this actor's properties
 	ARMagicProjectile();
 
@@ -43,6 +44,8 @@ protected:
 	 */
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* projectileMovementComp;
+
+	void DoDamage(AActor* OtherActor);
 	
 public:	
 	// Called every frame
