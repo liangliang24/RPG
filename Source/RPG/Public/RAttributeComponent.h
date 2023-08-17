@@ -17,8 +17,7 @@ public:
 	// Sets default values for this component's properties
 	URAttributeComponent();
 
-	UPROPERTY(BlueprintAssignable,EditAnywhere)
-	FOnHealthChanged OnHealthChange;
+
 protected:
 
 	
@@ -30,6 +29,12 @@ protected:
 	float maxHealth;
 
 public:
+	UFUNCTION(BlueprintCallable)
+	bool IsAlive() const;
+	
+	UPROPERTY(BlueprintAssignable,EditAnywhere)
+	FOnHealthChanged OnHealthChange;
+	
 	UFUNCTION(BlueprintCallable,Category="Attributes")
 	bool ApplyHealthChange(AActor* instigatorActor, float delta);
 		

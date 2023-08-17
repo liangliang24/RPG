@@ -20,6 +20,7 @@ class RPG_API ARCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
+	
 	// Sets default values for this character's properties
 	ARCharacter();
 
@@ -98,13 +99,18 @@ protected:
 	void Dash();
 	void BlackHole_Elasped();
 	void BlackHole();
-public:	
+public:
+	virtual void PostInitializeComponents() override;
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
+	void Die();
+	UFUNCTION()
+	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	
 };

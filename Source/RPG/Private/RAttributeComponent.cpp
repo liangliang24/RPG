@@ -12,6 +12,11 @@ URAttributeComponent::URAttributeComponent()
 	// ...
 }
 
+bool URAttributeComponent::IsAlive() const
+{
+	return health>0;
+}
+
 bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)
 {
 	

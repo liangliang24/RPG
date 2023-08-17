@@ -23,6 +23,7 @@ ARCharacter::ARCharacter()
 
 	interactComp = CreateDefaultSubobject<URInteractionComponent>("interactComp");
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
+
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	springArmComp->bUsePawnControlRotation = true;
@@ -50,6 +51,22 @@ void ARCharacter::Tick(float DeltaTime)
 
 
 
+void ARCharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth,
+                                 float Delta)
+{
+	if(NewHealth <= 0)
+	{
+		DisableInput(Cast<APlayerController>(GetController()));
+
+		FTimerHandle destroy_TimerHandle;
+		GetWorldTimerManager().SetTimer(destroy_TimerHandle,this,&ARCharacter::Die,5.0f);
+	}
+}
+
+void ARCharacter::Die()
+{
+	Destroy();
+}
 
 void ARCharacter::MoveForward(float X)
 {
@@ -134,6 +151,13 @@ void ARCharacter::BlackHole()
 {
 	PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);
+}
+
+void ARCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	attributeComp->OnHealthChange.AddDynamic(this,&ARCharacter::OnHealthChange);
 }
 
 
