@@ -95,9 +95,21 @@ protected:
 	 */
 	void PrimaryInteract();
 
+	/*
+	 * 冲刺操作定时器绑定函数
+	 */
 	void Dash_Elasped();
+	/*
+	 * 冲刺操作
+	 */
 	void Dash();
+	/*
+	 * 发射黑洞定时器绑定函数
+	 */
 	void BlackHole_Elasped();
+	/*
+	 * 发射黑洞操作
+	 */
 	void BlackHole();
 public:
 	virtual void PostInitializeComponents() override;
@@ -105,7 +117,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	/*
+	 * 角色死亡
+	 */
 	void Die();
+
+	/*
+	 * 绑定事件，当血量属性发生变化时被调用
+	 */
 	UFUNCTION()
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
 	

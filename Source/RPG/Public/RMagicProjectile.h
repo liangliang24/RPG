@@ -45,6 +45,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* projectileMovementComp;
 
+	/*
+	 * 对碰撞并且含有属性组件的Actor造成伤害
+	 */
 	void DoDamage(AActor* OtherActor);
 	
 public:	
