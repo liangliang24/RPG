@@ -21,9 +21,7 @@ bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delt
 {
 	
 	health+=delta;
-
-	if(health < 0) health = 0;
-	if(health > maxHealth) health = maxHealth;
+	health = FMath::Clamp(health,0,maxHealth);
 	OnHealthChange.Broadcast(instigatorActor,this,health,delta);
 	UE_LOG(LogTemp,Log,TEXT("Owner:%s Health:%f"),*GetNameSafe(GetOwner()),health);
 	return true;

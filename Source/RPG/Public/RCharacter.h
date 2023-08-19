@@ -28,6 +28,8 @@ protected:
 	FTimerHandle primaryAttackHandle;
 	FTimerHandle dashTimerHandle;
 	FTimerHandle blackHoleTimerHandle;
+	UPROPERTY(EditDefaultsOnly,Category="Effect")
+	UParticleSystem* spawnProjectileVFX;
 
 
 	// Called when the game starts or when spawned

@@ -30,21 +30,32 @@ protected:
 	/*
 	 * 根组件
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="Components")
 	USphereComponent* sphereComp;
 
 	/*
 	 * 粒子效果组件
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="Components")
 	UParticleSystemComponent* particleComp;
 
 	/*
 	 * 投掷物移动组件
 	 */
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="Components")
 	UProjectileMovementComponent* projectileMovementComp;
+	
+	UPROPERTY(VisibleAnywhere,Category="Components")
+	UAudioComponent* movingAudio;
 
+	UPROPERTY(EditDefaultsOnly,Category="Sounds")
+	USoundBase* explodeAudio;
+	
+	UPROPERTY(EditDefaultsOnly,Category="Effect")
+	TSubclassOf<UCameraShakeBase> shake;
+
+	//UPROPERTY(VisibleAnywhere,Category="Effect")
+	
 	/*
 	 * 对碰撞并且含有属性组件的Actor造成伤害
 	 */

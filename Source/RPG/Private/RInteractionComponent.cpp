@@ -71,9 +71,10 @@ void URInteractionComponent::PrimaryInteract()
 	{
 		if (hitActor->Implements<URGameplayInterface>())
 		{
-			APawn* instigatorPawn = Cast<APawn>(hitActor);
+			APawn* instigatorPawn = Cast<APawn>(GetOwner());
 
 			IRGameplayInterface::Execute_Interact(hitActor, instigatorPawn);
+			UE_LOG(LogTemp,Log,TEXT("Interaction:%s"),*GetNameSafe(hitActor));
 			DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
 		}
 	}

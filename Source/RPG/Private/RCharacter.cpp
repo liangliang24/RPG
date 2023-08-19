@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ARCharacter::ARCharacter()
@@ -52,7 +53,7 @@ void ARCharacter::Tick(float DeltaTime)
 
 
 void ARCharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth,
-                                 float Delta)
+float Delta)
 {
 	if(NewHealth <= 0)
 	{
@@ -108,6 +109,7 @@ void ARCharacter::SpawnProjectile(TSubclassOf<AActor> classToSpawn)
 		FCollisionQueryParams params;
 		params.AddIgnoredActor(this);
 		bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility,params);
+		UGameplayStatics::SpawnEmitterAttached(spawnProjectileVFX,GetMesh(),"Muzzle_01",FVector::ZeroVector,FRotator::ZeroRotator,EAttachLocation::SnapToTarget);
 		if(queryResult)
 		{
 			FRotator spawnway = (hit.ImpactPoint-location).Rotation();

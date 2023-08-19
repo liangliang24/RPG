@@ -4,8 +4,10 @@
 #include "RMagicProjectile.h"
 
 #include "RAttributeComponent.h"
+#include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 
 
@@ -25,6 +27,9 @@ ARMagicProjectile::ARMagicProjectile()
 
 	projectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>("projectileMovementComp");
 
+	movingAudio = CreateDefaultSubobject<UAudioComponent>("MovingAudio");
+	movingAudio->SetupAttachment(RootComponent);
+	movingAudio->SetAutoActivate(true);
 	projectileMovementComp->InitialSpeed = 8000.0f;
 	projectileMovementComp->ProjectileGravityScale = 0;
 	projectileMovementComp->bRotationFollowsVelocity = true;
@@ -38,6 +43,7 @@ void ARMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	sphereComp->IgnoreActorWhenMoving(GetInstigator(),true);
+	//movingAudio->Play();
 }
 
 
@@ -52,6 +58,8 @@ void ARMagicProjectile::Tick(float DeltaTime)
 
 void ARMagicProjectile::DoDamage(AActor* OtherActor)
 {
+	UGameplayStatics::PlaySoundAtLocation(this,explodeAudio,GetActorLocation());
+	UGameplayStatics::PlayWorldCameraShake(this,shake,GetActorLocation(),500,2000,0.5);
 	if(OtherActor)
 	{
 		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
@@ -59,6 +67,7 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor)
 		{
 			attributeComp->ApplyHealthChange(GetInstigator(), -20.0f);
 			UE_LOG(LogTemp,Log,TEXT("Apply Damage:-20.0f"));
+			
 			Destroy();
 		}		
 	}
