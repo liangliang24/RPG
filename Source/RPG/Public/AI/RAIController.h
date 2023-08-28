@@ -13,5 +13,12 @@ UCLASS()
 class RPG_API ARAIController : public AAIController
 {
 	GENERATED_BODY()
+
+protected:
+	UPROPERTY(EditDefaultsOnly,Category = "AI")
+	UBehaviorTree* behaviorTree;
+	
+	virtual void BeginPlay() override;
+
 	
 };
