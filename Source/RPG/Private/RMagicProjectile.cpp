@@ -35,6 +35,8 @@ ARMagicProjectile::ARMagicProjectile()
 	projectileMovementComp->bRotationFollowsVelocity = true;
 	projectileMovementComp->bInitialVelocityInLocalSpace = true;
 
+	damage = 20.0f;
+
 	
 }
 
@@ -65,7 +67,7 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor)
 		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
 		if (attributeComp)
 		{
-			attributeComp->ApplyHealthChange(GetInstigator(), -20.0f);
+			attributeComp->ApplyHealthChange(GetInstigator(), damage);
 			UE_LOG(LogTemp,Log,TEXT("Apply Damage:-20.0f"));
 			
 			Destroy();

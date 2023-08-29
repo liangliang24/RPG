@@ -54,6 +54,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Category="Effect")
 	TSubclassOf<UCameraShakeBase> shake;
 
+	UPROPERTY(EditDefaultsOnly,Category="Attack")
+	float damage;
+
 	//UPROPERTY(VisibleAnywhere,Category="Effect")
 	
 	/*
