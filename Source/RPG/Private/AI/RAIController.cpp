@@ -10,12 +10,17 @@ void ARAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	RunBehaviorTree(behaviorTree);
+	if(ensureMsgf(behaviorTree, TEXT("Behavior Tree is nullptr!")))
+	{
+		RunBehaviorTree(behaviorTree);
+	}
+	
+	
 
-	APawn* playerPawn = UGameplayStatics::GetPlayerPawn(this,0);
+	/*APawn* playerPawn = UGameplayStatics::GetPlayerPawn(this,0);
 
 	if (playerPawn)
 	{
 		GetBlackboardComponent()->SetValueAsObject("TargetActor",playerPawn);
-	}
+	}*/
 }
