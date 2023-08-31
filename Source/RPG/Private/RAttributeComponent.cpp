@@ -12,6 +12,21 @@ URAttributeComponent::URAttributeComponent()
 	// ...
 }
 
+URAttributeComponent* URAttributeComponent::GetAttributeComponent(AActor* targetActor)
+{
+	return targetActor?Cast<URAttributeComponent>(targetActor->GetComponentByClass(URAttributeComponent::StaticClass())):nullptr;
+}
+
+bool URAttributeComponent::GetActorAlive(AActor* targetActor)
+{
+	if(targetActor)
+	{
+		return GetAttributeComponent(targetActor)->IsAlive();
+	}
+	UE_LOG(LogTemp,Log,TEXT("%s no AttributeComponent"),*GetNameSafe(targetActor));
+	return false;
+}
+
 bool URAttributeComponent::IsAlive() const
 {
 	return health>0;

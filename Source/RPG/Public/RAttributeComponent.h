@@ -20,7 +20,11 @@ public:
 	// Sets default values for this component's properties
 	URAttributeComponent();
 
-
+	UFUNCTION(BlueprintCallable)
+	static URAttributeComponent* GetAttributeComponent(AActor* targetActor);
+	
+	UFUNCTION(BlueprintCallable)
+	static bool GetActorAlive(AActor* targetActor);
 protected:
 
 	

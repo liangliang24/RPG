@@ -4,6 +4,8 @@
 #include "AI/RBTTask_RangeAttack.h"
 
 #include "AIController.h"
+#include "RAttributeComponent.h"
+#include "RCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 
@@ -25,8 +27,7 @@ EBTNodeResult::Type URBTTask_RangeAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 
 		AActor* targetActor = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject("TargetActor"));
 		
-		if(targetActor == nullptr) return EBTNodeResult::Failed;
-
+		if(targetActor == nullptr||!URAttributeComponent::GetActorAlive(targetActor)) return EBTNodeResult::Failed;
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		spawnParameters.Instigator = myPawn;
