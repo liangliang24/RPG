@@ -7,7 +7,7 @@
 #include "RBTService_CheckAttackRange.generated.h"
 
 /**
- * 
+ * 行为树服务，判断
  */
 UCLASS()
 class RPG_API URBTService_CheckAttackRange : public UBTService
@@ -18,6 +18,9 @@ public:
 	virtual void OnGameplayTaskDeactivated(UGameplayTask& Task) override;
 
 protected:
+	/*
+	 * BlackBoard中的变量
+	 */
 	UPROPERTY(EditAnywhere,Category = "AI")
 	FBlackboardKeySelector AttackRangeKey;
 	

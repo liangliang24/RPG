@@ -7,7 +7,7 @@
 #include "RBTTask_RangeAttack.generated.h"
 
 /**
- * 
+ * 行为树任务，发起攻击
  */
 UCLASS()
 class RPG_API URBTTask_RangeAttack : public UBTTaskNode

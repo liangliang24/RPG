@@ -7,7 +7,7 @@
 #include "RAIController.generated.h"
 
 /**
- * 
+ * NPC的AI控制器
  */
 UCLASS()
 class RPG_API ARAIController : public AAIController
@@ -15,6 +15,9 @@ class RPG_API ARAIController : public AAIController
 	GENERATED_BODY()
 
 protected:
+	/*
+	 * 此控制器运行的行为树（相当于AI的大脑）
+	 */
 	UPROPERTY(EditDefaultsOnly,Category = "AI")
 	UBehaviorTree* behaviorTree;
 	
