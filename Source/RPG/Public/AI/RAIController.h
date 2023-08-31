@@ -13,7 +13,7 @@ UCLASS()
 class RPG_API ARAIController : public AAIController
 {
 	GENERATED_BODY()
-
+	
 protected:
 	/*
 	 * 此控制器运行的行为树（相当于AI的大脑）

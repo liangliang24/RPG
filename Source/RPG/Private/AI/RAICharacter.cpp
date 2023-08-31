@@ -4,8 +4,11 @@
 #include "AI/RAICharacter.h"
 
 #include "AIController.h"
+#include "BrainComponent.h"
 #include "RAttributeComponent.h"
+#include "AI/RAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -40,10 +43,25 @@ void ARAICharacter::Die()
 void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth,
                                    float Delta)
 {
+	ARAIController* AIController = Cast<ARAIController>(GetController());
 	if(NewHealth <= 0)
 	{
+		GetCharacterMovement()->DisableMovement();
+		
+		
+		if(AIController)
+			AIController->GetBrainComponent()->StopLogic("Die");
+
+		GetMesh()->SetAllBodiesSimulatePhysics(true);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::Type::QueryAndPhysics);
 		FTimerHandle dieHandle;
 		GetWorldTimerManager().SetTimer(dieHandle,this,&ARAICharacter::Die,3.0f);
+	}
+
+	if (Delta < 0)
+	{
+		if(InstigatorActor!=this)
+			AIController->GetBlackboardComponent()->SetValueAsObject("TargetActor",InstigatorActor);
 	}
 }
 

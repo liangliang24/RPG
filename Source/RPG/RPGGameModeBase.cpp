@@ -29,6 +29,23 @@ void ARPGGameModeBase::StartPlay()
 
 void ARPGGameModeBase::SpawnBotTimerElasped()
 {
+	int existBots = 0;
+	for(TActorIterator<ARAICharacter> it(GetWorld());it;++it)
+	{
+		ARAICharacter* AI = *it;
+		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(AI->GetComponentByClass(URAttributeComponent::StaticClass()));
+		if (attributeComp&&attributeComp->IsAlive())
+		{
+			existBots++;
+		}
+	}
+	UE_LOG(LogTemp,Log,TEXT("AI Nums:%d"),existBots);
+	
+	
+	if(difficultyCurve)
+	{
+		if(difficultyCurve->GetFloatValue(GetWorld()->TimeSeconds) < existBots) return ;
+	}
 	UEnvQueryInstanceBlueprintWrapper* result = UEnvQueryManager::RunEQSQuery(this,spawnBotQuery,this,EEnvQueryRunMode::RandomBest5Pct,nullptr);
     if (ensure(result))
     {
@@ -48,23 +65,8 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 	}
 	
 
-	int existBots = 0;
-	for(TActorIterator<ARAICharacter> it(GetWorld());it;++it)
-	{
-		ARAICharacter* AI = *it;
-		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(AI->GetComponentByClass(URAttributeComponent::StaticClass()));
-		if (attributeComp&&attributeComp->IsAlive())
-		{
-			existBots++;
-		}
-	}
-	UE_LOG(LogTemp,Log,TEXT("AI Nums:%d"),existBots);
-	TArray<FVector> locations = EnvQueryInstanceBlueprintWrapper->GetResultsAsLocations();
 	
-	if(difficultyCurve)
-	{
-		if(difficultyCurve->GetFloatValue(GetWorld()->TimeSeconds) < existBots) return ;
-	}
+	TArray<FVector> locations = EnvQueryInstanceBlueprintWrapper->GetResultsAsLocations();
 	if (locations.Num() > 0)
 	{
 		GetWorld()->SpawnActor<AActor>(minion,locations[0],FRotator::ZeroRotator);
