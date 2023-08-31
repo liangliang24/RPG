@@ -5,7 +5,6 @@
 
 #include "AIController.h"
 #include "RAttributeComponent.h"
-#include "RCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 

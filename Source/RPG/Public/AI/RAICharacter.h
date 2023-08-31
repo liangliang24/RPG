@@ -22,13 +22,16 @@ public:
 	// Sets default values for this character's properties
 	ARAICharacter();
 
+	
+
 protected:
 	/*
 	* AI感知组件
 	*/
 	UPROPERTY(VisibleAnywhere,Category="Components")
 	UPawnSensingComponent* pawnSensingComp;
-
+	FName materialParamName;
+	
 	/*
 	 * 当AI看见Pawn时候的反应
 	 */
@@ -42,6 +45,8 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly)
 	URAttributeComponent* attributeComp;
+
+	
 public:
 	
 	

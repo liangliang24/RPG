@@ -12,7 +12,7 @@
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
-ARAICharacter::ARAICharacter()
+ARAICharacter::ARAICharacter():materialParamName("TimeToHit")
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -60,6 +60,7 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 
 	if (Delta < 0)
 	{
+		GetMesh()->SetScalarParameterValueOnMaterials(materialParamName,GetWorld()->TimeSeconds);
 		if(InstigatorActor!=this)
 			AIController->GetBlackboardComponent()->SetValueAsObject("TargetActor",InstigatorActor);
 	}
