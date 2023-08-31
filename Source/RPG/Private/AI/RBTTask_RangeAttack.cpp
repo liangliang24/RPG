@@ -31,7 +31,14 @@ EBTNodeResult::Type URBTTask_RangeAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		spawnParameters.Instigator = myPawn;
-		AActor* spawnActor = GetWorld()->SpawnActor<AActor>(projectile,muzzleLocation,(targetActor->GetActorLocation()-muzzleLocation).Rotation(),spawnParameters);
+		FRotator spawnRotation = (targetActor->GetActorLocation()-muzzleLocation).Rotation();
+		spawnRotation.Pitch+=FMath::RandRange(-MaxBulletSpread,MaxBulletSpread);
+		spawnRotation.Yaw+=FMath::RandRange(-MaxBulletSpread,MaxBulletSpread);
+		
+		AActor* spawnActor = GetWorld()->SpawnActor<AActor>(projectile,
+		                                                    muzzleLocation,
+		                                                    spawnRotation,
+		                                                    spawnParameters);
 		DrawDebugSphere(GetWorld(),myPawn->GetActorLocation(),30,16,FColor::Red,false,2);
 		return spawnActor?EBTNodeResult::Succeeded:EBTNodeResult::Failed;
 	}

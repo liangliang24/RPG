@@ -12,6 +12,13 @@
 UCLASS()
 class RPG_API URBTTask_RangeAttack : public UBTTaskNode
 {
+public:
+	explicit URBTTask_RangeAttack()
+		: MaxBulletSpread(3.0f)
+	{
+	}
+
+private:
 	GENERATED_BODY()
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
@@ -20,4 +27,7 @@ public:
 protected:
 	UPROPERTY(EditAnywhere,Category="Attack")
 	TSubclassOf<AActor> projectile;
+	
+	UPROPERTY(EditAnywhere,Category="Attack")
+	double MaxBulletSpread;
 };
