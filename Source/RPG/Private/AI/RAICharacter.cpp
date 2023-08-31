@@ -20,6 +20,8 @@ ARAICharacter::ARAICharacter():materialParamName("TimeToHit")
 	pawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComponent");
 
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
+
+	
 }
 
 void ARAICharacter::OnSeePawn(APawn* Pawn)
@@ -43,7 +45,9 @@ void ARAICharacter::Die()
 void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth,
                                    float Delta)
 {
+	
 	ARAIController* AIController = Cast<ARAIController>(GetController());
+	AIController->GetBlackboardComponent()->SetValueAsFloat("Health",NewHealth);
 	if(NewHealth <= 0)
 	{
 		GetCharacterMovement()->DisableMovement();

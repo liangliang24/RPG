@@ -41,3 +41,8 @@ bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delt
 	UE_LOG(LogTemp,Log,TEXT("Owner:%s Health:%f"),*GetNameSafe(GetOwner()),health);
 	return true;
 }
+
+float URAttributeComponent::GetHealth()
+{
+	return health;
+}

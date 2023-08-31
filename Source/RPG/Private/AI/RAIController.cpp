@@ -14,8 +14,11 @@ void ARAIController::BeginPlay()
 	{
 		RunBehaviorTree(behaviorTree);
 	}
+
+	GetBlackboardComponent()->SetValueAsFloat("Health",100.0f);
 	
-	
+	float temp = GetBlackboardComponent()->GetValueAsFloat("Health");
+	UE_LOG(LogTemp,Log,TEXT("%s health is %f"),*GetNameSafe(GetPawn()),temp)
 
 	/*APawn* playerPawn = UGameplayStatics::GetPlayerPawn(this,0);
 

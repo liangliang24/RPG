@@ -38,7 +38,7 @@ EBTNodeResult::Type URBTTask_RangeAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 		                                                    muzzleLocation,
 		                                                    spawnRotation,
 		                                                    spawnParameters);
-		DrawDebugSphere(GetWorld(),myPawn->GetActorLocation(),30,16,FColor::Red,false,2);
+		//DrawDebugSphere(GetWorld(),myPawn->GetActorLocation(),30,16,FColor::Red,false,2);
 		return spawnActor?EBTNodeResult::Succeeded:EBTNodeResult::Failed;
 	}
 	return EBTNodeResult::Failed;
