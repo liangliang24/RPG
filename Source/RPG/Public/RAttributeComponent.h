@@ -7,7 +7,6 @@
 #include "RAttributeComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, float, newHealth, float, delta);
-
 /*
  * 属性组件，处理角色属性信息
  */
@@ -48,7 +47,7 @@ public:
 	 */
 	UPROPERTY(BlueprintAssignable,EditAnywhere)
 	FOnHealthChanged OnHealthChange;
-
+	
 	/*
 	 * 更改血量
 	 */

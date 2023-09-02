@@ -5,7 +5,10 @@
 
 #include "EngineUtils.h"
 #include "RAttributeComponent.h"
+#include "RCharacter.h"
+#include "RWorldUserWidget.h"
 #include "AI/RAICharacter.h"
+#include "Blueprint/UserWidget.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 
 ARPGGameModeBase::ARPGGameModeBase()
@@ -73,6 +76,20 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 	}
 }
 
+void ARPGGameModeBase::RespawnPlayerElasped(AController* controller)
+{
+	if (ensure(controller))
+	{
+		controller->UnPossess();
+		RestartPlayer(controller);
+		/*URWorldUserWidget* UI = Cast<URWorldUserWidget>(CreateWidget<URWorldUserWidget>(GetWorld(),mainHUD));
+		if (ensure(UI))
+		{
+			UI->AddToViewport();
+		}*/
+	}
+}
+
 void ARPGGameModeBase::KillAllAI()
 {
 	for (TActorIterator<ARAICharacter> it(GetWorld());it;++it)
@@ -89,4 +106,19 @@ void ARPGGameModeBase::KillAllAI()
 			}
 		}
 	}
+}
+
+void ARPGGameModeBase::OnActorKill(AActor* victimActor, AActor* instigatorActor)
+{
+	ARCharacter* player = Cast<ARCharacter>(victimActor);
+	if (player)
+	{
+		FTimerHandle timerHandle_RespawnDelay;
+		FTimerDelegate delegate;
+		//AController* controller = Cast<AController>(PlayerControllerClass);
+		delegate.BindUFunction(this,"RespawnPlayerElasped",player->GetController());
+		UE_LOG(LogTemp,Log,TEXT("Restart Player:%s,controller:%s"),*GetNameSafe(player),*GetNameSafe(player->GetController()));
+		GetWorldTimerManager().SetTimer(timerHandle_RespawnDelay,delegate,2.0f,false);
+	}
+	
 }

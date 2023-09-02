@@ -36,14 +36,18 @@ protected:
 	//难度曲线，生成AI数量的根据
 	UPROPERTY(EditDefaultsOnly)
 	UCurveFloat* difficultyCurve;
-	
+
 	UFUNCTION()
 	void SpawnBotTimerElasped();
 	
 	UFUNCTION()
 	void SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQueryInstanceBlueprintWrapper, EEnvQueryStatus::Type Arg);
 
+	UFUNCTION()
+	void RespawnPlayerElasped(AController* controller);
 public:
 	UFUNCTION(Exec)
 	void KillAllAI();
+
+	virtual void OnActorKill(AActor* victimActor,AActor* instigatorActor);
 };

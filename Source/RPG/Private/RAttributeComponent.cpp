@@ -3,6 +3,8 @@
 
 #include "RAttributeComponent.h"
 
+#include "RPG/RPGGameModeBase.h"
+
 // Sets default values for this component's properties
 URAttributeComponent::URAttributeComponent()
 {
@@ -34,11 +36,22 @@ bool URAttributeComponent::IsAlive() const
 
 bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)
 {
-	
+	if (health <= 0)
+	{
+		return false;
+	}
 	health+=delta;
 	health = FMath::Clamp(health,0,maxHealth);
 	OnHealthChange.Broadcast(instigatorActor,this,health,delta);
 	UE_LOG(LogTemp,Log,TEXT("Owner:%s Health:%f"),*GetNameSafe(GetOwner()),health);
+	if(health <= 0)
+	{
+		ARPGGameModeBase* GM = GetWorld()->GetAuthGameMode<ARPGGameModeBase>();
+		if(GM)
+		{
+			GM->OnActorKill(GetOwner(),instigatorActor);
+		}
+	}
 	return true;
 }
 
