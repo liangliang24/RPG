@@ -6,8 +6,10 @@
 #include "AIController.h"
 #include "BrainComponent.h"
 #include "RAttributeComponent.h"
+#include "RWorldUserWidget.h"
 #include "AI/RAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -47,6 +49,17 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 {
 	
 	ARAIController* AIController = Cast<ARAIController>(GetController());
+	if(healthBar == nullptr)
+	{
+		healthBar = Cast<URWorldUserWidget>(CreateWidget<URWorldUserWidget>(GetWorld(),healthBarWidget));
+		if (healthBar)
+        {
+			healthBar->attachedActor = this;
+            healthBar->AddToViewport();
+        }
+	}
+	
+	
 	AIController->GetBlackboardComponent()->SetValueAsFloat("Health",NewHealth);
 	if(NewHealth <= 0)
 	{

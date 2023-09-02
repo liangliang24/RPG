@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RAICharacter.generated.h"
 
+class URWorldUserWidget;
 class URAttributeComponent;
 class UPawnSensingComponent;
 
@@ -25,13 +26,16 @@ public:
 	
 
 protected:
+	URWorldUserWidget* healthBar;
 	/*
 	* AI感知组件
 	*/
 	UPROPERTY(VisibleAnywhere,Category="Components")
 	UPawnSensingComponent* pawnSensingComp;
 	FName materialParamName;
-	
+	UPROPERTY(EditAnywhere,Category="UI")
+	TSubclassOf<UUserWidget> healthBarWidget;
+
 	/*
 	 * 当AI看见Pawn时候的反应
 	 */
