@@ -42,7 +42,7 @@ protected:
 	UFUNCTION()
 	void OnSeePawn(APawn* Pawn);
 
-	void Die();
+
 	
 	UFUNCTION()
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
@@ -53,6 +53,6 @@ protected:
 	
 public:
 	
-	
+	void Die();
 	virtual void PostInitializeComponents() override;
 };

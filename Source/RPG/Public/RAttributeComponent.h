@@ -56,5 +56,7 @@ public:
 	bool ApplyHealthChange(AActor* instigatorActor, float delta);
 
 	float GetHealth();
+
+	bool Kill();
 		
 };

@@ -72,3 +72,21 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 		GetWorld()->SpawnActor<AActor>(minion,locations[0],FRotator::ZeroRotator);
 	}
 }
+
+void ARPGGameModeBase::KillAllAI()
+{
+	for (TActorIterator<ARAICharacter> it(GetWorld());it;++it)
+	{
+		ARAICharacter* AI = *it;
+		
+		
+		if (AI)
+		{
+			URAttributeComponent* AIAttributeComp = URAttributeComponent::GetAttributeComponent(AI);
+			if(AIAttributeComp)
+			{
+				AIAttributeComp->Kill();
+			}
+		}
+	}
+}

@@ -155,6 +155,11 @@ void ARCharacter::BlackHole()
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);
 }
 
+void ARCharacter::HealSelf(float delta)
+{
+	attributeComp->ApplyHealthChange(this,delta);
+}
+
 void ARCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();

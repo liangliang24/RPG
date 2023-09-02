@@ -43,5 +43,7 @@ protected:
 	UFUNCTION()
 	void SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQueryInstanceBlueprintWrapper, EEnvQueryStatus::Type Arg);
 
-	
+public:
+	UFUNCTION(Exec)
+	void KillAllAI();
 };

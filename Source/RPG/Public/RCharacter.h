@@ -114,6 +114,9 @@ protected:
 	 */
 	void BlackHole();
 public:
+	UFUNCTION(Exec)
+	void HealSelf(float delta);
+	
 	virtual void PostInitializeComponents() override;
 	
 	// Called every frame

@@ -46,3 +46,8 @@ float URAttributeComponent::GetHealth()
 {
 	return health;
 }
+
+bool URAttributeComponent::Kill()
+{
+	return ApplyHealthChange(nullptr,-maxHealth);
+}
