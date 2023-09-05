@@ -32,6 +32,11 @@ void ARPGGameModeBase::StartPlay()
 
 void ARPGGameModeBase::SpawnBotTimerElasped()
 {
+	if (!CVarSpawnBots.GetValueOnGameThread())
+	{
+		UE_LOG(LogTemp,Log,TEXT("CvarSpawnBots is false"));
+		return ;
+	}
 	int existBots = 0;
 	for(TActorIterator<ARAICharacter> it(GetWorld());it;++it)
 	{

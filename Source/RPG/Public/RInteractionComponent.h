@@ -6,6 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "RInteractionComponent.generated.h"
 
+static TAutoConsoleVariable<bool> CVarDebugDrawInteraction(TEXT("rpg.InteractionDebugDraw"),
+	false,
+	TEXT("Enable Debug Lines for Interaction Component"),
+	ECVF_Cheat);
 /*
  * 交互组件，拥有这个组件的物体可以和可交互物体进行交互
  */

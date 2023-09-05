@@ -7,6 +7,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "RPGGameModeBase.generated.h"
 
+static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("rpg.SpawnBots"),true,TEXT("Enable spawning of bots via timer"),ECVF_Cheat);
+
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
 /**

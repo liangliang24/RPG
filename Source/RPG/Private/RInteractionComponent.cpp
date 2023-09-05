@@ -75,13 +75,17 @@ void URInteractionComponent::PrimaryInteract()
 
 			IRGameplayInterface::Execute_Interact(hitActor, instigatorPawn);
 			UE_LOG(LogTemp,Log,TEXT("Interaction:%s"),*GetNameSafe(hitActor));
-			DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
+			if (CVarDebugDrawInteraction.GetValueOnGameThread())
+				DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
 		}
 	}
-	
 
-	FColor debugLineColor = hitsuccess ? (FColor::Red) : (FColor::Green);
-	DrawDebugLine(GetWorld(), eyesLocation, end, debugLineColor, false, 2, 0, 2);
+	if (CVarDebugDrawInteraction.GetValueOnGameThread())
+	{
+		FColor debugLineColor = hitsuccess ? (FColor::Red) : (FColor::Green);
+		DrawDebugLine(GetWorld(), eyesLocation, end, debugLineColor, false, 2, 0, 2);
+	}
+	
 
 	
 }

@@ -4,6 +4,7 @@
 #include "RMagicProjectile.h"
 
 #include "RAttributeComponent.h"
+#include "RGamePlayFunctionLibrary.h"
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -54,36 +55,38 @@ void ARMagicProjectile::BeginPlay()
 void ARMagicProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 
-void ARMagicProjectile::DoDamage(AActor* OtherActor)
+void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult)
 {
 	UGameplayStatics::PlaySoundAtLocation(this,explodeAudio,GetActorLocation());
 	UGameplayStatics::PlayWorldCameraShake(this,shake,GetActorLocation(),500,2000,0.5);
 	if(OtherActor)
 	{
-		URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
+		/*URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
 		if (attributeComp)
 		{
 			attributeComp->ApplyHealthChange(GetInstigator(), damage);
 			UE_LOG(LogTemp,Log,TEXT("Apply Damage:-20.0f"));
 			
 			Destroy();
-		}		
+		}	*/
+
+		URGamePlayFunctionLibrary::ApplyDirectionDamage(GetInstigator(),OtherActor,damage,hitResult);
+		Destroy();
 	}
 }
 
 void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	DoDamage(OtherActor);
+	DoDamage(OtherActor, SweepResult);
 }
 
 void ARMagicProjectile::ActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
-	DoDamage(OtherActor);
+	DoDamage(OtherActor, Hit);
 }
 

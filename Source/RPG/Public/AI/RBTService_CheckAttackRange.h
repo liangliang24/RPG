@@ -14,8 +14,6 @@ class RPG_API URBTService_CheckAttackRange : public UBTService
 {
 	GENERATED_BODY()
 public:
-	virtual void OnGameplayTaskActivated(UGameplayTask& Task) override;
-	virtual void OnGameplayTaskDeactivated(UGameplayTask& Task) override;
 
 protected:
 	/*

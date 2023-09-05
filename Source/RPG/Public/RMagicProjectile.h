@@ -62,7 +62,7 @@ protected:
 	/*
 	 * 对碰撞并且含有属性组件的Actor造成伤害
 	 */
-	void DoDamage(AActor* OtherActor);
+	void DoDamage(AActor* OtherActor, const FHitResult& hitResult);
 	
 public:	
 	// Called every frame

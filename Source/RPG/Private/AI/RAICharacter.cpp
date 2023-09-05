@@ -10,6 +10,7 @@
 #include "AI/RAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -23,7 +24,8 @@ ARAICharacter::ARAICharacter():materialParamName("TimeToHit")
 
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
 
-	
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldDynamic,ECR_Ignore);
+	GetMesh()->SetGenerateOverlapEvents(true);
 }
 
 void ARAICharacter::OnSeePawn(APawn* Pawn)
@@ -32,7 +34,8 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 
 	if (myController)
 	{
-		myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
+		if(Pawn&&Pawn!=this)
+			myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
 
 		// UE_LOG(LogTemp,Log,TEXT("See %s"),*GetNameSafe(Pawn));
 	}
@@ -47,7 +50,7 @@ void ARAICharacter::Die()
 void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth,
                                    float Delta)
 {
-	
+	//UE_LOG(LogTemp,Log,TEXT("Hit By %s"),*GetNameSafe(InstigatorActor));
 	ARAIController* AIController = Cast<ARAIController>(GetController());
 	if(healthBar == nullptr)
 	{
@@ -71,6 +74,8 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 
 		GetMesh()->SetAllBodiesSimulatePhysics(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::Type::QueryAndPhysics);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetCharacterMovement()->DisableMovement();
 		FTimerHandle dieHandle;
 		GetWorldTimerManager().SetTimer(dieHandle,this,&ARAICharacter::Die,3.0f);
 	}

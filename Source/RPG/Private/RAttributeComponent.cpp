@@ -40,6 +40,10 @@ bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delt
 	{
 		return false;
 	}
+	if (delta < 0)
+	{
+		delta*=CVarDamageMultiplier.GetValueOnGameThread();
+	}
 	health+=delta;
 	health = FMath::Clamp(health,0,maxHealth);
 	OnHealthChange.Broadcast(instigatorActor,this,health,delta);

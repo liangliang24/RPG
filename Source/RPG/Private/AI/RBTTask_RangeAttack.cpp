@@ -28,23 +28,19 @@ EBTNodeResult::Type URBTTask_RangeAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 		
 		if(targetActor == nullptr||!URAttributeComponent::GetActorAlive(targetActor)) return EBTNodeResult::Failed;
 		FActorSpawnParameters spawnParameters;
-		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		//spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		spawnParameters.Instigator = myPawn;
 		FRotator spawnRotation = (targetActor->GetActorLocation()-muzzleLocation).Rotation();
 		spawnRotation.Pitch+=FMath::RandRange(-MaxBulletSpread,MaxBulletSpread);
 		spawnRotation.Yaw+=FMath::RandRange(-MaxBulletSpread,MaxBulletSpread);
-		
+		//UE_LOG(LogTemp,Log,TEXT("Shoot by %s"),*GetNameSafe(myPawn));
 		AActor* spawnActor = GetWorld()->SpawnActor<AActor>(projectile,
 		                                                    muzzleLocation,
 		                                                    spawnRotation,
 		                                                    spawnParameters);
+		//UE_LOG(LogTemp,Log,TEXT("Spawn %s from %s control by %s"),*GetNameSafe(spawnActor),*GetNameSafe(myPawn),*GetNameSafe(myController));
 		//DrawDebugSphere(GetWorld(),myPawn->GetActorLocation(),30,16,FColor::Red,false,2);
-		return spawnActor?EBTNodeResult::Succeeded:EBTNodeResult::Failed;
+		return EBTNodeResult::Succeeded;
 	}
 	return EBTNodeResult::Failed;
-}
-
-void URBTTask_RangeAttack::OnGameplayTaskActivated(UGameplayTask& Task)
-{
-	Super::OnGameplayTaskActivated(Task);
 }
