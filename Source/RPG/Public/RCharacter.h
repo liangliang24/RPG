@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class URActionComponent;
 class URAttributeComponent;
 class URInteractionComponent;
 class UCameraComponent;
@@ -74,6 +75,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URAttributeComponent* attributeComp;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
+	URActionComponent* actionComp;
 	/*
 	 * 前后移动
 	 */
@@ -113,6 +117,15 @@ protected:
 	 * 发射黑洞操作
 	 */
 	void BlackHole();
+
+	void SprintStart();
+
+	void SprintStop();
+	
+	/*
+	 * 角色死亡
+	 */
+	void Die();
 public:
 	UFUNCTION(Exec)
 	void HealSelf(float delta);
@@ -122,10 +135,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	/*
-	 * 角色死亡
-	 */
-	void Die();
 
 	/*
 	 * 绑定事件，当血量属性发生变化时被调用

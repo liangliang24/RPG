@@ -3,6 +3,7 @@
 
 #include "RCharacter.h"
 
+#include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
 #include "Camera/CameraComponent.h"
@@ -25,6 +26,7 @@ ARCharacter::ARCharacter()
 	interactComp = CreateDefaultSubobject<URInteractionComponent>("interactComp");
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
 
+	actionComp = CreateDefaultSubobject<URActionComponent>("ActionComponent");
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	springArmComp->bUsePawnControlRotation = true;
@@ -63,6 +65,7 @@ float Delta)
 		GetWorldTimerManager().SetTimer(destroy_TimerHandle,this,&ARCharacter::Die,5.0f);
 	}
 }
+
 
 void ARCharacter::Die()
 {
@@ -155,6 +158,16 @@ void ARCharacter::BlackHole()
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);
 }
 
+void ARCharacter::SprintStart()
+{
+	actionComp->StartActionByName(this,"Sprint");
+}
+
+void ARCharacter::SprintStop()
+{
+	actionComp->StopActionByName(this,"Sprint");
+}
+
 void ARCharacter::HealSelf(float delta)
 {
 	attributeComp->ApplyHealthChange(this,delta);
@@ -189,5 +202,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	InputComponent->BindAction("Dash",IE_Pressed,this,&ARCharacter::Dash);
 
 	InputComponent->BindAction("BlackHole",IE_Pressed,this,&ARCharacter::BlackHole);
+
+	InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
+	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);
 }
 
