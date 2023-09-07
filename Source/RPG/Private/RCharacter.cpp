@@ -90,8 +90,9 @@ void ARCharacter::PrimaryAttack_Elasped()
 
 void ARCharacter::PrimaryAttack()
 {
-	PlayAnimMontage(primaryAttackAnimation);
-	GetWorld()->GetTimerManager().SetTimer(primaryAttackHandle,this,&ARCharacter::PrimaryAttack_Elasped,0.17f);
+	actionComp->StartActionByName(this,"PrimaryAttack");
+	/*PlayAnimMontage(primaryAttackAnimation);
+	GetWorld()->GetTimerManager().SetTimer(primaryAttackHandle,this,&ARCharacter::PrimaryAttack_Elasped,0.17f);*/
 	//
 	
 }

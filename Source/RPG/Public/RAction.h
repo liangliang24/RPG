@@ -22,4 +22,6 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category="Action")
 	FName actionName;
+
+	virtual UWorld* GetWorld() const override;
 };

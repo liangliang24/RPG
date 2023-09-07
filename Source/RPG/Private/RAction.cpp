@@ -11,3 +11,13 @@ void URAction::StartAction_Implementation(AActor* instigator)
 void URAction::StopAction_Implementation(AActor* instigator)
 {
 }
+
+UWorld* URAction::GetWorld() const
+{
+	UActorComponent* comp = Cast<UActorComponent>(GetOuter());
+	if (comp)
+	{
+		return comp->GetWorld();
+	}
+	return GetOuter()->GetWorld();
+}

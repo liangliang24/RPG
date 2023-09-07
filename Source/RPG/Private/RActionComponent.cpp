@@ -64,7 +64,10 @@ void URActionComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+	for (TSubclassOf<URAction> actionClass:defaultActions)
+	{
+		AddAction(actionClass);
+	}
 }
 
 
