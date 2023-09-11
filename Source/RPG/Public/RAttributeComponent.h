@@ -8,6 +8,8 @@
 static TAutoConsoleVariable<float> CVarDamageMultiplier(TEXT("rpg.DamageMultiplier"),1.0f,TEXT("Global Damage Modifier for Attribute Component."),ECVF_Cheat);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, float, newHealth, float, delta);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnCreditChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, int , newCredit, int, delta);
 /*
  * 属性组件，处理角色属性信息
  */
@@ -36,6 +38,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
 	float maxHealth;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	int credit;
+
 public:
 	/*
 	 * 判断角色生命值是否大于0
@@ -48,6 +53,9 @@ public:
 	 */
 	UPROPERTY(BlueprintAssignable,EditAnywhere)
 	FOnHealthChanged OnHealthChange;
+
+	UPROPERTY(BlueprintAssignable,EditAnywhere)
+	FOnCreditChanged OnCreditChanged;
 	
 	/*
 	 * 更改血量
@@ -55,6 +63,10 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Attributes")
 	bool ApplyHealthChange(AActor* instigatorActor, float delta);
 
+
+	UFUNCTION(BlueprintCallable,Category="Attributes")
+	bool ApplyCreditChange(AActor* instigatorActor, int delta);
+	
 	float GetHealth();
 
 	bool Kill();

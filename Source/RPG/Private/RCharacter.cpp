@@ -132,11 +132,18 @@ void ARCharacter::HealSelf(float delta)
 	attributeComp->ApplyHealthChange(this,delta);
 }
 
+void ARCharacter::OnCreditChanged(AActor* InstigatorActor, URAttributeComponent* OwningComp, int NewCredit, int Delta)
+{
+	
+}
+
 void ARCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
 	attributeComp->OnHealthChange.AddDynamic(this,&ARCharacter::OnHealthChange);
+
+	attributeComp->OnCreditChanged.AddDynamic(this,&ARCharacter::OnCreditChanged);
 }
 
 

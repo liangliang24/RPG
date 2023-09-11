@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "BrainComponent.h"
 #include "RAttributeComponent.h"
+#include "RCharacter.h"
 #include "RWorldUserWidget.h"
 #include "AI/RAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -67,7 +68,13 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 	if(NewHealth <= 0)
 	{
 		GetCharacterMovement()->DisableMovement();
-		
+
+		URAttributeComponent* instigatorAttributeComp = URAttributeComponent::GetAttributeComponent(InstigatorActor);
+
+		if (instigatorAttributeComp)
+		{
+			instigatorAttributeComp->ApplyCreditChange(this,20);
+		}
 		
 		if(AIController)
 			AIController->GetBrainComponent()->StopLogic("Die");

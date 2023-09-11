@@ -32,7 +32,11 @@ void ARHealthPotion::Interact_Implementation(APawn* instigatorPawn)
 	if(instigatorAttribute)
 	{
 		UE_LOG(LogTemp,Log,TEXT("otherAttribute:%s"),*GetNameSafe(instigatorAttribute));
-		instigatorAttribute->ApplyHealthChange(this,20.0f);
+		if (instigatorAttribute->ApplyCreditChange(instigatorPawn, -40))
+		{
+			instigatorAttribute->ApplyHealthChange(this,20.0f);
+		}
+		
 	}
 }
 // Called every frame

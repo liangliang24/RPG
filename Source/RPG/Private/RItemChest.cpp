@@ -3,6 +3,7 @@
 
 #include "RItemChest.h"
 
+#include "RAttributeComponent.h"
 
 
 // Sets default values
@@ -35,8 +36,15 @@ void ARItemChest::Tick(float DeltaTime)
 void ARItemChest::Interact_Implementation(APawn* instigatorPawn)
 {
 	IRGameplayInterface::Interact_Implementation(instigatorPawn);
-
-	lidMesh->SetRelativeRotation(FRotator((opened)?(0):(110),0,0));
+	URAttributeComponent* pawnAttributeComp = URAttributeComponent::GetAttributeComponent(instigatorPawn);
+	if (pawnAttributeComp)
+	{
+		if(pawnAttributeComp->ApplyCreditChange(instigatorPawn, -50))
+		{
+			lidMesh->SetRelativeRotation(FRotator((opened)?(0):(110),0,0));
+		}
+	}
+	
 
 	opened = !opened;
 }

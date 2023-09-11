@@ -11,6 +11,7 @@ URAttributeComponent::URAttributeComponent()
 
 	health = 100.0f;
 	maxHealth = 100.0f;
+	credit = 0.0f;
 	// ...
 }
 
@@ -56,6 +57,19 @@ bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delt
 			GM->OnActorKill(GetOwner(),instigatorActor);
 		}
 	}
+	return true;
+}
+
+bool URAttributeComponent::ApplyCreditChange(AActor* instigatorActor, int delta)
+{
+	if (credit + delta < 0)
+	{
+		return false;
+	}
+	credit+=delta;
+	
+	OnCreditChanged.Broadcast(instigatorActor, this, credit, delta);
+
 	return true;
 }
 

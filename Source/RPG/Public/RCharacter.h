@@ -115,6 +115,9 @@ protected:
 public:
 	UFUNCTION(Exec)
 	void HealSelf(float delta);
+
+	UFUNCTION()
+	void OnCreditChanged(AActor* InstigatorActor, URAttributeComponent* OwningComp, int NewCredit, int Delta);
 	
 	virtual void PostInitializeComponents() override;
 	
