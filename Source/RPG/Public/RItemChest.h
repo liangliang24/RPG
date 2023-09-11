@@ -40,6 +40,12 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	UStaticMeshComponent* lidMesh;
 
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UStaticMeshComponent* goldMesh;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UParticleSystemComponent* goldFlash;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

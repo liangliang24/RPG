@@ -4,6 +4,7 @@
 #include "RItemChest.h"
 
 #include "RAttributeComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
@@ -17,6 +18,12 @@ ARItemChest::ARItemChest() : opened(false)
 
 	lidMesh = CreateDefaultSubobject<UStaticMeshComponent>("lidMesh");
 	lidMesh->SetupAttachment(baseMesh);
+
+	goldMesh = CreateDefaultSubobject<UStaticMeshComponent>("goldMesh");
+	goldMesh->SetupAttachment(baseMesh);
+
+	goldFlash = CreateDefaultSubobject<UParticleSystemComponent>("goldFlash");
+	goldFlash->SetupAttachment(goldMesh);
 }
 
 // Called when the game starts or when spawned

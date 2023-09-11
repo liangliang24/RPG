@@ -65,8 +65,27 @@ void URInteractionComponent::PrimaryInteract()
 	collisionShape.SetSphere(30);
 	bool hitsuccess = GetWorld()->SweepMultiByObjectType(hits, eyesLocation, end, FQuat::Identity, objectQueryParams,
 	                                                     collisionShape);
+
+	for (FHitResult i:hits)
+	{
+		AActor* hitActor = i.GetActor();
+		if (hitActor)
+		{
+			if (hitActor->Implements<URGameplayInterface>())
+			{
+				APawn* instigatorPawn = Cast<APawn>(GetOwner());
+
+				IRGameplayInterface::Execute_Interact(hitActor, instigatorPawn);
+				UE_LOG(LogTemp,Log,TEXT("Interaction:%s"),*GetNameSafe(hitActor));
+				if (CVarDebugDrawInteraction.GetValueOnGameThread())
+					DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
+
+				break;
+			}
+		}
+	}
 	
-	AActor* hitActor = (hits.IsEmpty())?nullptr:hits[0].GetActor();
+	/*AActor* hitActor = (hits.IsEmpty())?nullptr:hits[0].GetActor();
 	if (hitActor)
 	{
 		if (hitActor->Implements<URGameplayInterface>())
@@ -78,7 +97,7 @@ void URInteractionComponent::PrimaryInteract()
 			if (CVarDebugDrawInteraction.GetValueOnGameThread())
 				DrawDebugSphere(GetWorld(),hits[0].ImpactPoint,30,8,FColor::Purple,false,2,0,1);
 		}
-	}
+	}*/
 
 	if (CVarDebugDrawInteraction.GetValueOnGameThread())
 	{

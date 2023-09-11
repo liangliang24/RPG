@@ -25,9 +25,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* staticMesh;
+	bool isDie;
 
+	UFUNCTION()
+	void Die();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	
 };

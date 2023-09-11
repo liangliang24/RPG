@@ -14,6 +14,8 @@ ARHealthPotion::ARHealthPotion()
 	PrimaryActorTick.bCanEverTick = true;
 
 	staticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMesh");
+	RootComponent = staticMesh;
+	isDie = false;
 }
 
 // Called when the game starts or when spawned
@@ -29,16 +31,29 @@ void ARHealthPotion::Interact_Implementation(APawn* instigatorPawn)
 
 	URAttributeComponent* instigatorAttribute = Cast<URAttributeComponent>(instigatorPawn->GetComponentByClass(URAttributeComponent::StaticClass()));
 
-	if(instigatorAttribute)
+	if(instigatorAttribute&&(!isDie))
 	{
 		UE_LOG(LogTemp,Log,TEXT("otherAttribute:%s"),*GetNameSafe(instigatorAttribute));
 		if (instigatorAttribute->ApplyCreditChange(instigatorPawn, -40))
 		{
 			instigatorAttribute->ApplyHealthChange(this,20.0f);
+
+			FTimerHandle timerHandle_Die;
+			GetWorldTimerManager().SetTimer(timerHandle_Die,this,&ARHealthPotion::Die,3.0f);
+			isDie = true;
 		}
 		
 	}
 }
+
+
+void ARHealthPotion::Die()
+{
+	Destroy();
+
+	
+}
+
 // Called every frame
 void ARHealthPotion::Tick(float DeltaTime)
 {

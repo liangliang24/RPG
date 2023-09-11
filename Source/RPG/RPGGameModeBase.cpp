@@ -14,7 +14,9 @@
 ARPGGameModeBase::ARPGGameModeBase()
 {
 	spawnTimerInterval = 2.0f;
+	interationSpawnInRate = 10.0f;
 }
+
 
 
 
@@ -25,10 +27,20 @@ void ARPGGameModeBase::StartPlay()
 	
 	
 	GetWorldTimerManager().SetTimer(timerHandle_SpawnBots,this,&ARPGGameModeBase::SpawnBotTimerElasped,spawnTimerInterval,true);
+
+	GetWorldTimerManager().SetTimer(timerHandle_SpawnInteration,this,&ARPGGameModeBase::SpawnInterationTimerElasped,interationSpawnInRate,true);
 }
 
 
+void ARPGGameModeBase::SpawnInterationTimerElasped()
+{
+	UEnvQueryInstanceBlueprintWrapper* result = UEnvQueryManager::RunEQSQuery(this,spawnInterationQuery,this,EEnvQueryRunMode::RandomBest25Pct,nullptr);
 
+	if (ensure(result))
+	{
+		result->GetOnQueryFinishedEvent().AddDynamic(this,&ARPGGameModeBase::SpawnInteration);
+	}
+}
 
 void ARPGGameModeBase::SpawnBotTimerElasped()
 {
@@ -92,6 +104,27 @@ void ARPGGameModeBase::RespawnPlayerElasped(AController* controller)
 		{
 			UI->AddToViewport();
 		}*/
+	}
+}
+
+void ARPGGameModeBase::SpawnInteration(UEnvQueryInstanceBlueprintWrapper* QueryInstance,
+	EEnvQueryStatus::Type QueryStatus)
+{
+	if (QueryStatus != EEnvQueryStatus::Success)
+	{
+		UE_LOG(LogTemp,Log,TEXT("Query interation failed"));
+		return ;		
+	}
+
+
+	TArray<FVector> results;
+	QueryInstance->GetQueryResultsAsLocations(results);
+
+	if (results.Num()>0)
+	{
+		UE_LOG(LogTemp,Log,TEXT("Spawn interation success"));
+		GetWorld()->SpawnActor<AActor>(interationActors[FMath::RandRange(0,interationActors.Num()-1)],
+			results[0],FRotator::ZeroRotator);
 	}
 }
 
