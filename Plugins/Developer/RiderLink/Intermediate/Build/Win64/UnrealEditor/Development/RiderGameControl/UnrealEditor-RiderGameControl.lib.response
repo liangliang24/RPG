@@ -6,6 +6,6 @@
 /NAME:"UnrealEditor-RiderGameControl.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\RiderGameControl.cpp.obj"
-"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\Default.rc2.res"
-/OUT:"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\UnrealEditor-RiderGameControl.lib"
+"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\RiderGameControl.cpp.obj"
+"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\Default.rc2.res"
+/OUT:"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderGameControl\UnrealEditor-RiderGameControl.lib"

@@ -1,10 +1,10 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\countdownlatch\\countdownlatch.cpp",
+        "Source": "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\countdownlatch\\countdownlatch.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
+            "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\chrono",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\yvals_core.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\vcruntime.h",
@@ -93,7 +93,7 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\atomic",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\xthreads.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\xfilesystem_abi.h",
-            "c:\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\countdownlatch\\countdownlatch.hpp",
+            "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\countdownlatch\\countdownlatch.hpp",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\cinttypes",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\inttypes.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.37.32822\\include\\mutex",

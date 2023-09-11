@@ -9,7 +9,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ARCharacter::ARCharacter()
@@ -82,11 +81,7 @@ void ARCharacter::MoveRight(float X)
 	AddMovementInput(cameraComp->GetRightVector(),X);
 }
 
-void ARCharacter::PrimaryAttack_Elasped()
-{
-	SpawnProjectile(projectile);
-	GetWorldTimerManager().ClearTimer(primaryAttackHandle);
-}
+
 
 void ARCharacter::PrimaryAttack()
 {
@@ -96,67 +91,30 @@ void ARCharacter::PrimaryAttack()
 	//
 	
 }
-void ARCharacter::SpawnProjectile(TSubclassOf<AActor> classToSpawn)
-{
-	if(ensureAlways(classToSpawn))
-	{
-		UE_LOG(LogTemp,Log,TEXT("Spawn %s"),*GetNameSafe(classToSpawn));
-		FVector location =  GetMesh()->GetSocketLocation("Muzzle_01");
-		FActorSpawnParameters spawnParameters;
-		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		spawnParameters.Instigator = this;
-		FHitResult hit;
-		FVector start = cameraComp->GetComponentLocation();
 
-		FVector end = start + cameraComp->GetComponentRotation().Vector()*10000;
-	
-		FCollisionQueryParams params;
-		params.AddIgnoredActor(this);
-		bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility,params);
-		UGameplayStatics::SpawnEmitterAttached(spawnProjectileVFX,GetMesh(),"Muzzle_01",FVector::ZeroVector,FRotator::ZeroRotator,EAttachLocation::SnapToTarget);
-		if(queryResult)
-		{
-			FRotator spawnway = (hit.ImpactPoint-location).Rotation();
-			GetWorld()->SpawnActor<AActor>(classToSpawn,location,spawnway,spawnParameters);
-		}
-		else
-		{
-			GetWorld()->SpawnActor<AActor>(classToSpawn,location,cameraComp->GetComponentRotation(),spawnParameters);
-		}
-	
-
-		//GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
-	}
-}
 
 void ARCharacter::PrimaryInteract()
 {
 	interactComp->PrimaryInteract();
 }
 
-void ARCharacter::Dash_Elasped()
-{
-	SpawnProjectile(dashProjectile);
-	GetWorldTimerManager().ClearTimer(dashTimerHandle);
-}
+
 
 void ARCharacter::Dash()
 {
-	UE_LOG(LogTemp,Log,TEXT("Dash"));
+	actionComp->StartActionByName(this,"Dash");
+	/*UE_LOG(LogTemp,Log,TEXT("Dash"));
 	PlayAnimMontage(primaryAttackAnimation);
-	GetWorld()->GetTimerManager().SetTimer(dashTimerHandle,this,&ARCharacter::Dash_Elasped,0.17f);
+	GetWorld()->GetTimerManager().SetTimer(dashTimerHandle,this,&ARCharacter::Dash_Elasped,0.17f);*/
 }
 
-void ARCharacter::BlackHole_Elasped()
-{
-	SpawnProjectile(blackHoleProjectile);
-	GetWorldTimerManager().ClearTimer(blackHoleTimerHandle);
-}
+
 
 void ARCharacter::BlackHole()
 {
-	PlayAnimMontage(primaryAttackAnimation);
-	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);
+	actionComp->StartActionByName(this,"BlackHole");
+	/*PlayAnimMontage(primaryAttackAnimation);
+	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);*/
 }
 
 void ARCharacter::SprintStart()

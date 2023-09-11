@@ -86,33 +86,19 @@ protected:
 	 * 左右移动
 	 */
 	void MoveRight(float X);
-	void PrimaryAttack_Elasped();
 	/*
 	 * 普通攻击操作绑定函数
 	 */
 	void PrimaryAttack();
 	/*
-	 * 普通攻击操作绑定函数（生成并发射）
-	 */
-	
-	void SpawnProjectile(TSubclassOf<AActor> classToSpawn);
-	/*
 	 * 绑定交互操作
 	 */
 	void PrimaryInteract();
-
-	/*
-	 * 冲刺操作定时器绑定函数
-	 */
-	void Dash_Elasped();
+	
 	/*
 	 * 冲刺操作
 	 */
 	void Dash();
-	/*
-	 * 发射黑洞定时器绑定函数
-	 */
-	void BlackHole_Elasped();
 	/*
 	 * 发射黑洞操作
 	 */

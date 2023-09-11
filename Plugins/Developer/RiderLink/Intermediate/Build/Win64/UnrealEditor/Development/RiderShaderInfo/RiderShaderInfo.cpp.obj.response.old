@@ -1,4 +1,4 @@
-E:\RPG\Plugins\Developer\RiderLink\Source\RiderShaderInfo\RiderShaderInfo.cpp
+C:\RPG\Plugins\Developer\RiderLink\Source\RiderShaderInfo\RiderShaderInfo.cpp
 /I .
 /I Runtime
 /I Runtime\TraceLog\Public
@@ -7,17 +7,17 @@ E:\RPG\Plugins\Developer\RiderLink\Source\RiderShaderInfo\RiderShaderInfo.cpp
 /I Runtime\Json\Public
 /I Runtime\RenderCore\Public
 /I Runtime\RHI\Public
-/I E:\RPG\Plugins\Developer\RiderLink\Source
+/I C:\RPG\Plugins\Developer\RiderLink\Source
 /I ThirdParty\mimalloc\include
-/I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE"
+/I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
-/FI"E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\Definitions.h"
-/Fo"E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\RiderShaderInfo.cpp.obj"
-/sourceDependencies E:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\RiderShaderInfo.cpp.json
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
+/FI"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\Definitions.h"
+/Fo"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\RiderShaderInfo.cpp.obj"
+/sourceDependencies C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderShaderInfo\RiderShaderInfo.cpp.json
 /Zc:inline
 /nologo
 /Oi

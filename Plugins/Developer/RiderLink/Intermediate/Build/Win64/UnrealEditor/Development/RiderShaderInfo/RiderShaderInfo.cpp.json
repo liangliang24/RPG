@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\rpg\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.cpp",
+        "Source": "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\ridershaderinfo\\definitions.h",
-            "c:\\rpg\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.h",
+            "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\ridershaderinfo\\definitions.h",
+            "c:\\rpg\\rpg\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\modules\\moduleinterface.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\coretypes.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\hal\\platform.h",
