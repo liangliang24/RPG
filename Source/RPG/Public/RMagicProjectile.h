@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/Actor.h"
 #include "RMagicProjectile.generated.h"
 
@@ -33,6 +34,9 @@ protected:
 	UPROPERTY(VisibleAnywhere,Category="Components")
 	USphereComponent* sphereComp;
 
+	UPROPERTY(EditDefaultsOnly,Category="Particle")
+	UParticleSystem* explodeEmitter;
+	
 	/*
 	 * 粒子效果组件
 	 */
@@ -56,6 +60,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,Category="Attack")
 	float damage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tags")
+	FGameplayTag Tag;
 
 	//UPROPERTY(VisibleAnywhere,Category="Effect")
 	

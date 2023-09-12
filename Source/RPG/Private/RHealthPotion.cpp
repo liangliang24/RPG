@@ -34,7 +34,7 @@ void ARHealthPotion::Interact_Implementation(APawn* instigatorPawn)
 	if(instigatorAttribute&&(!isDie))
 	{
 		UE_LOG(LogTemp,Log,TEXT("otherAttribute:%s"),*GetNameSafe(instigatorAttribute));
-		if (instigatorAttribute->ApplyCreditChange(instigatorPawn, -40))
+		if (instigatorAttribute->ApplyCreditChange(instigatorPawn, -20))
 		{
 			instigatorAttribute->ApplyHealthChange(this,20.0f);
 

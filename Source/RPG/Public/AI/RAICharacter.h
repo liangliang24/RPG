@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RAICharacter.generated.h"
 
+class URActionComponent;
 class URWorldUserWidget;
 class URAttributeComponent;
 class UPawnSensingComponent;
@@ -47,10 +48,11 @@ protected:
 	UFUNCTION()
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	URAttributeComponent* attributeComp;
 
-	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	URActionComponent* actionComp;
 public:
 	
 	void Die();

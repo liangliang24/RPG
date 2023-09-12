@@ -5,6 +5,7 @@
 
 #include "AIController.h"
 #include "BrainComponent.h"
+#include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RCharacter.h"
 #include "RWorldUserWidget.h"
@@ -25,6 +26,8 @@ ARAICharacter::ARAICharacter():materialParamName("TimeToHit")
 
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
 
+	actionComp = CreateDefaultSubobject<URActionComponent>("ActionComponent");
+	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldDynamic,ECR_Ignore);
 	GetMesh()->SetGenerateOverlapEvents(true);
 }
@@ -35,7 +38,7 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 
 	if (myController)
 	{
-		if(Pawn&&Pawn!=this)
+		if(Pawn&&Pawn->StaticClass()!=StaticClass())
 			myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
 
 		// UE_LOG(LogTemp,Log,TEXT("See %s"),*GetNameSafe(Pawn));

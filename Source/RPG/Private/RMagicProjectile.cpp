@@ -3,6 +3,7 @@
 
 #include "RMagicProjectile.h"
 
+#include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RGamePlayFunctionLibrary.h"
 #include "Components/AudioComponent.h"
@@ -62,7 +63,8 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 {
 	UGameplayStatics::PlaySoundAtLocation(this,explodeAudio,GetActorLocation());
 	UGameplayStatics::PlayWorldCameraShake(this,shake,GetActorLocation(),500,2000,0.5);
-	if(OtherActor)
+	//UE_LOG(LogTemp,Log,TEXT("other actor %s\nhit actor %s"),*GetNameSafe(OtherActor),*GetNameSafe(hitResult.GetActor()));
+	if(OtherActor&&OtherActor != GetInstigator())
 	{
 		/*URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
 		if (attributeComp)
@@ -72,8 +74,18 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 			
 			Destroy();
 		}	*/
+		//FGameplayTag Tag = FGameplayTag::RequestGameplayTag("Status.Parry");
+		URActionComponent* actionComp = Cast<URActionComponent>(OtherActor->GetComponentByClass(URActionComponent::StaticClass()));
+		//UE_LOG(LogTemp,Log,TEXT("hit %s ActionComp %s"),*GetNameSafe(OtherActor),*GetNameSafe(actionComp));
+		if (actionComp&&actionComp->activeGameplayTags.HasTag(Tag))
+		{
+			projectileMovementComp->Velocity = -projectileMovementComp->Velocity;
+			SetInstigator(Cast<APawn>(OtherActor));
 
+			return ;
+		}
 		URGamePlayFunctionLibrary::ApplyDirectionDamage(GetInstigator(),OtherActor,damage,hitResult);
+		UGameplayStatics::SpawnEmitterAtLocation(this,explodeEmitter,GetActorLocation(),GetActorRotation());
 		Destroy();
 	}
 }
@@ -87,6 +99,7 @@ void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 void ARMagicProjectile::ActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
+	UE_LOG(LogTemp,Log,TEXT("Hit"));
 	DoDamage(OtherActor, Hit);
 }
 

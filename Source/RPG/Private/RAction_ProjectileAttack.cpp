@@ -24,7 +24,7 @@ void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 		UE_LOG(LogTemp,Log,TEXT("Spawn %s"),*GetNameSafe(projectileClass));
 		FVector location =  instigator->GetMesh()->GetSocketLocation("Muzzle_01");
 		FActorSpawnParameters spawnParameters;
-		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		//spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		spawnParameters.Instigator = instigator;
 		FHitResult hit;
 		FVector start;
