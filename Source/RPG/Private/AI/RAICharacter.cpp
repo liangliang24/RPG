@@ -90,7 +90,7 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 	if (Delta < 0)
 	{
 		GetMesh()->SetScalarParameterValueOnMaterials(materialParamName,GetWorld()->TimeSeconds);
-		if(InstigatorActor!=this)
+		if(InstigatorActor->StaticClass()!=StaticClass())
 			AIController->GetBlackboardComponent()->SetValueAsObject("TargetActor",InstigatorActor);
 	}
 }

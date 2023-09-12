@@ -38,7 +38,7 @@ ARMagicProjectile::ARMagicProjectile()
 
 	damage = 20.0f;
 
-	
+	sphereComp->IgnoreActorWhenMoving(GetInstigator(),true);
 }
 
 // Called when the game starts or when spawned
