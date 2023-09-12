@@ -73,7 +73,7 @@ void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 		//GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
 	}
 
-	StopAction(instigator);
+	StopAction_Implementation(instigator);
 }
 
 void URAction_ProjectileAttack::StartAction_Implementation(AActor* instigator)

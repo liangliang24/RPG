@@ -27,8 +27,11 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 	{
 		if (action&&action->actionName == actionName)
 		{
-			action->StartAction(instigator);
-			return true;
+			if(action->CanStart(instigator))
+			{
+				action->StartAction(instigator);
+				return true;
+			}
 		}
 	}
 	return false;
@@ -40,8 +43,12 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 	{
 		if (action&&action->actionName == actionName)
 		{
-			action->StopAction(instigator);
-			return true;
+			if (action->IsRunning())
+			{
+				action->StopAction(instigator);
+                return true;
+			}
+			
 		}
 	}
 	return false;
