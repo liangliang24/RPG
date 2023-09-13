@@ -6,10 +6,11 @@
 #include "Components/ActorComponent.h"
 #include "RInteractionComponent.generated.h"
 
+class URWorldUserWidget;
 static TAutoConsoleVariable<bool> CVarDebugDrawInteraction(TEXT("rpg.InteractionDebugDraw"),
-	false,
-	TEXT("Enable Debug Lines for Interaction Component"),
-	ECVF_Cheat);
+                                                           false,
+                                                           TEXT("Enable Debug Lines for Interaction Component"),
+                                                           ECVF_Cheat);
 /*
  * 交互组件，拥有这个组件的物体可以和可交互物体进行交互
  */
@@ -22,6 +23,7 @@ public:
 	// Sets default values for this component's properties
 	URInteractionComponent();
 
+	
 	/*
 	 * 普通交互操作
 	 */
@@ -30,8 +32,19 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
+	void FindBestToInteract();
+
+	UPROPERTY()
+	AActor* FocusActor;
+
+	UPROPERTY(EditDefaultsOnly, Category="UI")
+	TSubclassOf<URWorldUserWidget> defaultWidgetClass;
+
+	UPROPERTY()
+	URWorldUserWidget* defaultWidgetInstance;
+public:
 	
-public:	
+	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
