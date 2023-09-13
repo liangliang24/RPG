@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "RAction.h"
 #include "GameFramework/Actor.h"
 #include "RMagicProjectile.generated.h"
 
+class URActionEffect;
 class USphereComponent;
 class UProjectileMovementComponent;
 
@@ -63,6 +65,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tags")
 	FGameplayTag Tag;
+	UPROPERTY(EditDefaultsOnly,Category="Attack")
+	TSubclassOf<URActionEffect> burningActionClass;
 
 	//UPROPERTY(VisibleAnywhere,Category="Effect")
 	

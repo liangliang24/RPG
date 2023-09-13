@@ -13,7 +13,7 @@ ARExplosiveActor::ARExplosiveActor()
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>("baseMesh");
 	baseMesh->SetSimulatePhysics(true);
 	RootComponent = baseMesh;
-
+	
 	pulseComp = CreateDefaultSubobject<URadialForceComponent>("pulseComp");
 	pulseComp->SetupAttachment(baseMesh);
 	

@@ -66,15 +66,7 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 	//UE_LOG(LogTemp,Log,TEXT("other actor %s\nhit actor %s"),*GetNameSafe(OtherActor),*GetNameSafe(hitResult.GetActor()));
 	if(OtherActor&&OtherActor != GetInstigator())
 	{
-		/*URAttributeComponent* attributeComp = Cast<URAttributeComponent>(OtherActor->GetComponentByClass(URAttributeComponent::StaticClass()));
-		if (attributeComp)
-		{
-			attributeComp->ApplyHealthChange(GetInstigator(), damage);
-			UE_LOG(LogTemp,Log,TEXT("Apply Damage:-20.0f"));
-			
-			Destroy();
-		}	*/
-		//FGameplayTag Tag = FGameplayTag::RequestGameplayTag("Status.Parry");
+		
 		URActionComponent* actionComp = Cast<URActionComponent>(OtherActor->GetComponentByClass(URActionComponent::StaticClass()));
 		//UE_LOG(LogTemp,Log,TEXT("hit %s ActionComp %s"),*GetNameSafe(OtherActor),*GetNameSafe(actionComp));
 		if (actionComp&&actionComp->activeGameplayTags.HasTag(Tag))
@@ -83,6 +75,11 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 			SetInstigator(Cast<APawn>(OtherActor));
 
 			return ;
+		}
+		//URActionComponent* actionComp = Cast<URActionComponent>(OtherActor->GetComponentByClass(URActionComponent::StaticClass()));
+		if (actionComp)
+		{
+			actionComp->AddAction(burningActionClass,GetInstigator());
 		}
 		URGamePlayFunctionLibrary::ApplyDirectionDamage(GetInstigator(),OtherActor,damage,hitResult);
 		UGameplayStatics::SpawnEmitterAtLocation(this,explodeEmitter,GetActorLocation(),GetActorRotation());

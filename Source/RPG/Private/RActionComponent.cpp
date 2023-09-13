@@ -5,7 +5,7 @@
 
 #include "RAction.h"
 
-void URActionComponent::AddAction(TSubclassOf<URAction> actionClass)
+void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* instigator)
 {
 	if (!ensure(actionClass))
 	{
@@ -17,6 +17,10 @@ void URActionComponent::AddAction(TSubclassOf<URAction> actionClass)
 	if (ensure(newAction))
 	{
 		actions.Add(newAction);
+		if (newAction->bAutoStart&&ensure(newAction->CanStart(instigator)))
+		{
+			newAction->StartAction(instigator);
+		}
 	}
 	
 }
@@ -54,6 +58,16 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 	return false;
 }
 
+void URActionComponent::RemoveAction(URAction* action)
+{
+	if (!ensure(action&&!action->IsRunning()))
+	{
+		return ;
+	}
+	
+	actions.Remove(action);
+}
+
 // Sets default values for this component's properties
 URActionComponent::URActionComponent()
 {
@@ -73,7 +87,7 @@ void URActionComponent::BeginPlay()
 	// ...
 	for (TSubclassOf<URAction> actionClass:defaultActions)
 	{
-		AddAction(actionClass);
+		AddAction(actionClass, GetOwner());
 	}
 }
 

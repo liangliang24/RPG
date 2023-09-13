@@ -16,7 +16,8 @@ class RPG_API URAction : public UObject
 {
 	GENERATED_BODY()
 protected:
-
+	URAction();
+	
 	UFUNCTION(BlueprintCallable, Category="Action")
 	URActionComponent* GetOwningComponent() const;
 	
@@ -29,6 +30,9 @@ protected:
 	bool bIsRunning;
 
 public:
+	UPROPERTY(EditDefaultsOnly)
+	bool bAutoStart;
+	
 	UFUNCTION(BlueprintCallable, Category="Action")
 	bool IsRunning();
 	

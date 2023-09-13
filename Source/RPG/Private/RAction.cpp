@@ -29,6 +29,11 @@ void URAction::StopAction_Implementation(AActor* instigator)
 	bIsRunning = false;
 }
 
+URAction::URAction()
+{
+	bAutoStart = false;
+}
+
 URActionComponent* URAction::GetOwningComponent() const
 {
 	return Cast<URActionComponent>(GetOuter());
