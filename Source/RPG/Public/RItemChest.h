@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "RItemChest.generated.h"
 
+class URAction;
 /*
  * 宝箱，可交互Actor
  */
@@ -50,4 +51,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void ExecuteWhenOpened(APawn* instigatorPawn);
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite)
+	TArray<TSubclassOf<URAction>> buffs;
 };

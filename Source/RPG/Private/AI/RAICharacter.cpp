@@ -39,7 +39,22 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 	if (myController)
 	{
 		if(Pawn&&Pawn->StaticClass()!=StaticClass())
+		{
 			myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
+
+			if(!playerSpotted)
+			{
+				playerSpotted = CreateWidget<URWorldUserWidget>(GetWorld(),playerSpottedClass);
+				playerSpotted->attachedActor = this;
+			}
+			float dis = GetDistanceTo(Pawn);
+			UE_LOG(LogTemp,Log,TEXT("%f"),dis);
+			if (!playerSpotted->IsInViewport()&&dis <= 2000.0f)
+			{
+				playerSpotted->AddToViewport();
+			}
+			
+		}
 
 		// UE_LOG(LogTemp,Log,TEXT("See %s"),*GetNameSafe(Pawn));
 	}

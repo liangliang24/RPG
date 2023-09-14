@@ -53,6 +53,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	URActionComponent* actionComp;
+
+	UPROPERTY(EditDefaultsOnly,Category="UI")
+	TSubclassOf<URWorldUserWidget> playerSpottedClass;
+
+	URWorldUserWidget* playerSpotted;
 public:
 	
 	void Die();

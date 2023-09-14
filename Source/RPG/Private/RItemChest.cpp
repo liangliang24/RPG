@@ -3,6 +3,7 @@
 
 #include "RItemChest.h"
 
+#include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
@@ -38,6 +39,26 @@ void ARItemChest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ARItemChest::ExecuteWhenOpened(APawn* instigatorPawn)
+{
+	if (!instigatorPawn)
+	{
+		return ;
+	}
+	URActionComponent* instigatorActionComp = Cast<URActionComponent>(instigatorPawn->GetComponentByClass(URActionComponent::StaticClass()));
+
+	if (!instigatorActionComp)
+	{
+		return ;
+	}
+
+	URAction* actionToStart = NewObject<URAction>(buffs[FMath::RandRange(0,buffs.Num()-1)]);
+	if (instigatorActionComp->StartActionByName(instigatorPawn,actionToStart->actionName))
+	{
+		
+	}
 }
 
 void ARItemChest::Interact_Implementation(APawn* instigatorPawn)
