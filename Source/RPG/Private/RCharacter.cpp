@@ -112,7 +112,11 @@ void ARCharacter::Dash()
 
 void ARCharacter::BlackHole()
 {
-	actionComp->StartActionByName(this,"BlackHole");
+	if (attributeComp->ApplyRageChange(this,blackHoleCostRage))
+	{
+		actionComp->StartActionByName(this,"BlackHole");
+	}
+	
 	/*PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);*/
 }

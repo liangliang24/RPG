@@ -10,6 +10,8 @@ static TAutoConsoleVariable<float> CVarDamageMultiplier(TEXT("rpg.DamageMultipli
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, float, newHealth, float, delta);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnCreditChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, int , newCredit, int, delta);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnRageChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, int , newRage, int, delta);
 /*
  * 属性组件，处理角色属性信息
  */
@@ -28,7 +30,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static bool GetActorAlive(AActor* targetActor);
 protected:
-
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="attributes")
+	bool haveRage;
 	
 	/*生命值*/
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
@@ -41,6 +44,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
 	int credit;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	int rage;
 public:
 	/*
 	 * 判断角色生命值是否大于0
@@ -56,16 +61,20 @@ public:
 
 	UPROPERTY(BlueprintAssignable,EditAnywhere)
 	FOnCreditChanged OnCreditChanged;
-	
+
+	UPROPERTY(BlueprintAssignable, EditAnywhere)
+	FOnRageChanged OnRageChanged;
 	/*
 	 * 更改血量
 	 */
 	UFUNCTION(BlueprintCallable,Category="Attributes")
 	bool ApplyHealthChange(AActor* instigatorActor, float delta);
 
-
 	UFUNCTION(BlueprintCallable,Category="Attributes")
 	bool ApplyCreditChange(AActor* instigatorActor, int delta);
+
+	UFUNCTION(BlueprintCallable, Category="Attributes")
+	bool ApplyRageChange(AActor* instigatorActor, int delta);
 	
 	float GetHealth();
 

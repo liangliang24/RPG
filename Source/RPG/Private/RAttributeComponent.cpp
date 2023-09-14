@@ -12,6 +12,8 @@ URAttributeComponent::URAttributeComponent()
 	health = 100.0f;
 	maxHealth = 100.0f;
 	credit = 0.0f;
+	rage = 0;
+	haveRage = true;
 	// ...
 }
 
@@ -70,6 +72,23 @@ bool URAttributeComponent::ApplyCreditChange(AActor* instigatorActor, int delta)
 	
 	OnCreditChanged.Broadcast(instigatorActor, this, credit, delta);
 
+	return true;
+}
+
+bool URAttributeComponent::ApplyRageChange(AActor* instigatorActor, int delta)
+{
+	if (!haveRage)
+	{
+		return false;
+	}
+
+	if (rage + delta < 0)
+	{
+		return false;
+	}
+	rage+=delta;
+	rage = FMath::Clamp(rage,0,100);
+	OnRageChanged.Broadcast(instigatorActor,this,rage,delta);
 	return true;
 }
 

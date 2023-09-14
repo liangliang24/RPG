@@ -18,7 +18,8 @@ ARGideonBlackHoleProjectile::ARGideonBlackHoleProjectile()
 
 	suckComp->Radius = 1000.0f;
 	suckComp->ForceStrength = -20000000.0f;
-	//suckComp->AddCollisionChannelToAffect(ECC_Pawn);
+	suckComp->AddCollisionChannelToAffect(ECC_Pawn);
+	suckComp->bIgnoreOwningActor = true;
 	//suckComp->AddCollisionChannelToAffect(ECC_WorldDynamic);
 	suckComp->AddCollisionChannelToAffect(ECC_PhysicsBody);
 	suckComp->bImpulseVelChange = true;

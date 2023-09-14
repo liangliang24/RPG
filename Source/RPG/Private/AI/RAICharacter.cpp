@@ -68,17 +68,18 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 	
 	
 	AIController->GetBlackboardComponent()->SetValueAsFloat("Health",NewHealth);
+	URAttributeComponent* instigatorAttributeComp = URAttributeComponent::GetAttributeComponent(InstigatorActor);
 	if(NewHealth <= 0)
 	{
 		GetCharacterMovement()->DisableMovement();
 
-		URAttributeComponent* instigatorAttributeComp = URAttributeComponent::GetAttributeComponent(InstigatorActor);
+		
 
 		if (instigatorAttributeComp)
 		{
 			instigatorAttributeComp->ApplyCreditChange(this,20);
+			instigatorAttributeComp->ApplyRageChange(this,50);
 		}
-		
 		if(AIController)
 			AIController->GetBrainComponent()->StopLogic("Die");
 
@@ -95,6 +96,11 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 		GetMesh()->SetScalarParameterValueOnMaterials(materialParamName,GetWorld()->TimeSeconds);
 		if(InstigatorActor->StaticClass()!=StaticClass())
 			AIController->GetBlackboardComponent()->SetValueAsObject("TargetActor",InstigatorActor);
+		
+		if (instigatorAttributeComp)
+		{
+			instigatorAttributeComp->ApplyRageChange(this,5);
+		}
 	}
 }
 

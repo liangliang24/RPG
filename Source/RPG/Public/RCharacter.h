@@ -31,6 +31,9 @@ protected:
 	FTimerHandle blackHoleTimerHandle;
 	UPROPERTY(EditDefaultsOnly,Category="Effect")
 	UParticleSystem* spawnProjectileVFX;
+	UPROPERTY(EditDefaultsOnly,Category="Attack")
+	//发射黑洞所需的愤怒值
+	int blackHoleCostRage;
 
 
 	// Called when the game starts or when spawned
