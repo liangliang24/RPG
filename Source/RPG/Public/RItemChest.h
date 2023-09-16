@@ -20,15 +20,21 @@ class RPG_API ARItemChest : public AActor,public IRGameplayInterface
 	GENERATED_BODY()
 	void Interact_Implementation(APawn* instigatorPawn) override;
 
-	bool opened;
+	
 public:	
 	// Sets default values for this actor's properties
 	ARItemChest();
 
 protected:
+	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened",BlueprintReadOnly)
+    bool bIsOpened;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnRep_LidOpened();
+	
 	/*
 	 * 根组件
 	 */
@@ -47,6 +53,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	UParticleSystemComponent* goldFlash;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

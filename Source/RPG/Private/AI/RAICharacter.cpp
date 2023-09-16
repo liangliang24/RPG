@@ -48,7 +48,7 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 				playerSpotted->attachedActor = this;
 			}
 			float dis = GetDistanceTo(Pawn);
-			UE_LOG(LogTemp,Log,TEXT("%f"),dis);
+			//UE_LOG(LogTemp,Log,TEXT("%f"),dis);
 			if (!playerSpotted->IsInViewport()&&dis <= 2000.0f)
 			{
 				playerSpotted->AddToViewport();

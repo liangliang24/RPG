@@ -25,6 +25,7 @@ void URInteractionComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ownerPawn = Cast<APawn>(GetOwner());
 	// ...
 	
 }
@@ -114,20 +115,31 @@ void URInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FindBestToInteract();
+
+	if (ownerPawn->IsLocallyControlled())
+	{
+		FindBestToInteract();
+	}
+	
+	
 	// ...
 }
 
 void URInteractionComponent::PrimaryInteract()
 {
-	if (FocusActor == nullptr)
+	ServerInteract(FocusActor);
+}
+
+void URInteractionComponent::ServerInteract_Implementation(AActor* focusActor)
+{
+	if (focusActor == nullptr)
 	{
 		return ;
 	}
 	APawn* instigatorPawn = Cast<APawn>(GetOwner());
 
 				
-	IRGameplayInterface::Execute_Interact(FocusActor, instigatorPawn);
-	UE_LOG(LogTemp,Log,TEXT("Interaction:%s"),*GetNameSafe(FocusActor));
+	IRGameplayInterface::Execute_Interact(focusActor, instigatorPawn);
+	UE_LOG(LogTemp,Log,TEXT("Interaction:%s"),*GetNameSafe(focusActor));
 }
 

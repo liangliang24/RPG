@@ -29,6 +29,10 @@ public:
 	 */
 	void PrimaryInteract(); 
 protected:
+
+	UFUNCTION(Server,Reliable)
+	void ServerInteract(AActor* focusActor);
+	
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
@@ -42,6 +46,8 @@ protected:
 
 	UPROPERTY()
 	URWorldUserWidget* defaultWidgetInstance;
+	APawn* ownerPawn;
+
 public:
 	
 	

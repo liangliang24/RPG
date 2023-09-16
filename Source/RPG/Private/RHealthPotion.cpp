@@ -16,6 +16,8 @@ ARHealthPotion::ARHealthPotion()
 	staticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMesh");
 	RootComponent = staticMesh;
 	isDie = false;
+
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned

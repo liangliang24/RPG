@@ -5,11 +5,12 @@
 
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
-ARItemChest::ARItemChest() : opened(false)
+ARItemChest::ARItemChest() : bIsOpened(false)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -25,6 +26,9 @@ ARItemChest::ARItemChest() : opened(false)
 
 	goldFlash = CreateDefaultSubobject<UParticleSystemComponent>("goldFlash");
 	goldFlash->SetupAttachment(goldMesh);
+
+	bIsOpened = false;
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +37,9 @@ void ARItemChest::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
+
+
 
 // Called every frame
 void ARItemChest::Tick(float DeltaTime)
@@ -63,17 +70,29 @@ void ARItemChest::ExecuteWhenOpened(APawn* instigatorPawn)
 
 void ARItemChest::Interact_Implementation(APawn* instigatorPawn)
 {
-	IRGameplayInterface::Interact_Implementation(instigatorPawn);
+	/*IRGameplayInterface::Interact_Implementation(instigatorPawn);
 	URAttributeComponent* pawnAttributeComp = URAttributeComponent::GetAttributeComponent(instigatorPawn);
 	if (pawnAttributeComp)
 	{
 		if(pawnAttributeComp->ApplyCreditChange(instigatorPawn, -50))
 		{
-			lidMesh->SetRelativeRotation(FRotator((opened)?(0):(110),0,0));
+			lidMesh->SetRelativeRotation(FRotator((bIsOpened)?(0):(110),0,0));
 		}
-	}
+	}*/
+
 	
 
-	opened = !opened;
+	bIsOpened = !bIsOpened;
+	OnRep_LidOpened();
+}
+
+void ARItemChest::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ARItemChest,bIsOpened);
+}
+void ARItemChest::OnRep_LidOpened_Implementation()
+{
 }
 
