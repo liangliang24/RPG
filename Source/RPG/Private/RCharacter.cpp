@@ -6,6 +6,7 @@
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -69,6 +70,24 @@ float Delta)
 void ARCharacter::Die()
 {
 	Destroy();
+}
+
+void ARCharacter::SpawnUI()
+{
+	if (!IsLocallyControlled())
+	{
+		return ;
+	}
+
+	if (!playerUIInstance)
+	{
+		playerUIInstance = CreateWidget<UUserWidget>(GetWorld(),playerUIClass);
+	}
+	
+	
+
+	playerUIInstance->AddToViewport();
+	
 }
 
 void ARCharacter::MoveForward(float X)

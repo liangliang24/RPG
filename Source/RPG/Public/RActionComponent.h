@@ -35,7 +35,11 @@ public:
 	URActionComponent();
 
 protected:
-	UPROPERTY()
+
+	UFUNCTION(Server,Reliable)
+	void ServerStartAction(AActor* instigator, FName actionName);
+	
+	UPROPERTY(Replicated)
 	TArray<URAction*> actions;
 	
 	// Called when the game starts
@@ -43,9 +47,14 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Action")
 	TArray<TSubclassOf<URAction>> defaultActions;
+
+	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	bool ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch, FReplicationFlags* RepFlags) override;
 };
+
+

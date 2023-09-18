@@ -4,6 +4,20 @@
 #include "RActionComponent.h"
 
 #include "RAction.h"
+#include "Engine/ActorChannel.h"
+#include "Net/UnrealNetwork.h"
+#include "RPG/RPG.h"
+
+// Sets default values for this component's properties
+URActionComponent::URActionComponent()
+{
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	PrimaryComponentTick.bCanEverTick = true;
+
+	SetIsReplicatedByDefault(true);
+	// ...
+}
 
 void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* instigator)
 {
@@ -12,10 +26,11 @@ void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* ins
 		return ;
 	}
 
-	URAction* newAction = NewObject<URAction>(this,actionClass);
+	URAction* newAction = NewObject<URAction>(GetOwner(),actionClass);
 
 	if (ensure(newAction))
 	{
+		newAction->InitializeActionComp(this);
 		actions.Add(newAction);
 		if (newAction->bAutoStart&&ensure(newAction->CanStart(instigator)))
 		{
@@ -33,6 +48,11 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 		{
 			if(action->CanStart(instigator))
 			{
+				if (!GetOwner()->HasAuthority())
+				{
+					ServerStartAction(instigator,actionName);
+				}
+
 				action->StartAction(instigator);
 				return true;
 			}
@@ -68,14 +88,11 @@ void URActionComponent::RemoveAction(URAction* action)
 	actions.Remove(action);
 }
 
-// Sets default values for this component's properties
-URActionComponent::URActionComponent()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+
+void URActionComponent::ServerStartAction_Implementation(AActor* instigator, FName actionName)
+{
+	StartActionByName(instigator,actionName);
 }
 
 
@@ -85,18 +102,57 @@ void URActionComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	for (TSubclassOf<URAction> actionClass:defaultActions)
+	if (GetOwner()->HasAuthority())
 	{
-		AddAction(actionClass, GetOwner());
+		for (TSubclassOf<URAction> actionClass:defaultActions)
+        {
+        	AddAction(actionClass, GetOwner());
+        }
 	}
+	
 }
 
+
+void URActionComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(URActionComponent, actions);
+}
 
 // Called every frame
 void URActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	
 	// ...
+
+	for (URAction* action:actions)
+	{
+		FColor textColor = action->IsRunning() ? FColor::Blue : FColor::White;
+
+		FString actionMsg = FString::Printf(TEXT("[%s] Action: %s : IsRunning: %s : Outer: %s"),
+			*GetNameSafe(GetOwner()),
+			*action->actionName.ToString(),
+			action->IsRunning() ? TEXT("True") : TEXT("False"),
+			*GetNameSafe(action->GetOuter()));
+
+		LogOnScreen(this,actionMsg,textColor, 0.0f);
+	}
 }
 
+bool URActionComponent::ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch,
+	FReplicationFlags* RepFlags)
+{
+	bool wroteSth = Super::ReplicateSubobjects(Channel, Bunch, RepFlags);
+	for (URAction* action:actions)
+	{
+		if (action)
+		{
+			wroteSth |= Channel->ReplicateSubobject(action,*Bunch,*RepFlags);
+		}
+	}
+
+	return wroteSth;
+}

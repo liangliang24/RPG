@@ -99,6 +99,12 @@ void ARPGGameModeBase::RespawnPlayerElasped(AController* controller)
 	{
 		controller->UnPossess();
 		RestartPlayer(controller);
+		ARCharacter* player = Cast<ARCharacter>(controller->GetPawn());
+		if (player)
+		{
+			player->SpawnUI();
+		}
+		
 		/*URWorldUserWidget* UI = Cast<URWorldUserWidget>(CreateWidget<URWorldUserWidget>(GetWorld(),mainHUD));
 		if (ensure(UI))
 		{

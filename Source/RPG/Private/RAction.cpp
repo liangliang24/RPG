@@ -4,23 +4,31 @@
 #include "RAction.h"
 
 #include "RActionComponent.h"
+#include "Net/UnrealNetwork.h"
+#include "RPG/RPG.h"
+
+void URAction::InitializeActionComp(URActionComponent* newActionComp)
+{
+	actionComp = newActionComp;
+}
 
 void URAction::StartAction_Implementation(AActor* instigator)
 {
-	UE_LOG(LogTemp,Log,TEXT("Running:%s"),*GetNameSafe(instigator));
-
+	//UE_LOG(LogTemp,Log,TEXT("Running:%s"),*GetNameSafe(instigator));
+	LogOnScreen(this,FString::Printf(TEXT("Running:%s"),*GetNameSafe(instigator)),FColor::Green);
 	URActionComponent* Comp = GetOwningComponent();
 
 	Comp->activeGameplayTags.AppendTags(grantTags);
 
 	bIsRunning = true;
+	
 }
 
 void URAction::StopAction_Implementation(AActor* instigator)
 {
-	UE_LOG(LogTemp,Log,TEXT("Stop:%s"),*GetNameSafe(instigator));
-
-	ensureAlways(bIsRunning);
+	//UE_LOG(LogTemp,Log,TEXT("Stop:%s"),*GetNameSafe(instigator));
+	LogOnScreen(this,FString::Printf(TEXT("Stop:%s"),*GetNameSafe(instigator)),FColor::White);
+	//ensureAlways(bIsRunning);
 	
 	URActionComponent* Comp = GetOwningComponent();
 	
@@ -36,8 +44,10 @@ URAction::URAction()
 
 URActionComponent* URAction::GetOwningComponent() const
 {
-	return Cast<URActionComponent>(GetOuter());
+	return actionComp;
 }
+
+
 
 bool URAction::IsRunning()
 {
@@ -58,10 +68,37 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 
 UWorld* URAction::GetWorld() const
 {
-	UActorComponent* comp = Cast<UActorComponent>(GetOuter());
-	if (comp)
+	AActor* actor = Cast<AActor>(GetOuter());
+	if (actor)
 	{
-		return comp->GetWorld();
+		return actor->GetWorld();
 	}
 	return GetOuter()->GetWorld();
 }
+
+bool URAction::IsSupportedForNetworking() const
+{
+	return true;
+}
+
+void URAction::OnRep_IsRunning_Implementation()
+{
+	if (bIsRunning)
+	{
+		StartAction(nullptr);
+	}
+	else
+	{
+		StopAction(nullptr);
+	}
+}
+
+void URAction::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(URAction,bIsRunning);
+	DOREPLIFETIME(URAction,actionComp);
+}
+
+

@@ -14,13 +14,13 @@ URActionEffect_Thorns::URActionEffect_Thorns()
 
 void URActionEffect_Thorns::StartAction_Implementation(AActor* instigator)
 {
-	URActionComponent* actionComp = GetOwningComponent();
+	URActionComponent* actionComponent = GetOwningComponent();
 
-	if (!actionComp)
+	if (!actionComponent)
 	{
 		return ;
 	}
-	AActor* owner = actionComp->GetOwner();
+	AActor* owner = actionComponent->GetOwner();
      
     if (!owner)
     {

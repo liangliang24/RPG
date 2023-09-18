@@ -16,6 +16,10 @@ class RPG_API URAction : public UObject
 {
 	GENERATED_BODY()
 protected:
+
+	UPROPERTY(Replicated)
+	URActionComponent* actionComp;
+	
 	URAction();
 	
 	UFUNCTION(BlueprintCallable, Category="Action")
@@ -26,10 +30,18 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Tags")
 	FGameplayTagContainer blockedTags;
-	
+
+	UPROPERTY(ReplicatedUsing="OnRep_IsRunning")
 	bool bIsRunning;
 
+	UFUNCTION(Server,Reliable)
+	void OnRep_IsRunning();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:
+
+	void InitializeActionComp(URActionComponent* newActionComp);
+	
 	UPROPERTY(EditDefaultsOnly)
 	bool bAutoStart;
 	
@@ -49,4 +61,11 @@ public:
 	FName actionName;
 
 	virtual UWorld* GetWorld() const override;
+
+	virtual bool IsSupportedForNetworking() const override;
 };
+
+
+
+
+

@@ -42,11 +42,10 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 		{
 			myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
 
-			if(!playerSpotted)
-			{
-				playerSpotted = CreateWidget<URWorldUserWidget>(GetWorld(),playerSpottedClass);
-				playerSpotted->attachedActor = this;
-			}
+			
+			playerSpotted = CreateWidget<URWorldUserWidget>(GetWorld(),playerSpottedClass);
+			playerSpotted->attachedActor = this;
+			
 			float dis = GetDistanceTo(Pawn);
 			//UE_LOG(LogTemp,Log,TEXT("%f"),dis);
 			if (!playerSpotted->IsInViewport()&&dis <= 2000.0f)
@@ -80,9 +79,12 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
             healthBar->AddToViewport();
         }
 	}
+
+	if (AIController)
+	{
+		AIController->GetBlackboardComponent()->SetValueAsFloat("Health",NewHealth);
+	}
 	
-	
-	AIController->GetBlackboardComponent()->SetValueAsFloat("Health",NewHealth);
 	URAttributeComponent* instigatorAttributeComp = URAttributeComponent::GetAttributeComponent(InstigatorActor);
 	if(NewHealth <= 0)
 	{
@@ -109,7 +111,7 @@ void ARAICharacter::OnHealthChange(AActor* InstigatorActor, URAttributeComponent
 	if (Delta < 0)
 	{
 		GetMesh()->SetScalarParameterValueOnMaterials(materialParamName,GetWorld()->TimeSeconds);
-		if(InstigatorActor->StaticClass()!=StaticClass())
+		if(InstigatorActor->StaticClass()!=StaticClass()&&AIController)
 			AIController->GetBlackboardComponent()->SetValueAsObject("TargetActor",InstigatorActor);
 		
 		if (instigatorAttributeComp)

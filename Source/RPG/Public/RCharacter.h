@@ -34,6 +34,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Category="Attack")
 	//发射黑洞所需的愤怒值
 	int blackHoleCostRage;
+	UUserWidget* playerUIInstance;
+	UPROPERTY(EditDefaultsOnly, Category="UI")
+	TSubclassOf<UUserWidget> playerUIClass;
 
 
 	// Called when the game starts or when spawned
@@ -116,6 +119,9 @@ protected:
 	 */
 	void Die();
 public:
+	UFUNCTION(BlueprintCallable)
+	void SpawnUI();
+	
 	UFUNCTION(Exec)
 	void HealSelf(float delta);
 

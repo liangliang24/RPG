@@ -23,6 +23,6 @@ protected:
 	
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 public:
-	UPROPERTY(BlueprintReadOnly,Category = "UI")
+	UPROPERTY(BlueprintReadOnly,Category = "UI", meta = (ExposeOnSpawn = true))
 	AActor* attachedActor;
 };

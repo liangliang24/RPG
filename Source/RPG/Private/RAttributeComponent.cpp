@@ -3,6 +3,7 @@
 
 #include "RAttributeComponent.h"
 
+#include "Net/UnrealNetwork.h"
 #include "RPG/RPGGameModeBase.h"
 
 // Sets default values for this component's properties
@@ -15,6 +16,8 @@ URAttributeComponent::URAttributeComponent()
 	rage = 0;
 	haveRage = true;
 	// ...
+
+	SetIsReplicatedByDefault(true);
 }
 
 URAttributeComponent* URAttributeComponent::GetAttributeComponent(AActor* targetActor)
@@ -30,6 +33,12 @@ bool URAttributeComponent::GetActorAlive(AActor* targetActor)
 	}
 	UE_LOG(LogTemp,Log,TEXT("%s no AttributeComponent"),*GetNameSafe(targetActor));
 	return false;
+}
+
+
+void URAttributeComponent::MulticastHealthChanged_Implementation(AActor* instigatorActor, float newHealth, float delta)
+{
+	OnHealthChange.Broadcast(instigatorActor,this,newHealth,delta);
 }
 
 bool URAttributeComponent::IsAlive() const
@@ -49,7 +58,8 @@ bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delt
 	}
 	health+=delta;
 	health = FMath::Clamp(health,0,maxHealth);
-	OnHealthChange.Broadcast(instigatorActor,this,health,delta);
+	MulticastHealthChanged(instigatorActor,health,delta);
+	//OnHealthChange.Broadcast(instigatorActor,this,health,delta);
 	UE_LOG(LogTemp,Log,TEXT("Owner:%s Health:%f"),*GetNameSafe(GetOwner()),health);
 	if(health <= 0)
 	{
@@ -77,6 +87,7 @@ bool URAttributeComponent::ApplyCreditChange(AActor* instigatorActor, int delta)
 
 bool URAttributeComponent::ApplyRageChange(AActor* instigatorActor, int delta)
 {
+	
 	if (!haveRage)
 	{
 		return false;
@@ -100,4 +111,16 @@ float URAttributeComponent::GetHealth()
 bool URAttributeComponent::Kill()
 {
 	return ApplyHealthChange(nullptr,-maxHealth);
+}
+
+void URAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(URAttributeComponent,health);
+	DOREPLIFETIME(URAttributeComponent,maxHealth);
+
+	//DOREPLIFETIME_CONDITION(URAttributeComponent,maxHealth,COND_OwnerOnly)
+
+	//DOREPLIFETIME(URAttributeComponent,credit);
 }

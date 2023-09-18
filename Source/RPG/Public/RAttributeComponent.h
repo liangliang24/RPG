@@ -29,16 +29,18 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	static bool GetActorAlive(AActor* targetActor);
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="attributes")
 	bool haveRage;
 	
 	/*生命值*/
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	UPROPERTY(EditDefaultsOnly,Replicated,BlueprintReadOnly,Category="Attributes")
 	float health;
 
 	/*最大生命值*/
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	UPROPERTY(EditDefaultsOnly,Replicated,BlueprintReadOnly,Category="Attributes")
 	float maxHealth;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
@@ -46,6 +48,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
 	int rage;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastHealthChanged(AActor* instigatorActor, float newHealth, float delta);
 public:
 	/*
 	 * 判断角色生命值是否大于0
