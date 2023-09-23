@@ -86,6 +86,7 @@ public:
 	virtual UWorld* GetWorld() const override;
 
 	virtual bool IsSupportedForNetworking() const override;
+	
 };
 
 

@@ -129,8 +129,7 @@ void URAction_ProjectileAttack::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigator)
 {
 	Super::PreAction_Implementation(instigator);
-
-	//SetFlag(true);
+	
 }
 
 void URAction_ProjectileAttack::ShowForAllClient_Implementation(AActor* instigator)
