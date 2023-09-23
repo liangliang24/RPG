@@ -16,6 +16,7 @@
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "GameFramework/GameState.h"
 #include "Kismet/GameplayStatics.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 
 ARPGGameModeBase::ARPGGameModeBase()
 {
@@ -223,8 +224,14 @@ void ARPGGameModeBase::WriteSaveGame()
 		FActorSaveData temp;
 		temp.actorName = actor->GetName();
 		temp.transform = actor->GetActorTransform();
-		currentSaveGame->savedActors.Add(temp);
+		
 		//LogOnScreen(this,temp.actorName);
+
+		FMemoryWriter memWriter(temp.byteData);
+		FObjectAndNameAsStringProxyArchive archive(memWriter,true);
+		archive.ArIsSaveGame = true;
+		actor->Serialize(archive);
+		currentSaveGame->savedActors.Add(temp);
 	}
 	
 	UGameplayStatics::SaveGameToSlot(currentSaveGame,SlotName,0);
@@ -274,6 +281,12 @@ void ARPGGameModeBase::SetActorTransformFromSaved()
 				actor->SetActorTransform(i.transform);
 				//LogOnScreen()
 				//UE_LOG(LogTemp,Log,TEXT("match actor %s"),*actor->GetName());
+				FMemoryReader memReader(i.byteData);
+				FObjectAndNameAsStringProxyArchive archive(memReader,true);
+				archive.ArIsSaveGame = true;
+				actor->Serialize(archive);
+
+				IRGameplayInterface::Execute_OnActorLoaded(actor);
 				break;
 			}
 		}

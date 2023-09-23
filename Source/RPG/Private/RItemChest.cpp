@@ -31,6 +31,16 @@ ARItemChest::ARItemChest() : bIsOpened(false)
 	SetReplicates(true);
 }
 
+void ARItemChest::OnActorLoaded_Implementation()
+{
+	IRGameplayInterface::OnActorLoaded_Implementation();
+
+	float currPitch = bIsOpened ? 110.0f : 0;
+	
+	lidMesh->SetRelativeRotation(FRotator(currPitch,0,0));
+	
+}
+
 // Called when the game starts or when spawned
 void ARItemChest::BeginPlay()
 {

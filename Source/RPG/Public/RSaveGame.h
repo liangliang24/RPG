@@ -16,6 +16,9 @@ public:
 
 	UPROPERTY()
 	FTransform transform;
+
+	UPROPERTY()
+	TArray<uint8> byteData;
 };
 /**
  * 
@@ -30,4 +33,6 @@ public:
 
 	UPROPERTY()
 	TArray<FActorSaveData> savedActors;
+
+
 };

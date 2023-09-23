@@ -25,8 +25,9 @@ public:
 	// Sets default values for this actor's properties
 	ARItemChest();
 
+	virtual void OnActorLoaded_Implementation() override;
 protected:
-	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened",BlueprintReadOnly)
+	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened",BlueprintReadOnly,SaveGame)
     bool bIsOpened;
 	
 	// Called when the game starts or when spawned
