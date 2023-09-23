@@ -10,7 +10,12 @@ USTRUCT()
 struct FActorSaveData
 {
 	GENERATED_BODY()
-	
+public:
+	UPROPERTY()
+	FString actorName;
+
+	UPROPERTY()
+	FTransform transform;
 };
 /**
  * 
@@ -22,4 +27,7 @@ class RPG_API URSaveGame : public USaveGame
 public:
 	UPROPERTY()
 	int credit;
+
+	UPROPERTY()
+	TArray<FActorSaveData> savedActors;
 };

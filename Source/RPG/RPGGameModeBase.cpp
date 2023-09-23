@@ -6,6 +6,8 @@
 #include "EngineUtils.h"
 #include "RAttributeComponent.h"
 #include "RCharacter.h"
+#include "RGameplayInterface.h"
+#include "RPG.h"
 #include "RPlayerState.h"
 #include "RSaveGame.h"
 #include "RWorldUserWidget.h"
@@ -30,7 +32,7 @@ void ARPGGameModeBase::StartPlay()
 {
 	Super::StartPlay();
 
-	
+	SetActorTransformFromSaved();
 	
 	GetWorldTimerManager().SetTimer(timerHandle_SpawnBots,this,&ARPGGameModeBase::SpawnBotTimerElasped,spawnTimerInterval,true);
 
@@ -58,6 +60,11 @@ void ARPGGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController*
 
 void ARPGGameModeBase::SpawnInterationTimerElasped()
 {
+	if (!CVarSpawnInteractor.GetValueOnGameThread())
+	{
+		UE_LOG(LogTemp,Log,TEXT("Spawn Interactor is false"));
+		return ;
+	}
 	UEnvQueryInstanceBlueprintWrapper* result = UEnvQueryManager::RunEQSQuery(this,spawnInterationQuery,this,EEnvQueryRunMode::RandomBest25Pct,nullptr);
 
 	if (ensure(result))
@@ -202,7 +209,26 @@ void ARPGGameModeBase::WriteSaveGame()
 			playerState->WriteSaveGame(currentSaveGame);
 		}
 	}
+
+	currentSaveGame->savedActors.Empty();
+	
+	for (FActorIterator it(GetWorld());it;++it)
+	{
+		AActor* actor = *it;
+		if (!actor->Implements<URGameplayInterface>())
+		{
+			continue;
+		}
+
+		FActorSaveData temp;
+		temp.actorName = actor->GetName();
+		temp.transform = actor->GetActorTransform();
+		currentSaveGame->savedActors.Add(temp);
+		//LogOnScreen(this,temp.actorName);
+	}
+	
 	UGameplayStatics::SaveGameToSlot(currentSaveGame,SlotName,0);
+	
 }
 
 void ARPGGameModeBase::LoadSaveGame()
@@ -216,11 +242,40 @@ void ARPGGameModeBase::LoadSaveGame()
 			return ;
 		}
 		UE_LOG(LogTemp,Log,TEXT("Loaded SaveGameData."))
+
+
+		
 	}
 	else
 	{
 		currentSaveGame = Cast<URSaveGame>(UGameplayStatics::CreateSaveGameObject(URSaveGame::StaticClass()));
 
 		UE_LOG(LogTemp,Log,TEXT("Created New SaveGame Data"));
+	}
+
+	
+}
+
+void ARPGGameModeBase::SetActorTransformFromSaved()
+{
+	for (FActorIterator it(GetWorld());it;++it)
+	{
+		AActor* actor = *it;
+			
+		if (!actor->Implements<URGameplayInterface>())
+		{
+			continue;
+		}
+			
+		for (FActorSaveData i:currentSaveGame->savedActors)
+		{
+			if (i.actorName == actor->GetName())
+			{
+				actor->SetActorTransform(i.transform);
+				//LogOnScreen()
+				//UE_LOG(LogTemp,Log,TEXT("match actor %s"),*actor->GetName());
+				break;
+			}
+		}
 	}
 }

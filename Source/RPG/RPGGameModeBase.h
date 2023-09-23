@@ -9,7 +9,7 @@
 
 class URSaveGame;
 static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("rpg.SpawnBots"),false,TEXT("Enable spawning of bots via timer"),ECVF_Cheat);
-
+static TAutoConsoleVariable<bool> CVarSpawnInteractor(TEXT("rpg.SpawnIterator"),false,TEXT("Enable spawning iterator"),ECVF_Default);
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
 /**
@@ -81,4 +81,8 @@ public:
 	void WriteSaveGame();
 
 	void LoadSaveGame();
+
+	void SetActorTransformFromSaved();
 };
+
+
