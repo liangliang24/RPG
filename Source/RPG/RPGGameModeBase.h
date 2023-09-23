@@ -7,6 +7,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "RPGGameModeBase.generated.h"
 
+class URSaveGame;
 static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("rpg.SpawnBots"),false,TEXT("Enable spawning of bots via timer"),ECVF_Cheat);
 
 class UEnvQueryInstanceBlueprintWrapper;
@@ -23,7 +24,14 @@ public:
 
 	void SpawnInterationTimerElasped();
 	virtual void StartPlay() override;
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 protected:
+	FString SlotName;
+	
+	UPROPERTY()
+	URSaveGame* currentSaveGame;
+	
 	FTimerHandle timerHandle_SpawnInteration;
 	
 	//生成AI的定时器句柄
@@ -68,4 +76,9 @@ public:
 	void KillAllAI();
 
 	virtual void OnActorKill(AActor* victimActor,AActor* instigatorActor);
+
+	UFUNCTION(BlueprintCallable,Category="SaveGame")
+	void WriteSaveGame();
+
+	void LoadSaveGame();
 };

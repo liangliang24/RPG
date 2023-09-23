@@ -3,7 +3,9 @@
 
 #include "RAttributeComponent.h"
 
+#include "RSaveGame.h"
 #include "Net/UnrealNetwork.h"
+#include "RPG/RPG.h"
 #include "RPG/RPGGameModeBase.h"
 
 // Sets default values for this component's properties
@@ -18,6 +20,14 @@ URAttributeComponent::URAttributeComponent()
 	// ...
 
 	SetIsReplicatedByDefault(true);
+}
+
+void URAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+
 }
 
 URAttributeComponent* URAttributeComponent::GetAttributeComponent(AActor* targetActor)
@@ -43,12 +53,13 @@ void URAttributeComponent::MulticastHealthChanged_Implementation(AActor* instiga
 
 void URAttributeComponent::MulticastCreditChanged_Implementation(AActor* instigatorActor, int newCredit, int delta)
 {
+	//LogOnScreen(GetOwner(),FString::Printf(TEXT("Credit is %d"),credit),FColor::Red,0);
 	OnCreditChanged.Broadcast(instigatorActor,this,newCredit,delta);
 }
 
 void URAttributeComponent::MulticastRageChanged_Implementation(AActor* instigatorActor, int newRage, int delta)
 {
-	OnCreditChanged.Broadcast(instigatorActor,this,newRage,delta);
+	OnRageChanged.Broadcast(instigatorActor,this,newRage,delta);
 }
 
 bool URAttributeComponent::IsAlive() const
@@ -127,6 +138,12 @@ bool URAttributeComponent::Kill()
 {
 	return ApplyHealthChange(nullptr,-maxHealth);
 }
+
+void URAttributeComponent::SetCredit(int in)
+{
+	credit = in;
+}
+
 
 void URAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {

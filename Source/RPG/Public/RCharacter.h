@@ -119,6 +119,10 @@ protected:
 	 */
 	void Die();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void LoadFromState();
+	
 	UFUNCTION(BlueprintCallable)
 	void SpawnUI();
 	

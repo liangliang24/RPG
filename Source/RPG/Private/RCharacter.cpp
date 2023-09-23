@@ -6,10 +6,12 @@
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
+#include "RPlayerState.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "RPG/RPG.h"
 
 // Sets default values
 ARCharacter::ARCharacter()
@@ -70,6 +72,15 @@ float Delta)
 void ARCharacter::Die()
 {
 	Destroy();
+}
+
+void ARCharacter::LoadFromState()
+{
+	ARPlayerState* playerState = Cast<ARPlayerState>(GetPlayerState());
+	if (playerState)
+	{
+		attributeComp->SetCredit(playerState->GetCredit());
+	}
 }
 
 void ARCharacter::SpawnUI()
@@ -157,7 +168,16 @@ void ARCharacter::HealSelf(float delta)
 
 void ARCharacter::OnCreditChanged(AActor* InstigatorActor, URAttributeComponent* OwningComp, int NewCredit, int Delta)
 {
-	
+	ARPlayerState* playerState = Cast<ARPlayerState>(GetPlayerState());
+	if (playerState)
+	{
+		LogOnScreen(this,"Find PlayerState");
+		playerState->SetCredit(NewCredit);
+	}
+	else
+	{
+		LogOnScreen(this,"Failed To Find PlayerState");
+	}
 }
 
 void ARCharacter::PostInitializeComponents()

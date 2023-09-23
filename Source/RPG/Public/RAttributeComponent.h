@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "RAttributeComponent.generated.h"
+class URSaveGame;
 static TAutoConsoleVariable<float> CVarDamageMultiplier(TEXT("rpg.DamageMultiplier"),1.0f,TEXT("Global Damage Modifier for Attribute Component."),ECVF_Cheat);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, instigatorActor, URAttributeComponent*, owningComp, float, newHealth, float, delta);
@@ -23,6 +24,8 @@ class RPG_API URAttributeComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	URAttributeComponent();
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
 	static URAttributeComponent* GetAttributeComponent(AActor* targetActor);
@@ -90,5 +93,6 @@ public:
 	float GetHealth();
 
 	bool Kill();
-		
+	
+	void SetCredit(int credit);
 };

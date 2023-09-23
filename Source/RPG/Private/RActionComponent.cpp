@@ -139,7 +139,7 @@ void URActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	
 	// ...
 
-	for (URAction* action:actions)
+	/*for (URAction* action:actions)
 	{
 		FColor textColor = action->IsRunning() ? FColor::Blue : FColor::White;
 
@@ -150,7 +150,7 @@ void URActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 			*GetNameSafe(action->GetOuter()));
 
 		LogOnScreen(this,actionMsg,textColor, 0.0f);
-	}
+	}*/
 }
 
 bool URActionComponent::ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch,

@@ -6,15 +6,21 @@
 #include "EngineUtils.h"
 #include "RAttributeComponent.h"
 #include "RCharacter.h"
+#include "RPlayerState.h"
+#include "RSaveGame.h"
 #include "RWorldUserWidget.h"
 #include "AI/RAICharacter.h"
 #include "Blueprint/UserWidget.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
+#include "GameFramework/GameState.h"
+#include "Kismet/GameplayStatics.h"
 
 ARPGGameModeBase::ARPGGameModeBase()
 {
 	spawnTimerInterval = 2.0f;
 	interationSpawnInRate = 10.0f;
+
+	SlotName = "SaveGame";
 }
 
 
@@ -29,6 +35,24 @@ void ARPGGameModeBase::StartPlay()
 	GetWorldTimerManager().SetTimer(timerHandle_SpawnBots,this,&ARPGGameModeBase::SpawnBotTimerElasped,spawnTimerInterval,true);
 
 	GetWorldTimerManager().SetTimer(timerHandle_SpawnInteration,this,&ARPGGameModeBase::SpawnInterationTimerElasped,interationSpawnInRate,true);
+}
+
+void ARPGGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	LoadSaveGame();
+}
+
+void ARPGGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
+{
+	Super::HandleStartingNewPlayer_Implementation(NewPlayer);
+	
+	ARPlayerState* playerState = NewPlayer->GetPlayerState<ARPlayerState>();
+	if (playerState)
+	{
+		playerState->LoadSaveGame(currentSaveGame);
+	}
 }
 
 
@@ -103,6 +127,7 @@ void ARPGGameModeBase::RespawnPlayerElasped(AController* controller)
 		if (player)
 		{
 			player->SpawnUI();
+			player->LoadFromState();
 		}
 		
 		/*URWorldUserWidget* UI = Cast<URWorldUserWidget>(CreateWidget<URWorldUserWidget>(GetWorld(),mainHUD));
@@ -165,4 +190,37 @@ void ARPGGameModeBase::OnActorKill(AActor* victimActor, AActor* instigatorActor)
 		GetWorldTimerManager().SetTimer(timerHandle_RespawnDelay,delegate,2.0f,false);
 	}
 	
+}
+
+void ARPGGameModeBase::WriteSaveGame()
+{
+	for (int i = 0; i < GameState->PlayerArray.Num(); ++i)
+	{
+		ARPlayerState* playerState = Cast<ARPlayerState>(GameState->PlayerArray[i]);
+		if (playerState)
+		{
+			playerState->WriteSaveGame(currentSaveGame);
+		}
+	}
+	UGameplayStatics::SaveGameToSlot(currentSaveGame,SlotName,0);
+}
+
+void ARPGGameModeBase::LoadSaveGame()
+{
+	if (UGameplayStatics::DoesSaveGameExist(SlotName,0))
+	{
+		currentSaveGame = Cast<URSaveGame>(UGameplayStatics::LoadGameFromSlot(SlotName,0));
+		if (currentSaveGame == nullptr)
+		{
+			UE_LOG(LogTemp,Log,TEXT("Failed to load SaveGame Data"));
+			return ;
+		}
+		UE_LOG(LogTemp,Log,TEXT("Loaded SaveGameData."))
+	}
+	else
+	{
+		currentSaveGame = Cast<URSaveGame>(UGameplayStatics::CreateSaveGameObject(URSaveGame::StaticClass()));
+
+		UE_LOG(LogTemp,Log,TEXT("Created New SaveGame Data"));
+	}
 }
