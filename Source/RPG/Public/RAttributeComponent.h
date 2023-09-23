@@ -43,14 +43,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Replicated,BlueprintReadOnly,Category="Attributes")
 	float maxHealth;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	UPROPERTY(EditDefaultsOnly,Replicated,BlueprintReadOnly,Category="Attributes")
 	int credit;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	UPROPERTY(EditDefaultsOnly,Replicated,BlueprintReadOnly,Category="Attributes")
 	int rage;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastHealthChanged(AActor* instigatorActor, float newHealth, float delta);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastCreditChanged(AActor* instigatorActor, int newCredit, int delta);
+	
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastRageChanged(AActor* instigatorActor, int newRage, int delta);
 public:
 	/*
 	 * 判断角色生命值是否大于0

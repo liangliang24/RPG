@@ -28,7 +28,11 @@ void URWorldUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 		float scale = UWidgetLayoutLibrary::GetViewportScale(this);
 
 		//将UI显示的位置调整至正确的比例
-		screenPosition/=scale;
+		if (scale > 0)
+		{
+			screenPosition/=scale;
+		}
+		
 
 		if (parentSizeBox)
 		{

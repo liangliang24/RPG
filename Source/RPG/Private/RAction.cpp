@@ -7,39 +7,51 @@
 #include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
 
+
+
+
 void URAction::InitializeActionComp(URActionComponent* newActionComp)
 {
 	actionComp = newActionComp;
 }
 
+
+void URAction::PreAction_Implementation(AActor* instigatorActor)
+{
+	
+}
+
 void URAction::StartAction_Implementation(AActor* instigator)
 {
 	//UE_LOG(LogTemp,Log,TEXT("Running:%s"),*GetNameSafe(instigator));
-	LogOnScreen(this,FString::Printf(TEXT("Running:%s"),*GetNameSafe(instigator)),FColor::Green);
+	//LogOnScreen(this,FString::Printf(TEXT("Running:%s"),*GetNameSafe(instigator)),FColor::Green);
 	URActionComponent* Comp = GetOwningComponent();
 
 	Comp->activeGameplayTags.AppendTags(grantTags);
 
-	bIsRunning = true;
+	repData.bIsRunning = true;
+	repData.instigator = instigator;
 	
 }
 
 void URAction::StopAction_Implementation(AActor* instigator)
 {
 	//UE_LOG(LogTemp,Log,TEXT("Stop:%s"),*GetNameSafe(instigator));
-	LogOnScreen(this,FString::Printf(TEXT("Stop:%s"),*GetNameSafe(instigator)),FColor::White);
+	//LogOnScreen(this,FString::Printf(TEXT("Stop:%s"),*GetNameSafe(instigator)),FColor::White);
 	//ensureAlways(bIsRunning);
 	
 	URActionComponent* Comp = GetOwningComponent();
 	
 	Comp->activeGameplayTags.RemoveTags(grantTags);
 
-	bIsRunning = false;
+	repData.bIsRunning = false;
 }
 
 URAction::URAction()
 {
 	bAutoStart = false;
+	hasPreAction = false;
+	
 }
 
 URActionComponent* URAction::GetOwningComponent() const
@@ -51,7 +63,7 @@ URActionComponent* URAction::GetOwningComponent() const
 
 bool URAction::IsRunning()
 {
-	return bIsRunning;
+	return repData.bIsRunning;
 }
 
 bool URAction::CanStart_Implementation(AActor* instigator)
@@ -66,6 +78,10 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 	return true;
 }
 
+void URAction::ShowForAllClient_Implementation(AActor* instigator)
+{
+}
+
 UWorld* URAction::GetWorld() const
 {
 	AActor* actor = Cast<AActor>(GetOuter());
@@ -73,7 +89,7 @@ UWorld* URAction::GetWorld() const
 	{
 		return actor->GetWorld();
 	}
-	return GetOuter()->GetWorld();
+	return nullptr;
 }
 
 bool URAction::IsSupportedForNetworking() const
@@ -81,15 +97,15 @@ bool URAction::IsSupportedForNetworking() const
 	return true;
 }
 
-void URAction::OnRep_IsRunning_Implementation()
+void URAction::OnRep_RepData_Implementation()
 {
-	if (bIsRunning)
+	if (repData.bIsRunning)
 	{
-		StartAction(nullptr);
+		StartAction(repData.instigator);
 	}
 	else
 	{
-		StopAction(nullptr);
+		StopAction(repData.instigator);
 	}
 }
 
@@ -97,7 +113,7 @@ void URAction::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(URAction,bIsRunning);
+	DOREPLIFETIME(URAction,repData);
 	DOREPLIFETIME(URAction,actionComp);
 }
 

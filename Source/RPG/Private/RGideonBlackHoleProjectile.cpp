@@ -29,6 +29,8 @@ ARGideonBlackHoleProjectile::ARGideonBlackHoleProjectile()
 	blackHole->SetupAttachment(RootComponent);
 	blackHole->SetAutoActivate(false);
 	sphere->IgnoreActorWhenMoving(GetInstigator(),true);
+
+	SetReplicates(true);
 }
 
 

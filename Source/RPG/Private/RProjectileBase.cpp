@@ -27,6 +27,8 @@ ARProjectileBase::ARProjectileBase()
 	moveComp->bInitialVelocityInLocalSpace = true;
 	moveComp->ProjectileGravityScale = 0.0f;
 	moveComp->InitialSpeed = 1000.0f;
+
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned

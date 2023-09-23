@@ -37,7 +37,9 @@ public:
 protected:
 
 	UFUNCTION(Server,Reliable)
-	void ServerStartAction(AActor* instigator, FName actionName);
+	void ServerStartAction(AActor* instigator, URAction* action);
+	UFUNCTION(Server,Reliable)
+	void ServerStopAction(AActor* instigator, URAction* action);
 	
 	UPROPERTY(Replicated)
 	TArray<URAction*> actions;

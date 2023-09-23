@@ -8,6 +8,20 @@
 #include "RAction.generated.h"
 
 class URActionComponent;
+
+USTRUCT()
+struct FActionRepData
+{
+	GENERATED_BODY();
+
+public:
+	UPROPERTY()
+	bool bIsRunning;
+	UPROPERTY()
+	AActor* instigator;
+};
+
+
 /**
  * 
  */
@@ -31,16 +45,23 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Tags")
 	FGameplayTagContainer blockedTags;
 
-	UPROPERTY(ReplicatedUsing="OnRep_IsRunning")
-	bool bIsRunning;
+	UPROPERTY(ReplicatedUsing="OnRep_RepData")
+	FActionRepData repData;
 
 	UFUNCTION(Server,Reliable)
-	void OnRep_IsRunning();
+	void OnRep_RepData();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:
 
+	bool hasPreAction;
+	
+	
+	UFUNCTION(BlueprintNativeEvent, Category="Action")
+	void PreAction(AActor* instigator);
+	
 	void InitializeActionComp(URActionComponent* newActionComp);
+	
 	
 	UPROPERTY(EditDefaultsOnly)
 	bool bAutoStart;
@@ -56,7 +77,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent,Category="Action")
 	void StopAction(AActor* instigator);
-	
+
+	UFUNCTION(NetMulticast,Reliable)
+	void ShowForAllClient(AActor* instigator);
 	UPROPERTY(EditDefaultsOnly, Category="Action")
 	FName actionName;
 

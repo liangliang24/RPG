@@ -18,6 +18,8 @@ public:
 	URAction_ProjectileAttack();
 
 protected:
+
+	
 	UPROPERTY(EditAnywhere, Category="Attack")
 	TSubclassOf<AActor> projectileClass;
 
@@ -35,9 +37,12 @@ protected:
 	
 	FTimerHandle primaryAttackHandle;
 
-	UFUNCTION()
+	UFUNCTION(Client,Reliable)
 	void AttackDelay_Elasped(ARCharacter* instigator);
 public:
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PreAction_Implementation(AActor* instigator) override;
+	virtual void ShowForAllClient_Implementation(AActor* instigator) override;
 };

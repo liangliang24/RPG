@@ -41,6 +41,16 @@ void URAttributeComponent::MulticastHealthChanged_Implementation(AActor* instiga
 	OnHealthChange.Broadcast(instigatorActor,this,newHealth,delta);
 }
 
+void URAttributeComponent::MulticastCreditChanged_Implementation(AActor* instigatorActor, int newCredit, int delta)
+{
+	OnCreditChanged.Broadcast(instigatorActor,this,newCredit,delta);
+}
+
+void URAttributeComponent::MulticastRageChanged_Implementation(AActor* instigatorActor, int newRage, int delta)
+{
+	OnCreditChanged.Broadcast(instigatorActor,this,newRage,delta);
+}
+
 bool URAttributeComponent::IsAlive() const
 {
 	return health>0;
@@ -48,6 +58,10 @@ bool URAttributeComponent::IsAlive() const
 
 bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)
 {
+	if (!GetOwner()->HasAuthority())
+	{
+		return false;
+	}
 	if (health <= 0)
 	{
 		return false;
@@ -79,8 +93,8 @@ bool URAttributeComponent::ApplyCreditChange(AActor* instigatorActor, int delta)
 		return false;
 	}
 	credit+=delta;
-	
-	OnCreditChanged.Broadcast(instigatorActor, this, credit, delta);
+	MulticastCreditChanged(instigatorActor,credit,delta);
+	//OnCreditChanged.Broadcast(instigatorActor, this, credit, delta);
 
 	return true;
 }
@@ -99,7 +113,8 @@ bool URAttributeComponent::ApplyRageChange(AActor* instigatorActor, int delta)
 	}
 	rage+=delta;
 	rage = FMath::Clamp(rage,0,100);
-	OnRageChanged.Broadcast(instigatorActor,this,rage,delta);
+	MulticastRageChanged(instigatorActor,rage,delta);
+	//OnRageChanged.Broadcast(instigatorActor,this,rage,delta);
 	return true;
 }
 
@@ -118,9 +133,10 @@ void URAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(URAttributeComponent,health);
-	DOREPLIFETIME(URAttributeComponent,maxHealth);
+	//DOREPLIFETIME(URAttributeComponent,maxHealth);
 
-	//DOREPLIFETIME_CONDITION(URAttributeComponent,maxHealth,COND_OwnerOnly)
+	DOREPLIFETIME_CONDITION(URAttributeComponent,maxHealth,COND_OwnerOnly)
 
-	//DOREPLIFETIME(URAttributeComponent,credit);
+	DOREPLIFETIME(URAttributeComponent,credit);
+	DOREPLIFETIME(URAttributeComponent,rage);
 }

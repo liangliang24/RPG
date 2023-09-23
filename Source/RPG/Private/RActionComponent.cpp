@@ -19,6 +19,11 @@ URActionComponent::URActionComponent()
 	// ...
 }
 
+void URActionComponent::ServerStopAction_Implementation(AActor* instigator, URAction* action)
+{
+	action->StopAction(instigator);
+}
+
 void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* instigator)
 {
 	if (!ensure(actionClass))
@@ -48,12 +53,14 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 		{
 			if(action->CanStart(instigator))
 			{
-				if (!GetOwner()->HasAuthority())
+				if (action->hasPreAction)
 				{
-					ServerStartAction(instigator,actionName);
+					action->PreAction(instigator);
 				}
+				ServerStartAction(instigator,action);
+				
 
-				action->StartAction(instigator);
+				//action->StartAction(instigator);
 				return true;
 			}
 		}
@@ -67,11 +74,12 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 	{
 		if (action&&action->actionName == actionName)
 		{
-			if (action->IsRunning())
+			ServerStopAction(instigator,action);
+			/*if (action->IsRunning())
 			{
 				action->StopAction(instigator);
                 return true;
-			}
+			}*/
 			
 		}
 	}
@@ -90,9 +98,12 @@ void URActionComponent::RemoveAction(URAction* action)
 
 
 
-void URActionComponent::ServerStartAction_Implementation(AActor* instigator, FName actionName)
+void URActionComponent::ServerStartAction_Implementation(AActor* instigator, URAction* action)
 {
-	StartActionByName(instigator,actionName);
+	/*LogOnScreen(this,"");
+	LogOnScreen(action,"");*/
+	//action->SetFlag(true);
+	action->StartAction(instigator);
 }
 
 

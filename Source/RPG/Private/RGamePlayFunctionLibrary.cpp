@@ -4,6 +4,8 @@
 #include "RGamePlayFunctionLibrary.h"
 
 #include "RAttributeComponent.h"
+#include "RCharacter.h"
+#include "Camera/CameraComponent.h"
 
 bool URGamePlayFunctionLibrary::ApplyDamage(AActor* DamageCauser, AActor* TargetActor, float DamageAmount)
 {
@@ -25,7 +27,7 @@ bool URGamePlayFunctionLibrary::ApplyDirectionDamage(AActor* DamageCauser, AActo
 
 		if (hitComp&&hitComp->IsSimulatingPhysics(HitResult.BoneName))
 		{
-			UE_LOG(LogTemp,Log,TEXT("Apply hit success"));
+			//UE_LOG(LogTemp,Log,TEXT("Apply hit success"));
 			hitComp->AddImpulseAtLocation(-HitResult.ImpactNormal * 300000.0f,HitResult.ImpactPoint,HitResult.BoneName);
 			return true;
 		}
@@ -33,3 +35,5 @@ bool URGamePlayFunctionLibrary::ApplyDirectionDamage(AActor* DamageCauser, AActo
 	}
 	return false;
 }
+
+
