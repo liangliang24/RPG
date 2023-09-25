@@ -43,21 +43,26 @@ void ARAICharacter::OnSeePawn(APawn* Pawn)
 			myController->GetBlackboardComponent()->SetValueAsObject("TargetActor",Pawn);
 
 			
-			playerSpotted = CreateWidget<URWorldUserWidget>(GetWorld(),playerSpottedClass);
-			playerSpotted->attachedActor = this;
-			
-			float dis = GetDistanceTo(Pawn);
-			//UE_LOG(LogTemp,Log,TEXT("%f"),dis);
-			if (!playerSpotted->IsInViewport()&&dis <= 2000.0f)
-			{
-				playerSpotted->AddToViewport();
-			}
+			MulticastSeePawnSpot(Pawn);
 			
 		}
 
 		// UE_LOG(LogTemp,Log,TEXT("See %s"),*GetNameSafe(Pawn));
 	}
 	
+}
+
+void ARAICharacter::MulticastSeePawnSpot_Implementation(APawn* Pawn)
+{
+	playerSpotted = CreateWidget<URWorldUserWidget>(GetWorld(),playerSpottedClass);
+	playerSpotted->attachedActor = this;
+			
+	float dis = GetDistanceTo(Pawn);
+	//UE_LOG(LogTemp,Log,TEXT("%f"),dis);
+	if (!playerSpotted->IsInViewport()&&dis <= 2000.0f)
+	{
+		playerSpotted->AddToViewport();
+	}
 }
 
 void ARAICharacter::Die()
