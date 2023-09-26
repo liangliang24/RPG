@@ -22,6 +22,7 @@ URActionComponent::URActionComponent()
 void URActionComponent::ServerStopAction_Implementation(AActor* instigator, URAction* action)
 {
 	action->StopAction(instigator);
+	OnActionStoped.Broadcast(this,action);
 }
 
 void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* instigator)
@@ -57,6 +58,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 				{
 					action->PreAction(instigator);
 				}
+				OnActionStarted.Broadcast(this,action);
 				ServerStartAction(instigator,action);
 				
 

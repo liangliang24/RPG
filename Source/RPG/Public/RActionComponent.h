@@ -11,6 +11,8 @@
 
 class URAction;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActionStateChanged,URActionComponent*,OwningComp,URAction*,Action);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class RPG_API URActionComponent : public UActorComponent
 {
@@ -41,7 +43,7 @@ protected:
 	UFUNCTION(Server,Reliable)
 	void ServerStopAction(AActor* instigator, URAction* action);
 	
-	UPROPERTY(Replicated)
+	UPROPERTY(Replicated,BlueprintReadOnly)
 	TArray<URAction*> actions;
 	
 	// Called when the game starts
@@ -52,7 +54,12 @@ protected:
 
 	
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-public:	
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStarted;
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStoped;
+	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
