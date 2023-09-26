@@ -66,6 +66,11 @@ bool URAction::IsRunning()
 	return repData.bIsRunning;
 }
 
+void URAction::SetIsRunning_Implementation(bool in)
+{
+	repData.bIsRunning = in;
+}
+
 bool URAction::CanStart_Implementation(AActor* instigator)
 {
 	URActionComponent* comp = GetOwningComponent();
@@ -80,6 +85,7 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 
 void URAction::ShowForAllClient_Implementation(AActor* instigator)
 {
+	LogOnScreen(this,"show");
 }
 
 UWorld* URAction::GetWorld() const
@@ -97,18 +103,40 @@ bool URAction::IsSupportedForNetworking() const
 	return true;
 }
 
+bool URAction::CallRemoteFunction(UFunction* Function, void* Parms, FOutParmRec* OutParms, FFrame* Stack)
+{
+	//UObject::CallRemoteFunction(Function, Parms, OutParms, Stack);
+	AActor* owner = GetTypedOuter<AActor>();
+	UNetDriver* NetDriver = owner->GetNetDriver();
+	if (NetDriver)
+	{
+		NetDriver->ProcessRemoteFunction(owner,Function,Parms,OutParms,Stack,this);
+		return true;
+	}
+	return false;
+}
+
+int32 URAction::GetFunctionCallspace(UFunction* Function, FFrame* Stack)
+{
+	check(GetOuter()!=nullptr)
+	return GetOuter()->GetFunctionCallspace(Function,Stack);
+}
 
 
 void URAction::OnRep_RepData_Implementation()
 {
-	if (repData.bIsRunning)
+	
+	/*LogOnScreen(repData.instigator,FString::Printf(TEXT("Onrep_RepDataImplementation,IsRunning:%s,instigator:%s"),
+		repData.bIsRunning?TEXT("true"):TEXT("false"),
+		*GetNameSafe(repData.instigator)));*/
+	/*if (repData.bIsRunning)
 	{
 		StartAction(repData.instigator);
 	}
 	else
 	{
 		StopAction(repData.instigator);
-	}
+	}*/
 }
 
 void URAction::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

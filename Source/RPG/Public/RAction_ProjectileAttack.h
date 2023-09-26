@@ -36,13 +36,28 @@ protected:
 	UParticleSystem* castingEffect;
 	
 	FTimerHandle primaryAttackHandle;
+	UPROPERTY(Replicated)
+	FVector LocationSpawn;
+	UPROPERTY(Replicated)
+	FRotator RotationSpawn;
 
-	UFUNCTION(Client,Reliable)
+	UFUNCTION()
 	void AttackDelay_Elasped(ARCharacter* instigator);
+
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMultiCastAnimation(ACharacter* instigator);
 public:
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	UFUNCTION(Server,Reliable)
+	void SetLocationSpawn(const FVector& Vector);
+	UFUNCTION(Server,Reliable)
+	void SetRotationSpawn(const FRotator& Rotator);
 	virtual void PreAction_Implementation(AActor* instigator) override;
 	virtual void ShowForAllClient_Implementation(AActor* instigator) override;
+	virtual void OnRep_RepData_Implementation() override;
+	
 };
+
+

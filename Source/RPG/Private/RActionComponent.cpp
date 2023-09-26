@@ -6,7 +6,7 @@
 #include "RAction.h"
 #include "Engine/ActorChannel.h"
 #include "Net/UnrealNetwork.h"
-#include "RPG/RPG.h"
+
 
 // Sets default values for this component's properties
 URActionComponent::URActionComponent()
@@ -100,10 +100,10 @@ void URActionComponent::RemoveAction(URAction* action)
 
 void URActionComponent::ServerStartAction_Implementation(AActor* instigator, URAction* action)
 {
-	/*LogOnScreen(this,"");
-	LogOnScreen(action,"");*/
-	//action->SetFlag(true);
+	
 	action->StartAction(instigator);
+	
+	
 }
 
 

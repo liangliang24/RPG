@@ -48,7 +48,7 @@ protected:
 	UPROPERTY(ReplicatedUsing="OnRep_RepData")
 	FActionRepData repData;
 
-	UFUNCTION(Server,Reliable)
+	UFUNCTION(NetMulticast,Reliable)
 	void OnRep_RepData();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -68,6 +68,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Action")
 	bool IsRunning();
+
+	UFUNCTION(Server,Reliable)
+	void SetIsRunning(bool in);
 	
 	UFUNCTION(BlueprintNativeEvent, Category="Action")
 	bool CanStart(AActor* instigator);
@@ -86,7 +89,10 @@ public:
 	virtual UWorld* GetWorld() const override;
 
 	virtual bool IsSupportedForNetworking() const override;
-	
+
+	virtual bool CallRemoteFunction(UFunction* Function, void* Parms, FOutParmRec* OutParms, FFrame* Stack) override;
+
+	virtual int32 GetFunctionCallspace(UFunction* Function, FFrame* Stack) override;
 };
 
 

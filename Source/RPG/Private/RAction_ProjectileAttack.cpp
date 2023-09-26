@@ -22,65 +22,16 @@ URAction_ProjectileAttack::URAction_ProjectileAttack()
 }
 
 
-void URAction_ProjectileAttack::AttackDelay_Elasped_Implementation(ARCharacter* instigator)
+void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 {
 	if(ensureAlways(projectileClass))
 	{
 		
-		UE_LOG(LogTemp,Log,TEXT("Spawn %s"),*GetNameSafe(projectileClass));
-		FVector locationSpawn =  instigator->GetMesh()->GetSocketLocation("Muzzle_01");
-		
-		//spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		
-		FHitResult hit;
-		FVector start;
-		FVector end;
-		UCameraComponent* cameraComp = Cast<UCameraComponent>(instigator->GetComponentByClass(UCameraComponent::StaticClass()));
-		if (cameraComp)
-		{
-			
-			start = cameraComp->GetComponentLocation();
-			end = start + cameraComp->GetComponentRotation().Vector()*10000;
-		}
-		else
-		{
-			UE_LOG(LogTemp,Log,TEXT("Can't not find CameraComp"));
-			start = locationSpawn;
-			end = locationSpawn + instigator->GetActorRotation().Vector()*10000;
-		}
-		
-
-		
-		FCollisionQueryParams params;
-		params.AddIgnoredActor(instigator);
-		bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility,params);
-		FRotator spawnWay;
-		if(queryResult)
-		{
-			spawnWay = (hit.ImpactPoint-locationSpawn).Rotation();
-		}
-		else
-		{
-			if (cameraComp)
-			{
-				spawnWay = cameraComp->GetComponentRotation();
-				//GetWorld()->SpawnActor<AActor>(projectileClass,location,cameraComp->GetComponentRotation(),spawnParameters);
-			}
-			else
-			{
-				spawnWay = (end-start).Rotation();
-				//GetWorld()->SpawnActor<AActor>(projectileClass,location,(end-start).Rotation(),spawnParameters);
-			}
-			
-		}
-
-		//LogOnScreen(this,"");
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.Instigator = instigator;
-		//spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		
-		GetWorld()->SpawnActor<AActor>(projectileClass,locationSpawn,spawnWay,spawnParameters);
-		
+		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AActor* projectile = GetWorld()->SpawnActor<AActor>(projectileClass,instigator->GetMesh()->GetSocketLocation("Muzzle_01"),RotationSpawn,spawnParameters);
+		LogOnScreen(instigator,FString::Printf(TEXT("Spawn Projectile %s"),*GetNameSafe(projectile)));
 		//GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
 	}
 	
@@ -88,18 +39,22 @@ void URAction_ProjectileAttack::AttackDelay_Elasped_Implementation(ARCharacter* 
 	StopAction_Implementation(instigator);
 }
 
+void URAction_ProjectileAttack::NetMultiCastAnimation_Implementation(ACharacter* instigator)
+{
+	instigator->PlayAnimMontage(attackAnim);
+}
 
 
 void URAction_ProjectileAttack::StartAction_Implementation(AActor* instigator)
 {
 	Super::StartAction_Implementation(instigator);
-
+	
 	ACharacter* player = Cast<ACharacter>(instigator);
 	if (!player)
 	{
 		return ;
 	}
-	player->PlayAnimMontage(attackAnim);
+	NetMultiCastAnimation(player);
 	FTimerDelegate delegate;
 	delegate.BindUFunction(this,"AttackDelay_Elasped",instigator);
 	FTimerDelegate delegateForShow;
@@ -123,12 +78,77 @@ void URAction_ProjectileAttack::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	
+	DOREPLIFETIME(URAction_ProjectileAttack,LocationSpawn);
+	DOREPLIFETIME(URAction_ProjectileAttack,RotationSpawn);
 }
 
-void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigator)
+void URAction_ProjectileAttack::SetLocationSpawn_Implementation(const FVector& Vector)
 {
-	Super::PreAction_Implementation(instigator);
+	LocationSpawn = Vector;
+}
+
+void URAction_ProjectileAttack::SetRotationSpawn_Implementation(const FRotator& Rotator)
+{
+	RotationSpawn = Rotator;
+}
+
+void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigatorActor)
+{
+	Super::PreAction_Implementation(instigatorActor);
+
+	ACharacter* instigator = Cast<ACharacter>(instigatorActor);
+	if (!instigator)
+	{
+		return ;	
+	}
+	FVector locationSpawn =  instigator->GetMesh()->GetSocketLocation("Muzzle_01");
+		
+	//spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		
+	FHitResult hit;
+	FVector start;
+	FVector end;
+	UCameraComponent* cameraComp = Cast<UCameraComponent>(instigator->GetComponentByClass(UCameraComponent::StaticClass()));
+	if (cameraComp)
+	{
+			
+		start = cameraComp->GetComponentLocation();
+		end = start + cameraComp->GetComponentRotation().Vector()*10000;
+	}
+	else
+	{
+		UE_LOG(LogTemp,Log,TEXT("Can't not find CameraComp"));
+		start = locationSpawn;
+		end = locationSpawn + instigator->GetActorRotation().Vector()*10000;
+	}
+		
+
+		
+	FCollisionQueryParams params;
+	params.AddIgnoredActor(instigator);
+	bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility,params);
+	FRotator spawnWay;
+	if(queryResult)
+	{
+		spawnWay = (hit.ImpactPoint-locationSpawn).Rotation();
+	}
+	else
+	{
+		if (cameraComp)
+		{
+			spawnWay = cameraComp->GetComponentRotation();
+			//GetWorld()->SpawnActor<AActor>(projectileClass,location,cameraComp->GetComponentRotation(),spawnParameters);
+		}
+		else
+		{
+			spawnWay = (end-start).Rotation();
+			//GetWorld()->SpawnActor<AActor>(projectileClass,location,(end-start).Rotation(),spawnParameters);
+		}
+			
+	}
+	SetLocationSpawn(locationSpawn);
+	SetRotationSpawn(spawnWay);
+	//LogOnScreen(this,"");
 	
 }
 
@@ -143,4 +163,13 @@ void URAction_ProjectileAttack::ShowForAllClient_Implementation(AActor* instigat
 	
 }
 
-
+void URAction_ProjectileAttack::OnRep_RepData_Implementation()
+{
+	Super::OnRep_RepData_Implementation();
+	/*if (repData.bIsRunning)
+	{
+		ACharacter* instigator = Cast<ACharacter>(repData.instigator);
+        instigator->PlayAnimMontage(attackAnim);
+	}*/
+	
+}
