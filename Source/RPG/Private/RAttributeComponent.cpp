@@ -3,6 +3,8 @@
 
 #include "RAttributeComponent.h"
 
+#include "RActionComponent.h"
+#include "RCharacter.h"
 #include "RSaveGame.h"
 #include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
@@ -65,6 +67,17 @@ void URAttributeComponent::MulticastRageChanged_Implementation(AActor* instigato
 bool URAttributeComponent::IsAlive() const
 {
 	return health>0;
+}
+
+bool URAttributeComponent::IsStunned() const
+{
+	ARCharacter* Owner = Cast<ARCharacter>(GetOwner());
+
+	if (Owner)
+	{
+		return Owner->actionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Status.Stunned"));
+	}
+	return false;
 }
 
 bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)

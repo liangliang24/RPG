@@ -67,6 +67,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsAlive() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsStunned() const;
+
 	/*
 	 * 事件，当血量更改的时候
 	 */

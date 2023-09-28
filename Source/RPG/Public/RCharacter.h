@@ -82,8 +82,7 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URAttributeComponent* attributeComp;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
-	URActionComponent* actionComp;
+
 	/*
 	 * 前后移动
 	 */
@@ -120,6 +119,8 @@ protected:
 	void Die();
 public:
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
+	URActionComponent* actionComp;
 	UFUNCTION(BlueprintCallable)
 	void LoadFromState();
 	
