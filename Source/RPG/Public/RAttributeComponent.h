@@ -69,6 +69,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool IsStunned() const;
+	
+	UFUNCTION(BlueprintCallable)
+	bool IsSprintting() const;
 
 	/*
 	 * 事件，当血量更改的时候

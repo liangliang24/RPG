@@ -80,6 +80,17 @@ bool URAttributeComponent::IsStunned() const
 	return false;
 }
 
+bool URAttributeComponent::IsSprintting() const
+{
+	ARCharacter* Owner = Cast<ARCharacter>(GetOwner());
+
+	if (Owner)
+	{
+		return Owner->actionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Action.Sprinting"));
+	}
+	return false;
+}
+
 bool URAttributeComponent::ApplyHealthChange(AActor* instigatorActor, float delta)
 {
 	if (!GetOwner()->HasAuthority())
