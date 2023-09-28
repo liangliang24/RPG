@@ -19,7 +19,7 @@ class RPG_API URActionComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tags")
+	UPROPERTY(EditAnywhere, Replicated, BlueprintReadWrite, Category="Tags")
 	FGameplayTagContainer activeGameplayTags;
 	
 	UFUNCTION(BlueprintCallable,Category="Action")

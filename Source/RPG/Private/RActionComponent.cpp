@@ -131,6 +131,7 @@ void URActionComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(URActionComponent, actions);
+	DOREPLIFETIME(URActionComponent, activeGameplayTags);
 }
 
 // Called every frame
