@@ -4,15 +4,18 @@
 #include "RPGGameModeBase.h"
 
 #include "EngineUtils.h"
+#include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RCharacter.h"
 #include "RGameplayInterface.h"
+#include "RMonsterData.h"
 #include "RPG.h"
 #include "RPlayerState.h"
 #include "RSaveGame.h"
 #include "RWorldUserWidget.h"
 #include "AI/RAICharacter.h"
 #include "Blueprint/UserWidget.h"
+#include "Engine/AssetManager.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "GameFramework/GameState.h"
 #include "Kismet/GameplayStatics.h"
@@ -106,8 +109,40 @@ void ARPGGameModeBase::SpawnBotTimerElasped()
     }
 }
 
+void ARPGGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLocation)
+{
+	LogOnScreen(this,"Finished Loading!");
+	UAssetManager* Manager = UAssetManager::GetIfValid();
+	if (Manager)
+	{
+		URMonsterData* MonsterData = Cast<URMonsterData>(Manager->GetPrimaryAssetObject(LoadedId));
+		if (MonsterData)
+		{
+			AActor* NewBot = GetWorld()->SpawnActor<AActor>(MonsterData->MonsterClass,SpawnLocation,FRotator::ZeroRotator);
+
+			if (NewBot)
+			{
+				LogOnScreen(this,FString::Printf(TEXT("Spawned enemy: %s (%s)")
+					,*GetNameSafe(NewBot),*GetNameSafe(MonsterData)));
+
+				URActionComponent* ActionComp = Cast<URActionComponent>(NewBot->GetComponentByClass(URActionComponent::StaticClass()));
+
+				if (ActionComp)
+				{
+					for (TSubclassOf<URAction> ActionClass:MonsterData->Actions)
+					{
+						ActionComp->AddAction(ActionClass,NewBot);
+					}
+				}
+			}
+		}
+	}
+	
+	
+}
+
 void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQueryInstanceBlueprintWrapper,
- 	EEnvQueryStatus::Type Arg)
+                                     EEnvQueryStatus::Type Arg)
 {
 	
 	if (Arg != EEnvQueryStatus::Success)
@@ -121,7 +156,31 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 	TArray<FVector> locations = EnvQueryInstanceBlueprintWrapper->GetResultsAsLocations();
 	if (locations.Num() > 0)
 	{
-		GetWorld()->SpawnActor<AActor>(minion,locations[0],FRotator::ZeroRotator);
+		if (MonsterTable)
+		{
+			TArray<FMonsterInfoRow*> Rows;
+			MonsterTable->GetAllRows("",Rows);
+
+			int32 RandomIndex = FMath::RandRange(0,Rows.Num()-1);
+			FMonsterInfoRow* SelectedRow = Rows[RandomIndex];
+
+			UAssetManager* Manager = UAssetManager::GetIfValid();
+			if (Manager)
+			{
+				TArray<FName> Bundles;
+
+				FStreamableDelegate Delegate = FStreamableDelegate::CreateUObject(
+					this,
+					&ARPGGameModeBase::OnMonsterLoaded,
+					SelectedRow->MonsterData,
+					locations[0]);
+				LogOnScreen(this,"Loading Monster...");
+				Manager->LoadPrimaryAsset(SelectedRow->MonsterData, Bundles, Delegate);
+			}
+			
+			
+		}
+		
 	}
 }
 

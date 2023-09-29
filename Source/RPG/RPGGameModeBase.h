@@ -3,15 +3,44 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/DataTable.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "GameFramework/GameModeBase.h"
 #include "RPGGameModeBase.generated.h"
 
+class URMonsterData;
 class URSaveGame;
 static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("rpg.SpawnBots"),false,TEXT("Enable spawning of bots via timer"),ECVF_Cheat);
 static TAutoConsoleVariable<bool> CVarSpawnInteractor(TEXT("rpg.SpawnInteractor"),false,TEXT("Enable spawning iterator"),ECVF_Default);
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
+
+USTRUCT(BlueprintType)
+struct FMonsterInfoRow : public FTableRowBase
+{
+	GENERATED_BODY()
+public:
+
+	FMonsterInfoRow()
+	{
+		Weight = 1.0f;
+		SpawnCost = 5.0f;
+		KillReward = 20.0f;
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FPrimaryAssetId MonsterData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Weight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float SpawnCost;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	float KillReward;
+};
+
 /**
  * 游戏模式
  */
@@ -43,6 +72,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Category="AI")
 	UEnvQuery* spawnBotQuery;
 
+	UPROPERTY(EditDefaultsOnly,Category="AI")
+	UDataTable* MonsterTable;
+
 	//生成的AI
 	UPROPERTY(EditDefaultsOnly,Category="AI")
 	TSubclassOf<AActor> minion;
@@ -58,7 +90,8 @@ protected:
 
 	UFUNCTION()
 	void SpawnBotTimerElasped();
-	
+
+	void OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLocation);
 	UFUNCTION()
 	void SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQueryInstanceBlueprintWrapper, EEnvQueryStatus::Type Arg);
 
