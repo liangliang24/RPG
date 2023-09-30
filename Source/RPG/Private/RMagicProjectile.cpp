@@ -42,7 +42,7 @@ ARMagicProjectile::ARMagicProjectile()
 	sphereComp->IgnoreActorWhenMoving(this,true);
 
 	//bReplicates = true;
-	SetReplicates(true);
+	
 }
 
 // Called when the game starts or when spawned
@@ -101,8 +101,15 @@ void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 	DoDamage(OtherActor, SweepResult);
 }
 
+void ARMagicProjectile::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	SetReplicates(true);
+}
+
 void ARMagicProjectile::ActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit)
+                                 FVector NormalImpulse, const FHitResult& Hit)
 {
 	UE_LOG(LogTemp,Log,TEXT("Hit"));
 	if (OtherActor->GetClass() == GetClass())

@@ -6,8 +6,9 @@
 #include "RAction.h"
 #include "Engine/ActorChannel.h"
 #include "Net/UnrealNetwork.h"
+#include "RPG/RPG.h"
 
-
+DECLARE_CYCLE_STAT(TEXT("StartActionByName"), STAT_StartActionByName, STATGROUP_RPG);
 // Sets default values for this component's properties
 URActionComponent::URActionComponent()
 {
@@ -48,6 +49,7 @@ void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* ins
 
 bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 {
+	SCOPE_CYCLE_COUNTER(STAT_StartActionByName);
 	for (URAction* action:actions)
 	{
 		if (action&&action->actionName == actionName)
@@ -61,7 +63,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 				OnActionStarted.Broadcast(this,action);
 				ServerStartAction(instigator,action);
 				
-
+				TRACE_BOOKMARK(TEXT("StartAction::%s"), *GetNameSafe(action));
 				//action->StartAction(instigator);
 				return true;
 			}

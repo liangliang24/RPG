@@ -11,6 +11,7 @@
 
 class URAction;
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActionStateChanged,URActionComponent*,OwningComp,URAction*,Action);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

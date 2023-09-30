@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-
+DECLARE_STATS_GROUP(TEXT("RPG_Game"),STATGROUP_RPG,STATCAT_Advanced);
 
 static void LogOnScreen(UObject* worldContext, FString msg, FColor color = FColor::White, float duration = 5.0f)
 {
