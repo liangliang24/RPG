@@ -26,6 +26,7 @@ public:
 	ARCharacter();
 
 protected:
+	
 	FTimerHandle primaryAttackHandle;
 	FTimerHandle dashTimerHandle;
 	FTimerHandle blackHoleTimerHandle;
