@@ -30,8 +30,10 @@ void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.Instigator = instigator;
 		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		AActor* projectile = GetWorld()->SpawnActor<AActor>(projectileClass,instigator->GetMesh()->GetSocketLocation("Muzzle_01"),RotationSpawn,spawnParameters);
-		LogOnScreen(instigator,FString::Printf(TEXT("Spawn Projectile %s"),*GetNameSafe(projectile)));
+		FVector LocationSpawn = instigator->GetMesh()->GetSocketLocation("Muzzle_01");
+		AActor* projectile = GetWorld()->SpawnActor<AActor>(projectileClass,LocationSpawn,(SpawnHit-LocationSpawn).Rotation(),spawnParameters);
+		//DrawDebugLine(GetWorld(),LocationSpawn,SpawnHit,FColor::Red,false,2.0f,0,2);
+		//LogOnScreen(instigator,FString::Printf(TEXT("Spawn Projectile %s"),*GetNameSafe(projectile)));
 		//GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
 	}
 	
@@ -77,19 +79,14 @@ void URAction_ProjectileAttack::StopAction_Implementation(AActor* instigator)
 void URAction_ProjectileAttack::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(URAction_ProjectileAttack,LocationSpawn);
-	DOREPLIFETIME(URAction_ProjectileAttack,RotationSpawn);
+	DOREPLIFETIME(URAction_ProjectileAttack,SpawnHit);
 }
 
-void URAction_ProjectileAttack::SetLocationSpawn_Implementation(const FVector& Vector)
-{
-	LocationSpawn = Vector;
-}
 
-void URAction_ProjectileAttack::SetRotationSpawn_Implementation(const FRotator& Rotator)
+
+void URAction_ProjectileAttack::SetSpawnHit_Implementation(const FVector & HitPoint)
 {
-	RotationSpawn = Rotator;
+	SpawnHit = HitPoint;
 }
 
 void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigatorActor)
@@ -127,12 +124,12 @@ void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigatorActor
 	FCollisionQueryParams params;
 	params.AddIgnoredActor(instigator);
 	bool queryResult = GetWorld()->LineTraceSingleByChannel(hit,start,end,ECollisionChannel::ECC_Visibility,params);
-	FRotator spawnWay;
+	//FRotator spawnWay;
 	if(queryResult)
 	{
-		spawnWay = (hit.ImpactPoint-locationSpawn).Rotation();
+		end = hit.Location;
 	}
-	else
+	/*else
 	{
 		if (cameraComp)
 		{
@@ -145,9 +142,8 @@ void URAction_ProjectileAttack::PreAction_Implementation(AActor* instigatorActor
 			//GetWorld()->SpawnActor<AActor>(projectileClass,location,(end-start).Rotation(),spawnParameters);
 		}
 			
-	}
-	SetLocationSpawn(locationSpawn);
-	SetRotationSpawn(spawnWay);
+	}*/
+	SetSpawnHit(end);
 	//LogOnScreen(this,"");
 	
 }

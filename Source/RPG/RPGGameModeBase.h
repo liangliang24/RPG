@@ -14,7 +14,6 @@ static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("rpg.SpawnBots"),false,TEXT
 static TAutoConsoleVariable<bool> CVarSpawnInteractor(TEXT("rpg.SpawnInteractor"),false,TEXT("Enable spawning iterator"),ECVF_Default);
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
-
 USTRUCT(BlueprintType)
 struct FMonsterInfoRow : public FTableRowBase
 {
