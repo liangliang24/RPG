@@ -19,6 +19,7 @@ public:
 	// Sets default values for this actor's properties
 	ARGideon_Portal();
 
+	UPROPERTY(EditAnywhere)
 	ARGideon_Portal* BindingPortal;
 protected:
 	// Called when the game starts or when spawned

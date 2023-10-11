@@ -11,6 +11,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Gideon/RGideon_Portal.h"
 #include "RPG/RPG.h"
 
 // Sets default values
@@ -133,6 +134,7 @@ void ARCharacter::PrimaryInteract()
 void ARCharacter::Dash()
 {
 	actionComp->StartActionByName(this,"Dash");
+	//GetWorld()->SpawnActor<ARGideon_Portal>(Portal,GetMesh())
 	/*UE_LOG(LogTemp,Log,TEXT("Dash"));
 	PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(dashTimerHandle,this,&ARCharacter::Dash_Elasped,0.17f);*/

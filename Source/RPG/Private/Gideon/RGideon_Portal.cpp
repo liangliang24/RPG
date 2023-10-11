@@ -8,6 +8,13 @@
 void ARGideon_Portal::Interact_Implementation(APawn* instigatorPawn)
 {
 	IRGameplayInterface::Interact_Implementation(instigatorPawn);
+
+	if (BindingPortal)
+	{
+		instigatorPawn->TeleportTo(BindingPortal->GetActorLocation(),instigatorPawn->GetActorRotation());
+		//instigatorPawn->SetActorLocation(BindingPortal->GetActorLocation());
+	}
+	
 }
 
 // Sets default values
