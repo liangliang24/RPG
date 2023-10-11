@@ -1,6 +1,6 @@
-C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private\RiderLC.cpp
+C:\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private\RiderLC.cpp
 /I .
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private
 /I Runtime
 /I Runtime\TraceLog\Public
 /I Runtime\Core\Public
@@ -252,25 +252,25 @@ C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private\RiderLC.cpp
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public\Model\Library
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public\Model\RdEditorProtocol
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp\src\main
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\util
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_gen_cpp\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\ordered-map\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\optional\tl
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\variant\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\string-view-lite\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\spdlog\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\clsocket\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\CTPL\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public\Model\Library
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public\Model\RdEditorProtocol
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RiderLink\Public
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp\src\main
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\util
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_gen_cpp\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\ordered-map\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\optional\tl
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\variant\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\string-view-lite\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\spdlog\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\clsocket\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\CTPL\include
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\LiveCoding
 /I Developer\Windows
 /I Developer\Windows\LiveCoding\Public
@@ -288,15 +288,15 @@ C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RiderLC\Private\RiderLC.cpp
 /I ThirdParty\PhysX3\PhysX_3.4\Include\common
 /I ThirdParty\PhysX3\PhysX_3.4\Include\extensions
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
-/I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\INCLUDE"
+/I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\Definitions.h"
-/Fo"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\RiderLC.cpp.obj"
-/sourceDependencies C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\RiderLC.cpp.json
+/FI"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\Definitions.h"
+/Fo"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\RiderLC.cpp.obj"
+/sourceDependencies C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLC\RiderLC.cpp.json
 /Zc:inline
 /nologo
 /Oi

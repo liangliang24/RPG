@@ -1,21 +1,21 @@
-C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\intern\InternScheduler.cpp
+C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\intern\InternScheduler.cpp
 /I .
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp\src\main
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\util
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_gen_cpp\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\ordered-map\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\optional\tl
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\variant\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\string-view-lite\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\spdlog\include
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\clsocket\src
-/I C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\CTPL\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_core_cpp\src\main
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\util
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_gen_cpp\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\ordered-map\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\optional\tl
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\variant\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\string-view-lite\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\spdlog\include
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\clsocket\src
+/I C:\RPG\Plugins\Developer\RiderLink\Source\RD\thirdparty\CTPL\include
 /I Runtime
 /I Runtime\TraceLog\Public
 /I Runtime\Core\Public
@@ -26,9 +26,9 @@ C:\RPG\RPG\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\i
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\Definitions.h"
-/Fo"C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\InternScheduler.cpp.obj"
-/sourceDependencies C:\RPG\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\InternScheduler.cpp.json
+/FI"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\Definitions.h"
+/Fo"C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\InternScheduler.cpp.obj"
+/sourceDependencies C:\RPG\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RD\InternScheduler.cpp.json
 /Zc:inline
 /nologo
 /Oi
