@@ -26,7 +26,7 @@ public:
 	ARCharacter();
 
 protected:
-	
+	FName HandSocketName;
 	FTimerHandle primaryAttackHandle;
 	FTimerHandle dashTimerHandle;
 	FTimerHandle blackHoleTimerHandle;
@@ -38,6 +38,8 @@ protected:
 	UUserWidget* playerUIInstance;
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> playerUIClass;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> Portal;
 
 
 	// Called when the game starts or when spawned
@@ -105,6 +107,8 @@ protected:
 	 * 冲刺操作
 	 */
 	void Dash();
+
+	void TempElasped();
 	/*
 	 * 发射黑洞操作
 	 */

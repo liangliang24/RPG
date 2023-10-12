@@ -4,14 +4,13 @@
 #include "RMagicProjectile.h"
 
 #include "RActionComponent.h"
-#include "RAttributeComponent.h"
 #include "RGamePlayFunctionLibrary.h"
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
-#include "RPG/RPG.h"
+
 
 
 // Sets default values
