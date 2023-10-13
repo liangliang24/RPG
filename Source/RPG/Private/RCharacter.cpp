@@ -9,15 +9,12 @@
 #include "RPlayerState.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
-#include "Engine/SkeletalMeshSocket.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Gideon/RGideon_Portal.h"
 #include "RPG/RPG.h"
 
 // Sets default values
 ARCharacter::ARCharacter()
-	:HandSocketName("Muzzle_01")
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -135,25 +132,7 @@ void ARCharacter::PrimaryInteract()
 
 void ARCharacter::Dash()
 {
-	//actionComp->StartActionByName(this,"Dash");
-	PlayAnimMontage(primaryAttackAnimation);
-	FTimerHandle Temp_TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(Temp_TimerHandle,this,&ARCharacter::TempElasped,0.17f);
-	
-	/*UE_LOG(LogTemp,Log,TEXT("Dash"));
-	PlayAnimMontage(primaryAttackAnimation);
-	GetWorld()->GetTimerManager().SetTimer(dashTimerHandle,this,&ARCharacter::Dash_Elasped,0.17f);*/
-}
-
-void ARCharacter::TempElasped()
-{
-	FVector tempLocation = GetMesh()->GetSocketLocation(HandSocketName);
-	FRotator tempRotation = GetActorRotation();
-	ARGideon_Portal* portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,tempLocation,tempRotation);
-	ARGideon_Portal* portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,tempLocation + tempRotation.Vector()*1500,tempRotation);
-
-	portal1->BindingPortal = portal2;
-	portal2->BindingPortal = portal1;
+	actionComp->StartActionByName(this,"Gideon_Portal");
 }
 
 void ARCharacter::BlackHole()
