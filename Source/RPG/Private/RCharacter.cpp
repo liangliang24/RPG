@@ -11,6 +11,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "RPG/RPG.h"
 
 // Sets default values
@@ -132,7 +133,18 @@ void ARCharacter::PrimaryInteract()
 
 void ARCharacter::Dash()
 {
-	actionComp->StartActionByName(this,"Gideon_Portal");
+	FVector tempLocation = cameraComp->GetComponentLocation();
+	FVector end = tempLocation+cameraComp->GetForwardVector()*2000.0f;
+	FHitResult hit;
+	bool traceResult = GetWorld()->LineTraceSingleByChannel(hit,
+	tempLocation,
+	end,
+	ECC_Visibility);
+	UGameplayStatics::SpawnDecalAtLocation(this,
+		PortalDecalMaterial,
+		FVector(100,100,100),
+		traceResult?hit.ImpactPoint:end);
+	//actionComp->StartActionByName(this,"Gideon_Portal");
 }
 
 void ARCharacter::BlackHole()

@@ -37,6 +37,8 @@ protected:
 	UUserWidget* playerUIInstance;
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> playerUIClass;
+	UPROPERTY(EditDefaultsOnly)
+	UMaterialInterface* PortalDecalMaterial;
 
 
 	// Called when the game starts or when spawned

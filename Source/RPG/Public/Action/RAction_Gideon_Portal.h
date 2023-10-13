@@ -19,6 +19,7 @@ public:
 	URAction_Gideon_Portal();
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
+	
 protected:
 	UPROPERTY(EditDefaultsOnly,Category="Animation")
 	UAnimMontage* PortalStartAnimMontage;
