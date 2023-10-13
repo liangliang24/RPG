@@ -24,5 +24,8 @@ protected:
 	UAnimMontage* PortalStartAnimMontage;
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> Portal;
+
+	UFUNCTION()
+	void StartAction_Elasped(ACharacter* instigator);
 private:
 };
