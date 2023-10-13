@@ -107,7 +107,9 @@ protected:
 	 */
 	void Dash();
 
-	void TempElasped();
+	UFUNCTION()
+	void SkillTargetTrace(UDecalComponent* Decal); 
+	
 	/*
 	 * 发射黑洞操作
 	 */

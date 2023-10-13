@@ -9,6 +9,7 @@
 #include "RPlayerState.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
+#include "Components/DecalComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -130,8 +131,24 @@ void ARCharacter::PrimaryInteract()
 }
 
 
-
+FTimerHandle SkillTarget;
 void ARCharacter::Dash()
+{
+	UDecalComponent* Decal = UGameplayStatics::SpawnDecalAtLocation(this,
+		PortalDecalMaterial,
+		FVector(100,100,100),
+		FVector::Zero());
+
+
+	FTimerDelegate SkillTargetDelegate;
+	SkillTargetDelegate.BindUFunction(this,"SkillTargetTrace",Decal);
+	GetWorld()->GetTimerManager().SetTimer(SkillTarget,SkillTargetDelegate,0.03f,true);
+
+	
+	//actionComp->StartActionByName(this,"Gideon_Portal");
+}
+
+void ARCharacter::SkillTargetTrace(UDecalComponent* Decal)
 {
 	FVector tempLocation = cameraComp->GetComponentLocation();
 	FVector end = tempLocation+cameraComp->GetForwardVector()*2000.0f;
@@ -140,11 +157,8 @@ void ARCharacter::Dash()
 	tempLocation,
 	end,
 	ECC_Visibility);
-	UGameplayStatics::SpawnDecalAtLocation(this,
-		PortalDecalMaterial,
-		FVector(100,100,100),
-		traceResult?hit.ImpactPoint:end);
-	//actionComp->StartActionByName(this,"Gideon_Portal");
+
+	Decal->SetWorldLocation(traceResult?hit.ImpactPoint:end);
 }
 
 void ARCharacter::BlackHole()
