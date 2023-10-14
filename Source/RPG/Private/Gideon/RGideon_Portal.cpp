@@ -14,6 +14,7 @@ void ARGideon_Portal::Interact_Implementation(APawn* instigatorPawn)
 		instigatorPawn->TeleportTo(BindingPortal->GetActorLocation(),instigatorPawn->GetActorRotation());
 		//instigatorPawn->SetActorLocation(BindingPortal->GetActorLocation());
 	}
+
 	
 }
 
@@ -28,6 +29,8 @@ ARGideon_Portal::ARGideon_Portal()
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetupAttachment(RootComponent);
+
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned
