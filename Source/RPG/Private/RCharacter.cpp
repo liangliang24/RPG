@@ -7,7 +7,7 @@
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
-#include "ShowingAimTarget.h"
+#include "..\Public\RShowingAimTarget.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
@@ -102,6 +102,7 @@ void ARCharacter::SpawnUI()
 	
 }
 
+
 void ARCharacter::MoveForward(float X)
 {
 	AddMovementInput(cameraComp->GetForwardVector(),X);
@@ -132,8 +133,9 @@ void ARCharacter::PrimaryInteract()
 
 void ARCharacter::Dash()
 {
-	UShowingAimTarget* Aim = NewObject<UShowingAimTarget>(this,AimTarget);
-	Aim->Start(this);
+	
+
+	actionComp->StartActionByName(this,"Gideon_Portal");
 }
 
 void ARCharacter::BlackHole()

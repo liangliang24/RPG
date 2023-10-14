@@ -75,7 +75,7 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 {
 	URActionComponent* comp = GetOwningComponent();
 
-	if (comp->activeGameplayTags.HasAny(blockedTags)||IsRunning())
+	if (comp->activeGameplayTags.HasAny(blockedTags))
 	{
 		return false;
 	}

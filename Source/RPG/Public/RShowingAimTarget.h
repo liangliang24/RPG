@@ -3,8 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "ShowingAimTarget.generated.h"
+#include "RShowingAimTarget.generated.h"
 
 class UCameraComponent;
 class ARCharacter;
@@ -16,14 +15,14 @@ class RPG_API UShowingAimTarget : public UObject
 {
 	GENERATED_BODY()
 public:
-	
+	//UPlayerInput
 	FVector TraceAimLine(ARCharacter* Instigator);
 	UCameraComponent* InstigatorCameraComponent;
 	UDecalComponent* DecalActor;
 	UPROPERTY(EditDefaultsOnly)
 	UMaterialInterface* PortalDecalMaterial;
 	void Start(ARCharacter* Instigator);
-	void Stop();
+	UDecalComponent* Stop();
 	UFUNCTION()
 	void SetDecalLocation(ARCharacter* Instigator);
 protected:

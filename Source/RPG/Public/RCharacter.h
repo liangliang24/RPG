@@ -27,8 +27,8 @@ public:
 	ARCharacter();
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UShowingAimTarget> AimTarget;
+	/*UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UShowingAimTarget> AimTarget;*/
 	FTimerHandle primaryAttackHandle;
 	FTimerHandle dashTimerHandle;
 	FTimerHandle blackHoleTimerHandle;
