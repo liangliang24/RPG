@@ -7,12 +7,12 @@
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
+#include "ShowingAimTarget.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "RPG/RPG.h"
 
 // Sets default values
@@ -37,7 +37,6 @@ ARCharacter::ARCharacter()
 
 	
     bUseControllerRotationYaw = false;
-	
 }
 
 // Called when the game starts or when spawned
@@ -131,34 +130,10 @@ void ARCharacter::PrimaryInteract()
 }
 
 
-FTimerHandle SkillTarget;
 void ARCharacter::Dash()
 {
-	UDecalComponent* Decal = UGameplayStatics::SpawnDecalAtLocation(this,
-		PortalDecalMaterial,
-		FVector(100,100,100),
-		FVector::Zero());
-
-
-	FTimerDelegate SkillTargetDelegate;
-	SkillTargetDelegate.BindUFunction(this,"SkillTargetTrace",Decal);
-	GetWorld()->GetTimerManager().SetTimer(SkillTarget,SkillTargetDelegate,0.03f,true);
-
-	
-	//actionComp->StartActionByName(this,"Gideon_Portal");
-}
-
-void ARCharacter::SkillTargetTrace(UDecalComponent* Decal)
-{
-	FVector tempLocation = cameraComp->GetComponentLocation();
-	FVector end = tempLocation+cameraComp->GetForwardVector()*2000.0f;
-	FHitResult hit;
-	bool traceResult = GetWorld()->LineTraceSingleByChannel(hit,
-	tempLocation,
-	end,
-	ECC_Visibility);
-
-	Decal->SetWorldLocation(traceResult?hit.ImpactPoint:end);
+	UShowingAimTarget* Aim = NewObject<UShowingAimTarget>(this,AimTarget);
+	Aim->Start(this);
 }
 
 void ARCharacter::BlackHole()

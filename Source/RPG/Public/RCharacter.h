@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class UShowingAimTarget;
 class URActionComponent;
 class URAttributeComponent;
 class URInteractionComponent;
@@ -26,6 +27,8 @@ public:
 	ARCharacter();
 
 protected:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UShowingAimTarget> AimTarget;
 	FTimerHandle primaryAttackHandle;
 	FTimerHandle dashTimerHandle;
 	FTimerHandle blackHoleTimerHandle;
@@ -37,8 +40,6 @@ protected:
 	UUserWidget* playerUIInstance;
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> playerUIClass;
-	UPROPERTY(EditDefaultsOnly)
-	UMaterialInterface* PortalDecalMaterial;
 
 
 	// Called when the game starts or when spawned
@@ -106,9 +107,7 @@ protected:
 	 * 冲刺操作
 	 */
 	void Dash();
-
-	UFUNCTION()
-	void SkillTargetTrace(UDecalComponent* Decal); 
+	
 	
 	/*
 	 * 发射黑洞操作
