@@ -25,6 +25,8 @@ public:
 	UDecalComponent* Stop();
 	UFUNCTION()
 	void SetDecalLocation(ARCharacter* Instigator);
+
+	void DestroyDecal();
 protected:
 private:
 	FTimerHandle SkillTarget_TimerHandle;

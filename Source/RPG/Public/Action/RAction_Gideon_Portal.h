@@ -24,7 +24,7 @@ public:
 	void CreateAim();
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
-	
+
 
 protected:
 	UPROPERTY(Replicated)

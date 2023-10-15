@@ -69,14 +69,16 @@ void URAction_Gideon_Portal::StartAction_Elasped(ACharacter* instigator)
 
 	portal1->BindingPortal = portal2;
 	portal2->BindingPortal = portal1;
+
 	
-	//DecalActor->DestroyComponent();
+	
 	//StopAction(instigator);
 }
 
 void URAction_Gideon_Portal::AimStop_Implementation()
 {
 	SetPortal2SpawnLocation(Aim->Stop()->GetComponentLocation()+Aim->Stop()->GetComponentRotation().Vector()*(-200.0f));
+	Aim->DestroyDecal();
 }
 
 void URAction_Gideon_Portal::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

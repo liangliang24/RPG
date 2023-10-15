@@ -55,3 +55,11 @@ void UShowingAimTarget::SetDecalLocation(ARCharacter* Instigator)
 {
 	DecalActor->SetWorldLocation(TraceAimLine(Instigator)); 
 }
+
+void UShowingAimTarget::DestroyDecal()
+{
+	if (DecalActor)
+	{
+		DecalActor->DestroyComponent();
+	}
+}
