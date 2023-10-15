@@ -22,6 +22,8 @@ public:
 	URAction_Gideon_Portal();
 	UFUNCTION(Client,Reliable)
 	void CreateAim();
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMulticast_AnimationPlay(ARCharacter* Owner);
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
 

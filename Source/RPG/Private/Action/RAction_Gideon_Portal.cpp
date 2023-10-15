@@ -24,6 +24,11 @@ void URAction_Gideon_Portal::CreateAim_Implementation()
 	Aim = NewObject<UShowingAimTarget>(this,AimTarget);
 }
 
+void URAction_Gideon_Portal::NetMulticast_AnimationPlay_Implementation(ARCharacter* Owner)
+{
+	Owner->PlayAnimMontage(PortalStartAnimMontage);
+}
+
 void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
 {
 	Super::StartAction_Implementation(instigator);
@@ -35,7 +40,7 @@ void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
         {
 
         	AimStop();
-        	float x = owner->PlayAnimMontage(PortalStartAnimMontage);
+        	NetMulticast_AnimationPlay(owner);
         	
         	//UE_LOG(LogTemp,Log,TEXT("%f"),x);
         	FTimerHandle StartAction_TimerHandle;
