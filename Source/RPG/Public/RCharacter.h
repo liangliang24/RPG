@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class URInputMoveConfig;
 class UShowingAimTarget;
 class URActionComponent;
 class URAttributeComponent;
@@ -28,7 +29,9 @@ public:
 	ARCharacter();
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="EnhancedInput")
+	URInputMoveConfig* InputMoveAction;
+	UPROPERTY(EditAnywhere,Category="EnhancedInput")
 	UInputMappingContext* InputMapping;
 	/*UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UShowingAimTarget> AimTarget;*/
@@ -94,11 +97,13 @@ protected:
 	/*
 	 * 前后移动
 	 */
-	void MoveForward(float X);
+	void MoveForward(const FInputActionValue& InputActionValue);
+	void MoveBackWard(const FInputActionValue& InputActionValue);
 	/*
 	 * 左右移动
 	 */
-	void MoveRight(float X);
+	void MoveLeft(const FInputActionValue& InputActionValue);
+	void MoveRight(const FInputActionValue& InputActionValue);
 	/*
 	 * 普通攻击操作绑定函数
 	 */
@@ -156,6 +161,7 @@ public:
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
 
 	void P(const FInputActionInstance& InputActionInstance);
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

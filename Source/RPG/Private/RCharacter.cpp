@@ -7,12 +7,11 @@
 #include "EnhancedInputSubsystems.h"
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
+#include "RInputMoveConfig.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
-#include "..\Public\RShowingAimTarget.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
-#include "Components/DecalComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "RPG/RPG.h"
@@ -120,14 +119,24 @@ void ARCharacter::SpawnUI()
 }
 
 
-void ARCharacter::MoveForward(float X)
+void ARCharacter::MoveForward(const FInputActionValue& InputActionValue)
 {
-	AddMovementInput(cameraComp->GetForwardVector(),X);
+	AddMovementInput(cameraComp->GetForwardVector(),InputActionValue.Get<float>());
 }
 
-void ARCharacter::MoveRight(float X)
+void ARCharacter::MoveBackWard(const FInputActionValue& InputActionValue)
 {
-	AddMovementInput(cameraComp->GetRightVector(),X);
+	AddMovementInput(cameraComp->GetForwardVector(),-InputActionValue.Get<float>());
+}
+
+void ARCharacter::MoveLeft(const FInputActionValue& InputActionValue)
+{
+	AddMovementInput(cameraComp->GetRightVector(),-InputActionValue.Get<float>());
+}
+
+void ARCharacter::MoveRight(const FInputActionValue& InputActionValue)
+{
+	AddMovementInput(cameraComp->GetRightVector(),InputActionValue.Get<float>());
 }
 
 
@@ -216,8 +225,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAxis("MoveForward",this,&ARCharacter::MoveForward);
-	InputComponent->BindAxis("MoveRight",this,&ARCharacter::MoveRight);
+	/*InputComponent->BindAxis("MoveForward",this,&ARCharacter::MoveForward);
+	InputComponent->BindAxis("MoveRight",this,&ARCharacter::MoveRight);*/
 
 	InputComponent->BindAxis("TurnHorizon",this,&APawn::AddControllerYawInput);
 
@@ -245,5 +254,11 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	Input->BindAction(IA_P,ETriggerEvent::Triggered,this,&ARCharacter::P);
+
+	Input->BindAction(InputMoveAction->Forward,ETriggerEvent::Triggered,this,&ARCharacter::MoveForward);
+	Input->BindAction(InputMoveAction->BackWard,ETriggerEvent::Triggered,this,&ARCharacter::MoveBackWard);
+	Input->BindAction(InputMoveAction->Left,ETriggerEvent::Triggered,this,&ARCharacter::MoveLeft);
+	Input->BindAction(InputMoveAction->Right,ETriggerEvent::Triggered,this,&ARCharacter::MoveRight);
+	
 }
 
