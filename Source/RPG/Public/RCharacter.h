@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
@@ -27,6 +28,8 @@ public:
 	ARCharacter();
 
 protected:
+	/*UPROPERTY(EditAnywhere)
+	TSoftObjectPtr<UInputMappingContext> InputMapping;*/
 	/*UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UShowingAimTarget> AimTarget;*/
 	FTimerHandle primaryAttackHandle;
@@ -40,6 +43,8 @@ protected:
 	UUserWidget* playerUIInstance;
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> playerUIClass;
+	UPROPERTY(EditAnywhere)
+	const UInputAction* IA_P;
 
 
 	// Called when the game starts or when spawned
@@ -149,7 +154,8 @@ public:
 	 */
 	UFUNCTION()
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
-	
+
+	void P(const FInputActionInstance& InputActionInstance);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

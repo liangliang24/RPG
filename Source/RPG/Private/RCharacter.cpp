@@ -3,6 +3,8 @@
 
 #include "RCharacter.h"
 
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RInteractionComponent.h"
@@ -43,7 +45,20 @@ ARCharacter::ARCharacter()
 void ARCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	/*if (ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(GetController()))
+	{
+		//LogOnScreen(this,(TEXT("Get LocalPlayer:%s"),*GetNameSafe(LocalPlayer)));
+		if(UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
+		{
+			//LogOnScreen(this,(TEXT("Get InputSystem:%s"),*GetNameSafe(InputSystem)));
+			if (!InputMapping.IsNull())
+			{
+				InputSystem->AddMappingContext(InputMapping.LoadSynchronous(),0);
+				//LogOnScreen(this,(TEXT("Get InputMapping:%s"),*GetNameSafe(InputMapping)));
+			}
+		}
+	}*/
 }
 
 
@@ -66,6 +81,20 @@ float Delta)
 
 		FTimerHandle destroy_TimerHandle;
 		GetWorldTimerManager().SetTimer(destroy_TimerHandle,this,&ARCharacter::Die,5.0f);
+	}
+}
+
+void ARCharacter::P(const FInputActionInstance& InputActionInstance)
+{
+	bool BoolValue = InputActionInstance.GetValue().Get<bool>();
+
+	if (BoolValue)
+	{
+		LogOnScreen(this,"Pressed +");
+	}
+	else
+	{
+		LogOnScreen(this,"????????");
 	}
 }
 
@@ -185,6 +214,12 @@ void ARCharacter::PostInitializeComponents()
 	attributeComp->OnHealthChange.AddDynamic(this,&ARCharacter::OnHealthChange);
 
 	attributeComp->OnCreditChanged.AddDynamic(this,&ARCharacter::OnCreditChanged);
+
+	
+	
+	//UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(GetController()->GetComponentByClass(UEnhancedInputComponent::StaticClass()));
+	
+	
 }
 
 
@@ -212,5 +247,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
 	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);
+
+	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	Input->BindAction(IA_P,ETriggerEvent::Triggered,this,&ARCharacter::P);
 }
 
