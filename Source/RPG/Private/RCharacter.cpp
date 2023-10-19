@@ -86,6 +86,8 @@ void ARCharacter::P(const FInputActionInstance& InputActionInstance)
 }
 
 
+
+
 void ARCharacter::Die()
 {
 	Destroy();
@@ -219,6 +221,23 @@ void ARCharacter::PostInitializeComponents()
 	
 }
 
+void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
+{
+	if (InputActionValue.Get<bool>())
+	{
+		Jump();
+	}
+}
+
+void ARCharacter::Input_TurnHorizon(const FInputActionValue& InputActionValue)
+{
+	AddControllerYawInput(InputActionValue.Get<float>());
+}
+
+void ARCharacter::Input_TurnUp(const FInputActionValue& InputActionValue)
+{
+	AddControllerPitchInput(-InputActionValue.Get<float>());
+}
 
 // Called to bind functionality to input
 void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -228,11 +247,11 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	/*InputComponent->BindAxis("MoveForward",this,&ARCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight",this,&ARCharacter::MoveRight);*/
 
-	InputComponent->BindAxis("TurnHorizon",this,&APawn::AddControllerYawInput);
+	/*InputComponent->BindAxis("TurnHorizon",this,&APawn::AddControllerYawInput);
 
-	InputComponent->BindAxis("TurnUp",this,&APawn::AddControllerPitchInput);
+	InputComponent->BindAxis("TurnUp",this,&APawn::AddControllerPitchInput);*/
 
-	InputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
+	//InputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
 
 	InputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ARCharacter::PrimaryAttack);
 
@@ -259,6 +278,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputMoveAction->BackWard,ETriggerEvent::Triggered,this,&ARCharacter::MoveBackWard);
 	Input->BindAction(InputMoveAction->Left,ETriggerEvent::Triggered,this,&ARCharacter::MoveLeft);
 	Input->BindAction(InputMoveAction->Right,ETriggerEvent::Triggered,this,&ARCharacter::MoveRight);
-	
+	Input->BindAction(InputMoveAction->Jump,ETriggerEvent::Triggered,this,&ARCharacter::Input_Jump);
+	Input->BindAction(InputMoveAction->TurnHorizon,ETriggerEvent::Triggered,this,&ARCharacter::Input_TurnHorizon);
+	Input->BindAction(InputMoveAction->TurnUp,ETriggerEvent::Triggered,this,&ARCharacter::Input_TurnUp);
 }
 

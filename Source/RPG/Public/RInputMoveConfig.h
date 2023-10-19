@@ -26,5 +26,14 @@ public:
 	UInputAction* Left;
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
-	UInputAction* Right;	
+	UInputAction* Right;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* Jump;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* TurnUp;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* TurnHorizon;
 };

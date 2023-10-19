@@ -161,7 +161,10 @@ public:
 	void OnHealthChange(AActor* InstigatorActor, URAttributeComponent* OwningComp, float NewHealth, float Delta);
 
 	void P(const FInputActionInstance& InputActionInstance);
-	
+
+	void Input_Jump(const FInputActionValue& InputActionValue);
+	void Input_TurnHorizon(const FInputActionValue& InputActionValue);
+	void Input_TurnUp(const FInputActionValue& InputActionValue);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
