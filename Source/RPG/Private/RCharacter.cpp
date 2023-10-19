@@ -46,19 +46,7 @@ void ARCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/*if (ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(GetController()))
-	{
-		//LogOnScreen(this,(TEXT("Get LocalPlayer:%s"),*GetNameSafe(LocalPlayer)));
-		if(UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
-		{
-			//LogOnScreen(this,(TEXT("Get InputSystem:%s"),*GetNameSafe(InputSystem)));
-			if (!InputMapping.IsNull())
-			{
-				InputSystem->AddMappingContext(InputMapping.LoadSynchronous(),0);
-				//LogOnScreen(this,(TEXT("Get InputMapping:%s"),*GetNameSafe(InputMapping)));
-			}
-		}
-	}*/
+	
 }
 
 
@@ -247,6 +235,13 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
 	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);
+
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+	Subsystem->ClearAllMappings();
+	Subsystem->AddMappingContext(InputMapping, 0);
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	Input->BindAction(IA_P,ETriggerEvent::Triggered,this,&ARCharacter::P);

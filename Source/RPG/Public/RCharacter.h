@@ -28,8 +28,8 @@ public:
 	ARCharacter();
 
 protected:
-	/*UPROPERTY(EditAnywhere)
-	TSoftObjectPtr<UInputMappingContext> InputMapping;*/
+	UPROPERTY(EditAnywhere)
+	UInputMappingContext* InputMapping;
 	/*UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UShowingAimTarget> AimTarget;*/
 	FTimerHandle primaryAttackHandle;
