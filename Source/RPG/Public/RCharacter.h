@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class URInputAbilityConfig;
 class URInputMoveConfig;
 class UShowingAimTarget;
 class URActionComponent;
@@ -30,6 +31,8 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="EnhancedInput")
 	URInputMoveConfig* InputMoveAction;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="EnhancedInput")
+	URInputAbilityConfig* InputAbilityAction;
 	UPROPERTY(EditAnywhere,Category="EnhancedInput")
 	UInputMappingContext* InputMapping;
 	/*UPROPERTY(EditDefaultsOnly)
@@ -106,7 +109,7 @@ protected:
 	/*
 	 * 普通攻击操作绑定函数
 	 */
-	void PrimaryAttack();
+	void PrimaryAttack(const FInputActionValue& InputActionValue);
 	/*
 	 * 绑定交互操作
 	 */
@@ -121,7 +124,7 @@ protected:
 	/*
 	 * 发射黑洞操作
 	 */
-	void BlackHole();
+	void BlackHole(const FInputActionValue& InputActionValue);
 
 	void SprintStart(const FInputActionValue& InputActionValue);
 

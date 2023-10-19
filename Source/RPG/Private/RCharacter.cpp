@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
+#include "RInputAbilityConfig.h"
 #include "RInputMoveConfig.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
@@ -135,7 +136,7 @@ void ARCharacter::MoveRight(const FInputActionValue& InputActionValue)
 
 
 
-void ARCharacter::PrimaryAttack()
+void ARCharacter::PrimaryAttack(const FInputActionValue& InputActionValue)
 {
 	actionComp->StartActionByName(this,"PrimaryAttack");
 	/*PlayAnimMontage(primaryAttackAnimation);
@@ -158,7 +159,7 @@ void ARCharacter::Dash()
 	actionComp->StartActionByName(this,"Gideon_Portal");
 }
 
-void ARCharacter::BlackHole()
+void ARCharacter::BlackHole(const FInputActionValue& InputActionValue)
 {
 	if (attributeComp->ApplyRageChange(this,blackHoleCostRage))
 	{
@@ -248,13 +249,13 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	//InputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
 
-	InputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ARCharacter::PrimaryAttack);
+	//InputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ARCharacter::PrimaryAttack);
 
 	InputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&ARCharacter::PrimaryInteract);
 
 	InputComponent->BindAction("Dash",IE_Pressed,this,&ARCharacter::Dash);
 
-	InputComponent->BindAction("BlackHole",IE_Pressed,this,&ARCharacter::BlackHole);
+	//InputComponent->BindAction("BlackHole",IE_Pressed,this,&ARCharacter::BlackHole);
 
 	/*InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
 	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);*/
@@ -283,5 +284,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputMoveAction->TurnUp,ETriggerEvent::Triggered,this,&ARCharacter::Input_TurnUp);
 	Input->BindAction(InputMoveAction->StartRun,ETriggerEvent::Triggered,this,&ARCharacter::SprintStart);
 	Input->BindAction(InputMoveAction->StopRun,ETriggerEvent::Triggered,this,&ARCharacter::SprintStop);
+	Input->BindAction(InputAbilityAction->PrimaryAttack,ETriggerEvent::Triggered,this,&ARCharacter::PrimaryAttack);
+	//Input->BindAction(InputAbilityAction->F_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash);
+	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole);
 }
 
