@@ -36,4 +36,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	UInputAction* TurnHorizon;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* StartRun;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* StopRun;
 };

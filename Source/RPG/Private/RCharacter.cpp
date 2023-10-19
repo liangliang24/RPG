@@ -73,16 +73,8 @@ float Delta)
 
 void ARCharacter::P(const FInputActionInstance& InputActionInstance)
 {
-	bool BoolValue = InputActionInstance.GetValue().Get<bool>();
-
-	if (BoolValue)
-	{
-		LogOnScreen(this,"Pressed +");
-	}
-	else
-	{
-		LogOnScreen(this,"????????");
-	}
+	LogOnScreen(this,"P");
+	
 }
 
 
@@ -177,13 +169,16 @@ void ARCharacter::BlackHole()
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);*/
 }
 
-void ARCharacter::SprintStart()
+void ARCharacter::SprintStart(const FInputActionValue& InputActionValue)
 {
+	
+	
 	actionComp->StartActionByName(this,"Sprint");
 }
 
-void ARCharacter::SprintStop()
+void ARCharacter::SprintStop(const FInputActionValue& InputActionValue)
 {
+	
 	actionComp->StopActionByName(this,"Sprint");
 }
 
@@ -261,8 +256,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAction("BlackHole",IE_Pressed,this,&ARCharacter::BlackHole);
 
-	InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
-	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);
+	/*InputComponent->BindAction("Sprint",IE_Pressed,this,&ARCharacter::SprintStart);
+	InputComponent->BindAction("Sprint",IE_Released,this,&ARCharacter::SprintStop);*/
 
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 
@@ -272,6 +267,11 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Subsystem->AddMappingContext(InputMapping, 0);
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	//Input->BindAction(IA_P,ETriggerEvent::Triggered,this,&ARCharacter::P);
+	/*Input->BindAction(IA_P,ETriggerEvent::Canceled,this,&ARCharacter::P);
+	Input->BindAction(IA_P,ETriggerEvent::Completed,this,&ARCharacter::P);
+	Input->BindAction(IA_P,ETriggerEvent::None,this,&ARCharacter::P);
+	Input->BindAction(IA_P,ETriggerEvent::Ongoing,this,&ARCharacter::P);*/
 	Input->BindAction(IA_P,ETriggerEvent::Triggered,this,&ARCharacter::P);
 
 	Input->BindAction(InputMoveAction->Forward,ETriggerEvent::Triggered,this,&ARCharacter::MoveForward);
@@ -281,5 +281,7 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputMoveAction->Jump,ETriggerEvent::Triggered,this,&ARCharacter::Input_Jump);
 	Input->BindAction(InputMoveAction->TurnHorizon,ETriggerEvent::Triggered,this,&ARCharacter::Input_TurnHorizon);
 	Input->BindAction(InputMoveAction->TurnUp,ETriggerEvent::Triggered,this,&ARCharacter::Input_TurnUp);
+	Input->BindAction(InputMoveAction->StartRun,ETriggerEvent::Triggered,this,&ARCharacter::SprintStart);
+	Input->BindAction(InputMoveAction->StopRun,ETriggerEvent::Triggered,this,&ARCharacter::SprintStop);
 }
 

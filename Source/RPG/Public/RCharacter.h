@@ -24,7 +24,6 @@ class RPG_API ARCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	
 	// Sets default values for this character's properties
 	ARCharacter();
 
@@ -124,9 +123,9 @@ protected:
 	 */
 	void BlackHole();
 
-	void SprintStart();
+	void SprintStart(const FInputActionValue& InputActionValue);
 
-	void SprintStop();
+	void SprintStop(const FInputActionValue& InputActionValue);
 	
 	/*
 	 * 角色死亡
