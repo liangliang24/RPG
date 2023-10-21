@@ -16,7 +16,7 @@ class RPG_API URActionEffect : public URAction
 public:
 	URActionEffect();
 		
-	virtual void StartAction_Implementation(AActor* instigator) override;
+	virtual void StartAction_Implementation(AActor* Instigator) override;
 
 	virtual void StopAction_Implementation(AActor* instigator) override;
 protected:

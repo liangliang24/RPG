@@ -12,7 +12,7 @@ URActionEffect_Thorns::URActionEffect_Thorns()
 	bAutoStart = false;
 }
 
-void URActionEffect_Thorns::StartAction_Implementation(AActor* instigator)
+void URActionEffect_Thorns::StartAction_Implementation(AActor* Instigator)
 {
 	URActionComponent* actionComponent = GetOwningComponent();
 
@@ -35,7 +35,7 @@ void URActionEffect_Thorns::StartAction_Implementation(AActor* instigator)
 
 	FTimerHandle stop_TimerHandle;
 	FTimerDelegate delegate;
-	delegate.BindUFunction(this,"StopAction",instigator);
+	delegate.BindUFunction(this,"StopAction",Instigator);
 	GetWorld()->GetTimerManager().SetTimer(stop_TimerHandle,delegate,10.0f,false);
 }
 

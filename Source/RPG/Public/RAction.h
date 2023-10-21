@@ -84,7 +84,7 @@ public:
 	UFUNCTION(NetMulticast,Reliable)
 	void ShowForAllClient(AActor* instigator);
 	UPROPERTY(EditDefaultsOnly, Category="Action")
-	FName actionName;
+	FName ActionName;
 
 	virtual UWorld* GetWorld() const override;
 

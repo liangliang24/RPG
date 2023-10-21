@@ -46,7 +46,7 @@ protected:
 	UFUNCTION(NetMulticast,Reliable)
 	void NetMultiCastAnimation(ACharacter* instigator);
 public:
-	virtual void StartAction_Implementation(AActor* instigator) override;
+	virtual void StartAction_Implementation(AActor* Instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	UFUNCTION(Server,Reliable)

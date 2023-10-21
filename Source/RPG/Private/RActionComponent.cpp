@@ -52,7 +52,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 	SCOPE_CYCLE_COUNTER(STAT_StartActionByName);
 	for (URAction* action:actions)
 	{
-		if (action&&action->actionName == actionName)
+		if (action&&action->ActionName == actionName)
 		{
 			if(action->CanStart(instigator))
 			{
@@ -76,7 +76,7 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 {
 	for (URAction* action:actions)
 	{
-		if (action&&action->actionName == actionName)
+		if (action&&action->ActionName == actionName)
 		{
 			ServerStopAction(instigator,action);
 			/*if (action->IsRunning())

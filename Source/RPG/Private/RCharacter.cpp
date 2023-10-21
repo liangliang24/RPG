@@ -152,11 +152,16 @@ void ARCharacter::PrimaryInteract()
 }
 
 
-void ARCharacter::Dash()
+void ARCharacter::Dash_Start()
 {
 	
 
 	actionComp->StartActionByName(this,"Gideon_Portal");
+}
+
+void ARCharacter::Dash_Stop()
+{
+	actionComp->StopActionByName(this,"Gideon_Portal");
 }
 
 void ARCharacter::BlackHole(const FInputActionValue& InputActionValue)
@@ -253,7 +258,10 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&ARCharacter::PrimaryInteract);
 
-	InputComponent->BindAction("Dash",IE_Pressed,this,&ARCharacter::Dash);
+	/*InputComponent->BindAction("Dash",IE_Pressed,this,&ARCharacter::Dash_Start);
+
+	InputComponent->BindAction("Dash",IE_Released,this,&ARCharacter::Dash_Stop);*/
+	
 
 	//InputComponent->BindAction("BlackHole",IE_Pressed,this,&ARCharacter::BlackHole);
 
@@ -287,5 +295,7 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->PrimaryAttack,ETriggerEvent::Triggered,this,&ARCharacter::PrimaryAttack);
 	//Input->BindAction(InputAbilityAction->F_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash);
 	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole);
+	Input->BindAction(InputAbilityAction->F_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash_Start);
+	Input->BindAction(InputAbilityAction->FStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash_Stop);
 }
 

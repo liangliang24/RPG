@@ -16,7 +16,7 @@ URAction_ProjectileAttack::URAction_ProjectileAttack()
 
 	handSocketName = "Muzzle_01";
 
-	actionName = "PrimaryAttack";
+	ActionName = "PrimaryAttack";
 
 	hasPreAction = true;
 }
@@ -47,20 +47,20 @@ void URAction_ProjectileAttack::NetMultiCastAnimation_Implementation(ACharacter*
 }
 
 
-void URAction_ProjectileAttack::StartAction_Implementation(AActor* instigator)
+void URAction_ProjectileAttack::StartAction_Implementation(AActor* Instigator)
 {
-	Super::StartAction_Implementation(instigator);
+	Super::StartAction_Implementation(Instigator);
 	
-	ACharacter* player = Cast<ACharacter>(instigator);
+	ACharacter* player = Cast<ACharacter>(Instigator);
 	if (!player)
 	{
 		return ;
 	}
 	NetMultiCastAnimation(player);
 	FTimerDelegate delegate;
-	delegate.BindUFunction(this,"AttackDelay_Elasped",instigator);
+	delegate.BindUFunction(this,"AttackDelay_Elasped",Instigator);
 	FTimerDelegate delegateForShow;
-	delegateForShow.BindUFunction(this,"ShowForAllClient",instigator);
+	delegateForShow.BindUFunction(this,"ShowForAllClient",Instigator);
 	GetWorld()->GetTimerManager().SetTimer(primaryAttackHandle,delegate,attackAnimDelay,false);
 
 	FTimerHandle showHandle;

@@ -62,11 +62,7 @@ protected:
 	UPROPERTY(VisibleAnywhere,Category="Components")
 	USpringArmComponent* springArmComp;
 
-	/*
-	 * 摄像机组件
-	 */
-	UPROPERTY(VisibleAnywhere,Category="Components")
-	UCameraComponent* cameraComp;
+	
 
 	/*
 	 * 投掷物
@@ -118,9 +114,9 @@ protected:
 	/*
 	 * 冲刺操作
 	 */
-	void Dash();
+	void Dash_Start();
 	
-	
+	void Dash_Stop();
 	/*
 	 * 发射黑洞操作
 	 */
@@ -138,6 +134,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URActionComponent* actionComp;
+	
+	/*
+	 * 摄像机组件
+	 */
+	UPROPERTY(VisibleAnywhere,Category="Components")
+	UCameraComponent* cameraComp;
 	UFUNCTION(BlueprintCallable)
 	void LoadFromState();
 	

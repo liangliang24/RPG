@@ -5,114 +5,52 @@
 
 #include "ObjectStringName.h"
 #include "RCharacter.h"
-#include "RShowingAimTarget.h"
-#include "Components/DecalComponent.h"
-#include "GameFramework/Character.h"
-
+#include "Camera/CameraComponent.h"
 #include "Gideon/RGideon_Portal.h"
-#include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
 
 URAction_Gideon_Portal::URAction_Gideon_Portal()
-	:isAiming(false)
 {
-	actionName = "Gideon_Portal";
-}
-
-void URAction_Gideon_Portal::CreateAim_Implementation()
-{
-	Aim = NewObject<UShowingAimTarget>(this,AimTarget);
-}
-
-void URAction_Gideon_Portal::NetMulticast_AnimationPlay_Implementation(ARCharacter* Owner)
-{
-	Owner->PlayAnimMontage(PortalStartAnimMontage);
+	ActionName = "Gideon_Portal";
 }
 
 void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
 {
 	Super::StartAction_Implementation(instigator);
-	ARCharacter* owner = Cast<ARCharacter>(instigator);
-	
-	if (isAiming)
-	{
-        if (owner)
-        {
-
-        	AimStop();
-        	NetMulticast_AnimationPlay(owner);
-        	
-        	//UE_LOG(LogTemp,Log,TEXT("%f"),x);
-        	FTimerHandle StartAction_TimerHandle;
-        	FTimerDelegate ElaspedDelegate;
-        	ElaspedDelegate.BindUFunction(this,"StartAction_Elasped",owner);
-        	GetWorld()->GetTimerManager().SetTimer(StartAction_TimerHandle,ElaspedDelegate,0.17,false);
-        	
-        }
-		isAiming = false;
-	}
-	else
-	{
-		AimStart(owner);
-		//Aim->Start(owner);
-		isAiming = true;
-		
-	}
-	
-	
 }
 
-void URAction_Gideon_Portal::StartAction_Elasped(ACharacter* instigator)
+void URAction_Gideon_Portal::SpawnPortal_Implementation(ARCharacter* Instigator)
 {
-	FVector tempLocation = instigator->GetMesh()->GetSocketLocation(Gideon_HandSocketName);
-	FRotator tempRotation = instigator->GetViewRotation();
-	
-	ARGideon_Portal* portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,tempLocation,tempRotation);
-	ARGideon_Portal* portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,
-		Portal2SpawnLocation,
-		tempRotation);
+	ResultLocation.Z += 150;
+	FVector Portal1Location = Instigator->GetMesh()->GetSocketLocation(Gideon_HandSocketName);
+	Portal1Location.X-=150;
+	ARGideon_Portal* Portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,Portal1Location,Instigator->cameraComp->GetComponentRotation());
+	ARGideon_Portal* Portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,ResultLocation,Instigator->cameraComp->GetComponentRotation());
 
-	portal1->BindingPortal = portal2;
-	portal2->BindingPortal = portal1;
-
-	
-	
-	//StopAction(instigator);
-}
-
-void URAction_Gideon_Portal::AimStop_Implementation()
-{
-	SetPortal2SpawnLocation(Aim->Stop()->GetComponentLocation()+Aim->Stop()->GetComponentRotation().Vector()*(-200.0f));
-	Aim->DestroyDecal();
-}
-
-void URAction_Gideon_Portal::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(URAction_Gideon_Portal,Aim);
-	DOREPLIFETIME(URAction_Gideon_Portal,Portal2SpawnLocation);
+	Portal1->BindingPortal = Portal2;
+	Portal2->BindingPortal = Portal1;
 }
 
 void URAction_Gideon_Portal::StopAction_Implementation(AActor* instigator)
 {
 	Super::StopAction_Implementation(instigator);
+	ARCharacter* owner = Cast<ARCharacter>(instigator);
+
+	NetMulticast_PlayAnimMontage(owner);
+	//LogOnScreen(this,(TEXT("Spawn Success : %s"),ResultLocation.ToString()));
+
+	FTimerHandle SpawnPortal_TimerHandle;
+	FTimerDelegate SpawnPortal_TimerDelegate;
+	SpawnPortal_TimerDelegate.BindUFunction(this,"SpawnPortal",owner);
+	GetWorld()->GetTimerManager().SetTimer(SpawnPortal_TimerHandle,SpawnPortal_TimerDelegate,0.17,false);
+	
+	
+	
 }
 
-void URAction_Gideon_Portal::SetPortal2SpawnLocation_Implementation(FVector NewLocation)
+void URAction_Gideon_Portal::NetMulticast_PlayAnimMontage_Implementation(ARCharacter* Instigator)
 {
-	Portal2SpawnLocation = NewLocation;
-}
-
-
-void URAction_Gideon_Portal::AimStart_Implementation(ARCharacter* Instigator)
-{
-	if (!Aim)
-	{
-		CreateAim();
-	}
-	LogOnScreen(this,(TEXT("%s"),*GetNameSafe(Aim)));
-	Aim->Start(Instigator);
+	Instigator->PlayAnimMontage(Anim);
 }
 
 

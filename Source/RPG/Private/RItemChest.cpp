@@ -72,7 +72,7 @@ void ARItemChest::ExecuteWhenOpened(APawn* instigatorPawn)
 	}
 
 	URAction* actionToStart = NewObject<URAction>(buffs[FMath::RandRange(0,buffs.Num()-1)]);
-	if (instigatorActionComp->StartActionByName(instigatorPawn,actionToStart->actionName))
+	if (instigatorActionComp->StartActionByName(instigatorPawn,actionToStart->ActionName))
 	{
 		
 	}

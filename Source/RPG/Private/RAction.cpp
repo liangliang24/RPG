@@ -21,7 +21,7 @@ void URAction::PreAction_Implementation(AActor* instigatorActor)
 	
 }
 
-void URAction::StartAction_Implementation(AActor* instigator)
+void URAction::StartAction_Implementation(AActor* Instigator)
 {
 	//UE_LOG(LogTemp,Log,TEXT("Running:%s"),*GetNameSafe(instigator));
 	//LogOnScreen(this,FString::Printf(TEXT("Running:%s"),*GetNameSafe(instigator)),FColor::Green);
@@ -30,7 +30,7 @@ void URAction::StartAction_Implementation(AActor* instigator)
 	Comp->activeGameplayTags.AppendTags(grantTags);
 
 	repData.bIsRunning = true;
-	repData.instigator = instigator;
+	repData.instigator = Instigator;
 	
 }
 

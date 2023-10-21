@@ -15,21 +15,21 @@ URActionEffect::URActionEffect()
 	bAutoStart = true;
 }
 
-void URActionEffect::StartAction_Implementation(AActor* instigator)
+void URActionEffect::StartAction_Implementation(AActor* Instigator)
 {
-	Super::StartAction_Implementation(instigator);
+	Super::StartAction_Implementation(Instigator);
 
 	if (duration > 0.0f)
 	{
 		FTimerDelegate delegate;
-		delegate.BindUFunction(this,"StopAction", instigator);
+		delegate.BindUFunction(this,"StopAction", Instigator);
 		GetWorld()->GetTimerManager().SetTimer(durationHandle,delegate, duration, false);
 	}
 
 	if (period > 0.0f)
 	{
 		FTimerDelegate delegate;
-		delegate.BindUFunction(this,"ExecutePeriodicEffect", instigator);
+		delegate.BindUFunction(this,"ExecutePeriodicEffect", Instigator);
 		GetWorld()->GetTimerManager().SetTimer(periodHandle, delegate, period, true);
 	}
 }

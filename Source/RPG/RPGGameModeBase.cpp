@@ -158,7 +158,8 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 	{
 		if (MonsterTable)
 		{
-			TArray<FMonsterInfoRow*> Rows;
+			GetWorld()->SpawnActor<AActor>(minion,locations[0],FRotator::ZeroRotator);
+			/*TArray<FMonsterInfoRow*> Rows;
 			MonsterTable->GetAllRows("",Rows);
 
 			int32 RandomIndex = FMath::RandRange(0,Rows.Num()-1);
@@ -176,7 +177,7 @@ void ARPGGameModeBase::SpawnAIMinion(UEnvQueryInstanceBlueprintWrapper* EnvQuery
 					locations[0]);
 				LogOnScreen(this,"Loading Monster...");
 				Manager->LoadPrimaryAsset(SelectedRow->MonsterData, Bundles, Delegate);
-			}
+		}*/
 			
 			
 		}
