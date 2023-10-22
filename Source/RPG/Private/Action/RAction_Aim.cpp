@@ -49,9 +49,12 @@ void URAction_Aim::SpawnDecalActor_Implementation(ARCharacter* Instigator)
 	GetWorld()->GetTimerManager().SetTimer(SkillTarget_TimerHandle,SetDecalLocation_Delegate,0.03f,true);
 }
 
-void URAction_Aim::SetDecalLocation(ARCharacter* Instigator)
+void URAction_Aim::SetDecalLocation_Implementation(ARCharacter* Instigator)
 {
-	DecalActor->SetWorldLocation(TraceAimLine(Instigator)); 	
+	FVector ret = TraceAimLine(Instigator);
+	DecalActor->SetWorldLocation(ret);
+
+	SetResultLocation(ret);
 }
 
 FVector URAction_Aim::TraceAimLine(ARCharacter* Instigator)
@@ -92,7 +95,7 @@ void URAction_Aim::SetClientLogicStop_Implementation()
 {
 	
 
-	SetResultLocation(DecalActor->GetComponentLocation());
+	//SetResultLocation(DecalActor->GetComponentLocation());
 	//LogOnScreen(this,(TEXT("DecalLocation : %s"),DecalActor->GetComponentLocation().ToString()));
 	GetWorld()->GetTimerManager().ClearTimer(SkillTarget_TimerHandle);
 	DecalActor->DestroyComponent();

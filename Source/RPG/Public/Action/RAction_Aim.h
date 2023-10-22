@@ -22,12 +22,12 @@ public:
 	virtual void StopAction_Implementation(AActor* instigator) override;
 	UFUNCTION(Client,Reliable)
 	void SpawnDecalActor(ARCharacter* Instigator);
-	UFUNCTION()
+	UFUNCTION(Client,Unreliable)
 	void SetDecalLocation(ARCharacter* Instigator);
 	FVector TraceAimLine(ARCharacter* Instigator);
 	UFUNCTION(Client,Reliable)
 	void SetClientLogicStop();
-	UFUNCTION(Server,Reliable)
+	UFUNCTION(Server,Unreliable)
 	void SetResultLocation(FVector FinalLocation);
 	
 protected:
