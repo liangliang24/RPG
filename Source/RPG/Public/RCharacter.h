@@ -120,8 +120,9 @@ protected:
 	/*
 	 * 发射黑洞操作
 	 */
-	void BlackHole(const FInputActionValue& InputActionValue);
+	void BlackHole_Start(const FInputActionValue& InputActionValue);
 
+	void BlackHole_Stop(const FInputActionValue& InputActionValue);
 	void SprintStart(const FInputActionValue& InputActionValue);
 
 	void SprintStop(const FInputActionValue& InputActionValue);

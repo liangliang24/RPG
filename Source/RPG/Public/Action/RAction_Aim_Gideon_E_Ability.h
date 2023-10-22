@@ -13,5 +13,18 @@ UCLASS()
 class RPG_API URAction_Aim_Gideon_E_Ability : public URAction_Aim
 {
 	GENERATED_BODY()
+
+public:
+	URAction_Aim_Gideon_E_Ability();
+	virtual void StartAction_Implementation(AActor* instigator) override;
+	virtual void StopAction_Implementation(AActor* instigator) override;
+	
+protected:
+	UFUNCTION(Server,Reliable)
+	void SpawnBlackHole();
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> BlackHole;
+private:
 	
 };

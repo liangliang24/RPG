@@ -26,6 +26,9 @@ public:
 	UInputAction* E_Ability;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* EStop_Ability;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	UInputAction* F_Ability;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)

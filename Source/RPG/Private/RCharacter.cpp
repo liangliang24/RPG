@@ -5,6 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "ObjectStringName.h"
 #include "RActionComponent.h"
 #include "RAttributeComponent.h"
 #include "RInputAbilityConfig.h"
@@ -161,18 +162,22 @@ void ARCharacter::Dash_Start()
 
 void ARCharacter::Dash_Stop()
 {
-	actionComp->StopActionByName(this,"Gideon_Portal");
+	actionComp->StopActionByName(this,Gideon_BlackHole);
 }
 
-void ARCharacter::BlackHole(const FInputActionValue& InputActionValue)
+void ARCharacter::BlackHole_Start(const FInputActionValue& InputActionValue)
 {
-	if (attributeComp->ApplyRageChange(this,blackHoleCostRage))
-	{
-		actionComp->StartActionByName(this,"BlackHole");
-	}
+	
+	actionComp->StartActionByName(this,Gideon_BlackHole);
+	
 	
 	/*PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(blackHoleTimerHandle,this,&ARCharacter::BlackHole_Elasped,0.17f);*/
+}
+
+void ARCharacter::BlackHole_Stop(const FInputActionValue& InputActionValue)
+{
+	actionComp->StopActionByName(this,Gideon_BlackHole);
 }
 
 void ARCharacter::SprintStart(const FInputActionValue& InputActionValue)
@@ -294,8 +299,11 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputMoveAction->StopRun,ETriggerEvent::Triggered,this,&ARCharacter::SprintStop);
 	Input->BindAction(InputAbilityAction->PrimaryAttack,ETriggerEvent::Triggered,this,&ARCharacter::PrimaryAttack);
 	//Input->BindAction(InputAbilityAction->F_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash);
-	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole);
+	//Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole);
 	Input->BindAction(InputAbilityAction->F_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash_Start);
 	Input->BindAction(InputAbilityAction->FStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash_Stop);
+	Input->BindAction(InputAbilityAction->E_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Start);
+	Input->BindAction(InputAbilityAction->EStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Stop);
+	
 }
 
