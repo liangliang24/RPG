@@ -25,6 +25,8 @@ public:
 	// Sets default values for this actor's properties
 	ARItemChest();
 
+	virtual void PreInitializeComponents() override;
+
 	virtual void OnActorLoaded_Implementation() override;
 protected:
 	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened",BlueprintReadOnly,SaveGame)

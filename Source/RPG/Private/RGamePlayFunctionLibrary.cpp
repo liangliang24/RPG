@@ -6,6 +6,8 @@
 #include "RAttributeComponent.h"
 #include "RCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 bool URGamePlayFunctionLibrary::ApplyDamage(AActor* DamageCauser, AActor* TargetActor, float DamageAmount)
 {
@@ -35,5 +37,8 @@ bool URGamePlayFunctionLibrary::ApplyDirectionDamage(AActor* DamageCauser, AActo
 	}
 	return false;
 }
+
+
+
 
 

@@ -170,6 +170,9 @@ public:
 	void Input_Jump(const FInputActionValue& InputActionValue);
 	void Input_TurnHorizon(const FInputActionValue& InputActionValue);
 	void Input_TurnUp(const FInputActionValue& InputActionValue);
+	void SetCharacterSpeedShortly(float Speed, float time);
+	UFUNCTION()
+	void CharacterSpeedSet(float Speed);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

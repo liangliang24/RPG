@@ -28,4 +28,6 @@ void URAction_Aim_Gideon_E_Ability::SpawnBlackHole_Implementation()
 {
 	ResultLocation.Z+=100;
 	GetWorld()->SpawnActor<AActor>(BlackHole,ResultLocation,FRotator::ZeroRotator);
+
+	
 }

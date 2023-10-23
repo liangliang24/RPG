@@ -28,7 +28,15 @@ ARItemChest::ARItemChest() : bIsOpened(false)
 	goldFlash->SetupAttachment(goldMesh);
 
 	bIsOpened = false;
+
 	SetReplicates(true);
+}
+
+void ARItemChest::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+
+	bReplicates = true;
 }
 
 void ARItemChest::OnActorLoaded_Implementation()

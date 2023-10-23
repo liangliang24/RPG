@@ -245,6 +245,23 @@ void ARCharacter::Input_TurnUp(const FInputActionValue& InputActionValue)
 	AddControllerPitchInput(-InputActionValue.Get<float>());
 }
 
+void ARCharacter::SetCharacterSpeedShortly(float Speed, float time)
+{
+	
+	float CurSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
+
+	FTimerHandle ShortlySpeedSet_TimerHandle;
+	FTimerDelegate ShortlySpeedSet_TimerDelegate;
+	ShortlySpeedSet_TimerDelegate.BindUFunction(this,"CharacterSpeedSet",CurSpeed);
+	GetWorld()->GetTimerManager().SetTimer(ShortlySpeedSet_TimerHandle,ShortlySpeedSet_TimerDelegate,time,false);
+}
+
+void ARCharacter::CharacterSpeedSet(float Speed)
+{
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
+}
+
 // Called to bind functionality to input
 void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

@@ -20,6 +20,13 @@ ARHealthPotion::ARHealthPotion()
 	SetReplicates(true);
 }
 
+void ARHealthPotion::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+
+	bReplicates = true;
+}
+
 // Called when the game starts or when spawned
 void ARHealthPotion::BeginPlay()
 {

@@ -13,6 +13,8 @@
 URAction_Aim::URAction_Aim()
 {
 	ActionName = "Aim";
+
+	DecalSize = FVector(100.0f,100.0f,100.0f);
 }
 
 void URAction_Aim::StartAction_Implementation(AActor* Instigator)
@@ -43,8 +45,10 @@ void URAction_Aim::SpawnDecalActor_Implementation(ARCharacter* Instigator)
 		FVector(100,100,100),
 		TraceAimLine(Instigator));
 	
-	
+	//LogOnScreen(this,(TEXT("DecalActor Size:%s"), DecalActor->DecalSize.ToString()));
+	DecalActor->DecalSize = DecalSize;
 	FTimerDelegate SetDecalLocation_Delegate;
+	
 	SetDecalLocation_Delegate.BindUFunction(this,"SetDecalLocation",Instigator);
 	GetWorld()->GetTimerManager().SetTimer(SkillTarget_TimerHandle,SetDecalLocation_Delegate,0.03f,true);
 }

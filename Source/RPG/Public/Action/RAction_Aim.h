@@ -38,6 +38,9 @@ protected:
     FTimerHandle SkillTarget_TimerHandle;
 	UPROPERTY(Replicated)
 	FVector ResultLocation;
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector DecalSize;
 private:
 	
 
