@@ -4,6 +4,7 @@
 #include "Action/RAction_Aim_Gideon_E_Ability.h"
 
 #include "ObjectStringName.h"
+#include "RPG/RPG.h"
 
 
 URAction_Aim_Gideon_E_Ability::URAction_Aim_Gideon_E_Ability()
@@ -26,7 +27,12 @@ void URAction_Aim_Gideon_E_Ability::StopAction_Implementation(AActor* instigator
 
 void URAction_Aim_Gideon_E_Ability::SpawnBlackHole_Implementation()
 {
-	ResultLocation.Z+=100;
+	if (ResultLocation == FVector::Zero())
+	{
+		LogOnScreen(this,"Won't Spawn");
+		return ;
+	}
+	ResultLocation.Z+=10;
 	GetWorld()->SpawnActor<AActor>(BlackHole,ResultLocation,FRotator::ZeroRotator);
 
 	

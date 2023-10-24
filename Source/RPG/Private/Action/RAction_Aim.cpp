@@ -79,7 +79,7 @@ FVector URAction_Aim::TraceAimLine(ARCharacter* Instigator)
 		return hit.ImpactPoint;
 	}
 	
-	return TraceEnd;
+	return FVector::Zero();
 }
 
 void URAction_Aim::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
