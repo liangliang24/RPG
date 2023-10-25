@@ -31,6 +31,8 @@ public:
 	void SetResultLocation(FVector FinalLocation);
 	
 protected:
+	UPROPERTY(EditDefaultsOnly)
+	FVector ResultLocationBias;
 	UCameraComponent* InstigatorCameraComponent;
     UDecalComponent* DecalActor;
     UPROPERTY(EditDefaultsOnly)

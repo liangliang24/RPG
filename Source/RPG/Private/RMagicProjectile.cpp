@@ -10,7 +10,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
-
+#include "RPG/RPG.h"
 
 
 // Sets default values
@@ -63,7 +63,7 @@ void ARMagicProjectile::Tick(float DeltaTime)
 
 void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult)
 {
-	//LogOnScreen(this,FString::Printf(TEXT("Projectil Hit %s"),*GetNameSafe(OtherActor)));
+	LogOnScreen(this,FString::Printf(TEXT("Projectil Hit %s"),*GetNameSafe(OtherActor)));
 	UGameplayStatics::PlaySoundAtLocation(this,explodeAudio,GetActorLocation());
 	UGameplayStatics::PlayWorldCameraShake(this,shake,GetActorLocation(),500,2000,0.5);
 	//UE_LOG(LogTemp,Log,TEXT("other actor %s\nhit actor %s"),*GetNameSafe(OtherActor),*GetNameSafe(hitResult.GetActor()));
@@ -93,6 +93,7 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 void ARMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	LogOnScreen(this,"projectil overlap");
 	if (OtherActor->GetClass() == GetClass())
 	{
 		return ;
@@ -111,6 +112,7 @@ void ARMagicProjectile::ActorHit(UPrimitiveComponent* HitComponent, AActor* Othe
                                  FVector NormalImpulse, const FHitResult& Hit)
 {
 	UE_LOG(LogTemp,Log,TEXT("Hit"));
+	LogOnScreen(this,"projectil hit");
 	if (OtherActor->GetClass() == GetClass())
 	{
 		return ;

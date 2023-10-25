@@ -34,6 +34,10 @@ void URAction_Aim::StopAction_Implementation(AActor* instigator)
 	//ResultLocation = FVector::Zero();
 	SetClientLogicStop();
 
+	if (ResultLocation != FVector::Zero())
+	{
+		ResultLocation+=ResultLocationBias;
+	}
 	LogOnScreen(this,(TEXT("SpawnLocation:%s"),ResultLocation.ToString()));
 }
 
@@ -101,6 +105,12 @@ void URAction_Aim::SetClientLogicStop_Implementation()
 
 	//SetResultLocation(DecalActor->GetComponentLocation());
 	//LogOnScreen(this,(TEXT("DecalLocation : %s"),DecalActor->GetComponentLocation().ToString()));
+	
+	
 	GetWorld()->GetTimerManager().ClearTimer(SkillTarget_TimerHandle);
-	DecalActor->DestroyComponent();
+	if (ensure(DecalActor))
+	{
+		DecalActor->DestroyComponent();
+	}
+	
 }

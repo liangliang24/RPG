@@ -14,7 +14,8 @@ class RPG_API ARGideon_Damage_Meteor : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+	
 	// Sets default values for this actor's properties
 	ARGideon_Damage_Meteor();
 
@@ -23,11 +24,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite)
 	UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite)
 	UCapsuleComponent* ColliMesh;
+	
+	
 	UPROPERTY(EditDefaultsOnly)
 	UProjectileMovementComponent* MeteorMove;
 
@@ -38,4 +41,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	/*UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);*/
 };

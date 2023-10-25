@@ -21,10 +21,8 @@ void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
 
 void URAction_Gideon_Portal::SpawnPortal_Implementation(ARCharacter* Instigator)
 {
-	
 	FVector Portal1Location = Instigator->GetMesh()->GetSocketLocation(Gideon_HandSocketName);
 	Portal1Location.Z-=50;
-	ResultLocation.Z = Portal1Location.Z;
 	ARGideon_Portal* Portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,Portal1Location,Instigator->cameraComp->GetComponentRotation());
 	ARGideon_Portal* Portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,ResultLocation,Instigator->cameraComp->GetComponentRotation());
 
@@ -35,6 +33,10 @@ void URAction_Gideon_Portal::SpawnPortal_Implementation(ARCharacter* Instigator)
 void URAction_Gideon_Portal::StopAction_Implementation(AActor* instigator)
 {
 	Super::StopAction_Implementation(instigator);
+	if (ResultLocation == FVector::Zero())
+	{
+		return ;
+	}
 	ARCharacter* owner = Cast<ARCharacter>(instigator);
 
 	NetMulticast_PlayAnimMontage(owner);

@@ -134,7 +134,7 @@ protected:
 public:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
-	URActionComponent* actionComp;
+	URActionComponent* ActionComp;
 	
 	/*
 	 * 摄像机组件
@@ -173,6 +173,9 @@ public:
 	void SetCharacterSpeedShortly(float Speed, float time);
 	UFUNCTION()
 	void CharacterSpeedSet(float Speed);
+	void Q_AbilityStart(const FInputActionValue& InputActionValue);
+	void Q_AbilityStop(const FInputActionValue& InputActionValue);
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

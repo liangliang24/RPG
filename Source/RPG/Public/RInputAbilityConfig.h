@@ -37,6 +37,9 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	UInputAction* Q_Ability;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* QStop_Ability;
+
 	
 	
 	

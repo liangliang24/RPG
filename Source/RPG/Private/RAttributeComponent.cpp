@@ -75,7 +75,7 @@ bool URAttributeComponent::IsStunned() const
 
 	if (Owner)
 	{
-		return Owner->actionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Status.Stunned"));
+		return Owner->ActionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Status.Stunned"));
 	}
 	return false;
 }
@@ -86,7 +86,7 @@ bool URAttributeComponent::IsSprintting() const
 
 	if (Owner)
 	{
-		return Owner->actionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Action.Sprinting"));
+		return Owner->ActionComp->activeGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Action.Sprinting"));
 	}
 	return false;
 }

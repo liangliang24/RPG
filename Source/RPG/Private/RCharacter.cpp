@@ -33,7 +33,7 @@ ARCharacter::ARCharacter()
 	interactComp = CreateDefaultSubobject<URInteractionComponent>("interactComp");
 	attributeComp = CreateDefaultSubobject<URAttributeComponent>("AttributeComponent");
 
-	actionComp = CreateDefaultSubobject<URActionComponent>("ActionComponent");
+	ActionComp = CreateDefaultSubobject<URActionComponent>("ActionComponent");
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	springArmComp->bUsePawnControlRotation = true;
@@ -139,7 +139,7 @@ void ARCharacter::MoveRight(const FInputActionValue& InputActionValue)
 
 void ARCharacter::PrimaryAttack(const FInputActionValue& InputActionValue)
 {
-	actionComp->StartActionByName(this,"PrimaryAttack");
+	ActionComp->StartActionByName(this,"PrimaryAttack");
 	/*PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(primaryAttackHandle,this,&ARCharacter::PrimaryAttack_Elasped,0.17f);*/
 	//
@@ -157,18 +157,18 @@ void ARCharacter::Dash_Start()
 {
 	
 
-	actionComp->StartActionByName(this,"Gideon_Portal");
+	ActionComp->StartActionByName(this,Gideon_Portal);
 }
 
 void ARCharacter::Dash_Stop()
 {
-	actionComp->StopActionByName(this,Gideon_BlackHole);
+	ActionComp->StopActionByName(this,Gideon_Portal);
 }
 
 void ARCharacter::BlackHole_Start(const FInputActionValue& InputActionValue)
 {
 	
-	actionComp->StartActionByName(this,Gideon_BlackHole);
+	ActionComp->StartActionByName(this,Gideon_BlackHole);
 	
 	
 	/*PlayAnimMontage(primaryAttackAnimation);
@@ -177,20 +177,20 @@ void ARCharacter::BlackHole_Start(const FInputActionValue& InputActionValue)
 
 void ARCharacter::BlackHole_Stop(const FInputActionValue& InputActionValue)
 {
-	actionComp->StopActionByName(this,Gideon_BlackHole);
+	ActionComp->StopActionByName(this,Gideon_BlackHole);
 }
 
 void ARCharacter::SprintStart(const FInputActionValue& InputActionValue)
 {
 	
 	
-	actionComp->StartActionByName(this,"Sprint");
+	ActionComp->StartActionByName(this,Sprint);
 }
 
 void ARCharacter::SprintStop(const FInputActionValue& InputActionValue)
 {
 	
-	actionComp->StopActionByName(this,"Sprint");
+	ActionComp->StopActionByName(this,Sprint);
 }
 
 void ARCharacter::HealSelf(float delta)
@@ -262,6 +262,16 @@ void ARCharacter::CharacterSpeedSet(float Speed)
 	GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
 
+void ARCharacter::Q_AbilityStart(const FInputActionValue& InputActionValue)
+{
+	ActionComp->StartActionByName(this,Gideon_QAbility);
+}
+
+void ARCharacter::Q_AbilityStop(const FInputActionValue& InputActionValue)
+{
+	ActionComp->StopActionByName(this,Gideon_QAbility);
+}
+
 // Called to bind functionality to input
 void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -321,6 +331,8 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->FStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Dash_Stop);
 	Input->BindAction(InputAbilityAction->E_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Start);
 	Input->BindAction(InputAbilityAction->EStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Stop);
+	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStart);
+	Input->BindAction(InputAbilityAction->QStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStop);
 	
 }
 

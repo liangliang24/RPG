@@ -17,8 +17,15 @@ public:
 	URAction_Aim_Gideon_Q_Ability();
 
 	virtual void StartAction_Implementation(AActor* instigator) override;
+	UFUNCTION()
+	void SpawnMeteor();
 	virtual void StopAction_Implementation(AActor* instigator) override;
 
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMulticastAnimMontage(ARCharacter* Instigator);
+
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* AnimMontage;
 protected:
 
 	UPROPERTY(EditDefaultsOnly)

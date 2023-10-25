@@ -18,6 +18,7 @@ public:
 	URAction_Aim_Gideon_E_Ability();
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
+
 	
 protected:
 	UFUNCTION(Server,Reliable)
@@ -25,6 +26,12 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> BlackHole;
+
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* SpawnAnimMontage;
+
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMulticastAnimMontage(ARCharacter* Instigator);
 private:
 	
 };

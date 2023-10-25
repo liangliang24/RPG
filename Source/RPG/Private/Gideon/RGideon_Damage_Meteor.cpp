@@ -13,15 +13,19 @@ ARGideon_Damage_Meteor::ARGideon_Damage_Meteor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMesh");
-	RootComponent = BaseMesh;
+	
 
 	MeteorMove = CreateDefaultSubobject<UProjectileMovementComponent>("MeteorMovement");
-	SetReplicates(true);
+	
 
 	ColliMesh = CreateDefaultSubobject<UCapsuleComponent>("CollisionMesh");
-	ColliMesh->SetupAttachment(BaseMesh);
-	BaseMesh->SetEnableGravity(true);
+	RootComponent = ColliMesh;
+	BaseMesh->SetupAttachment(ColliMesh);
+	//BaseMesh->SetEnableGravity(true);
 	MeteorMove->ProjectileGravityScale = 1.0f;
+	
+	//ColliMesh->OnComponentBeginOverlap.AddDynamic(this,&ARGideon_Damage_Meteor::OnOverlap);
+	SetReplicates(true);
 }
 
 void ARGideon_Damage_Meteor::PreInitializeComponents()
