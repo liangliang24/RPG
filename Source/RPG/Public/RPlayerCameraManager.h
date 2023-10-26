@@ -17,6 +17,6 @@ class RPG_API ARPlayerCameraManager : public APlayerCameraManager
 public:
 	ARPlayerCameraManager();
 protected:
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	USkeletalMeshComponent* CameraBehavior;
 };
