@@ -26,8 +26,8 @@ class RPG_API IRALS_Interface
 public:
 
 	UFUNCTION(BlueprintNativeEvent,BlueprintCallable)
-	void SetALSMovingState(EMovementState NewMovementState);
+	void SetALSMovementState(EMovementState NewMovementState);
 
 	UFUNCTION(BlueprintNativeEvent,BlueprintCallable)
-	void SetALSMovingAction(EMovementAction NewMovementAction);
+	void SetALSMovementAction(EMovementAction NewMovementAction);
 };

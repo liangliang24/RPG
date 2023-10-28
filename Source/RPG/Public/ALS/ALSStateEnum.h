@@ -15,6 +15,6 @@ enum class EMovementState : uint8
 UENUM(BlueprintType)
 enum class EMovementAction : uint8
 {
-	ALS_MovementState_None UMETA(DisplayName = "None"),
-	ALS_MovementState_Walk UMETA(DisplayName = "Idle/Run")
+	ALS_MovementAction_None UMETA(DisplayName = "None"),
+	ALS_MovementAction_Jump UMETA(DisplayName = "Jump")
 };

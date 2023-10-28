@@ -25,8 +25,8 @@ class RPG_API ARCharacter : public ACharacter,public IRALS_Interface
 {
 	GENERATED_BODY()
 
-	virtual void SetALSMovingAction_Implementation(EMovementAction NewMovementAction) override;
-	virtual void SetALSMovingState_Implementation(EMovementState NewMovementState) override;
+	virtual void SetALSMovementAction_Implementation(EMovementAction NewMovementAction) override;
+	virtual void SetALSMovementState_Implementation(EMovementState NewMovementState) override;
 public:
 	// Sets default values for this character's properties
 	ARCharacter();
@@ -135,6 +135,11 @@ protected:
 	 */
 	void Die();
 public:
+	UPROPERTY(BlueprintReadWrite)
+	EMovementState MovementState;
+
+	UPROPERTY(BlueprintReadWrite)
+	EMovementAction MovementAction;
 	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URActionComponent* ActionComp;

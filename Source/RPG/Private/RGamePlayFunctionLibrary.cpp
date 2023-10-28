@@ -4,10 +4,6 @@
 #include "RGamePlayFunctionLibrary.h"
 
 #include "RAttributeComponent.h"
-#include "RCharacter.h"
-#include "Camera/CameraComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PawnMovementComponent.h"
 
 bool URGamePlayFunctionLibrary::ApplyDamage(AActor* DamageCauser, AActor* TargetActor, float DamageAmount)
 {
@@ -38,7 +34,11 @@ bool URGamePlayFunctionLibrary::ApplyDirectionDamage(AActor* DamageCauser, AActo
 	return false;
 }
 
-
+/*template <typename TEnum>
+bool URGamePlayFunctionLibrary::ALSEnumIsDifferent(TEnum enum1, TEnum enum2)
+{
+	return enum1!=enum2;
+}*/
 
 
 

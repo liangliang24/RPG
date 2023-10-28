@@ -20,4 +20,11 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Gameplay")
 	static bool ApplyDirectionDamage(AActor* DamageCauser,AActor* TargetActor,float DamageAmount,const FHitResult& HitResult);
+
+	
+	/*template<typename TEnum>
+	UFUNCTION(BlueprintCallable,Category="ALS")
+	static bool ALSEnumIsDifferent(UEnum enum1,UEnum enum2);*/
 };
+
+

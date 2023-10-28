@@ -12,6 +12,7 @@
 #include "RInputMoveConfig.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
+#include "ALS/ALSStateEnum.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -78,7 +79,6 @@ float Delta)
 void ARCharacter::P(const FInputActionInstance& InputActionInstance)
 {
 	LogOnScreen(this,"P");
-	
 }
 
 
@@ -119,6 +119,7 @@ void ARCharacter::SpawnUI()
 
 void ARCharacter::MoveForward(const FInputActionValue& InputActionValue)
 {
+	//SetALSMovingAction_Implementation(EMovementAction::ALS_MovementState_Walk);
 	AddMovementInput(cameraComp->GetForwardVector(),InputActionValue.Get<float>());
 }
 
@@ -231,10 +232,9 @@ void ARCharacter::PostInitializeComponents()
 
 void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
 {
-	if (InputActionValue.Get<bool>())
-	{
-		Jump();
-	}
+	Jump();
+	SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
+	
 }
 
 void ARCharacter::Input_TurnHorizon(const FInputActionValue& InputActionValue)
@@ -339,17 +339,32 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 }
 
 
-void ARCharacter::SetALSMovingAction_Implementation(EMovementAction NewMovementAction)
+void ARCharacter::SetALSMovementAction_Implementation(EMovementAction NewMovementAction)
 {
-	IRALS_Interface::SetALSMovingAction_Implementation(NewMovementAction);
+	IRALS_Interface::SetALSMovementAction_Implementation(NewMovementAction);
 
-	
+	if(NewMovementAction!=MovementAction)
+	{
+		LogOnScreen(this,"MovementActionChanged");
+		MovementAction = NewMovementAction;
+	}
+	else
+	{
+		LogOnScreen(this,"MovementActionNotChanged");
+	}
 }
 
-void ARCharacter::SetALSMovingState_Implementation(EMovementState NewMovementState)
+void ARCharacter::SetALSMovementState_Implementation(EMovementState NewMovementState)
 {
-	IRALS_Interface::SetALSMovingState_Implementation(NewMovementState);
+	IRALS_Interface::SetALSMovementState_Implementation(NewMovementState);
 
-	
+	if (NewMovementState != MovementState)
+	{
+		LogOnScreen(this,"MovementStateChanged");
+	}
+	else
+	{
+		LogOnScreen(this,"MovementStateNotChanged");
+	}
 }
 
