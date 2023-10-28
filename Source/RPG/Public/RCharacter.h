@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InputAction.h"
+#include "ALS/RALS_Interface.h"
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
@@ -20,10 +21,12 @@ class USpringArmComponent;
  * 玩家角色，用于玩家操控
  */
 UCLASS()
-class RPG_API ARCharacter : public ACharacter
+class RPG_API ARCharacter : public ACharacter,public IRALS_Interface
 {
 	GENERATED_BODY()
 
+	virtual void SetALSMovingAction_Implementation(EMovementAction NewMovementAction) override;
+	virtual void SetALSMovingState_Implementation(EMovementState NewMovementState) override;
 public:
 	// Sets default values for this character's properties
 	ARCharacter();
@@ -132,7 +135,7 @@ protected:
 	 */
 	void Die();
 public:
-
+	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URActionComponent* ActionComp;
 	

@@ -18,6 +18,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "RPG/RPG.h"
 
+
+
 // Sets default values
 ARCharacter::ARCharacter()
 {
@@ -333,6 +335,21 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->EStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Stop);
 	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStart);
 	Input->BindAction(InputAbilityAction->QStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStop);
+	
+}
+
+
+void ARCharacter::SetALSMovingAction_Implementation(EMovementAction NewMovementAction)
+{
+	IRALS_Interface::SetALSMovingAction_Implementation(NewMovementAction);
+
+	
+}
+
+void ARCharacter::SetALSMovingState_Implementation(EMovementState NewMovementState)
+{
+	IRALS_Interface::SetALSMovingState_Implementation(NewMovementState);
+
 	
 }
 
