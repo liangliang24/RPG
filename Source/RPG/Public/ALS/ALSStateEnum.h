@@ -18,3 +18,11 @@ enum class EMovementAction : uint8
 	ALS_MovementAction_None UMETA(DisplayName = "None"),
 	ALS_MovementAction_Jump UMETA(DisplayName = "Jump")
 };
+
+UENUM(BlueprintType)
+enum class EGait : uint8
+{
+	ALS_Gait_Idle UMETA(DisplayName = "Idle"),
+	ALS_Gait_Walking UMETA(DisplayName = "Walking"),
+	ALS_Gait_Spring UMETA(DisplayName = "Spring")
+};

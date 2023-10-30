@@ -3,6 +3,8 @@
 
 #include "RCharacter.h"
 
+#include <string>
+
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "ObjectStringName.h"
@@ -59,7 +61,21 @@ void ARCharacter::BeginPlay()
 void ARCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	float MaxWalkSpeed = GetMovementComponent()->Velocity.Length();
+	if (MaxWalkSpeed == 0)
+	{
+		Gait = EGait::ALS_Gait_Idle;
+	}
+	else if(MaxWalkSpeed > 0 && MaxWalkSpeed < 600)
+	{
+		Gait = EGait::ALS_Gait_Walking;
+	}
+	else if (MaxWalkSpeed >= 600)
+	{
+		Gait = EGait::ALS_Gait_Spring;
+	}
 
+	
 }
 
 

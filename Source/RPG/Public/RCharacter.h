@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+enum class EGait : uint8;
 class URInputAbilityConfig;
 class URInputMoveConfig;
 class UShowingAimTarget;
@@ -140,7 +141,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	EMovementAction MovementAction;
-	
+
+	UPROPERTY(BlueprintReadWrite)
+	EGait Gait;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URActionComponent* ActionComp;
 	
