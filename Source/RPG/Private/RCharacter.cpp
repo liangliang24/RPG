@@ -232,6 +232,13 @@ void ARCharacter::PostInitializeComponents()
 
 void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
 {
+	switch (MovementAction)
+	{
+	case EMovementAction::ALS_MovementAction_Jump:
+		LogOnScreen(this,"Already In Air");
+		return ;
+		break;
+	}
 	Jump();
 	SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
 	
@@ -345,12 +352,12 @@ void ARCharacter::SetALSMovementAction_Implementation(EMovementAction NewMovemen
 
 	if(NewMovementAction!=MovementAction)
 	{
-		LogOnScreen(this,"MovementActionChanged");
+		//LogOnScreen(this,"MovementActionChanged");
 		MovementAction = NewMovementAction;
 	}
 	else
 	{
-		LogOnScreen(this,"MovementActionNotChanged");
+		//LogOnScreen(this,"MovementActionNotChanged");
 	}
 }
 
