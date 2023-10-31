@@ -75,7 +75,20 @@ void ARCharacter::Tick(float DeltaTime)
 		Gait = EGait::ALS_Gait_Spring;
 	}
 
-	
+	switch (Gait)
+	{
+	case EGait::ALS_Gait_Idle:
+		LogOnScreen(this,"Idle",FColor::Red,0);
+		break;
+	case EGait::ALS_Gait_Walking:
+		LogOnScreen(this,"Walking",FColor::Red,0);
+		break;
+	case EGait::ALS_Gait_Spring:
+		LogOnScreen(this,"Spring",FColor::Red,0);
+		break;
+	}
+
+	LogOnScreen(this,FString::Printf(TEXT("%hhd,%f"),Gait,MaxWalkSpeed),FColor::Red,0);
 }
 
 

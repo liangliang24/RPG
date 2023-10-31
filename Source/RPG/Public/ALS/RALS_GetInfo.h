@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "RALS_GetInformation.generated.h"
+#include "RALS_GetInfo.generated.h"
 
 class ARCharacter;
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI,Blueprintable)
-class URALS_GetInformation : public UInterface
+UINTERFACE(MinimalAPI)
+class URALS_GetInfo : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -17,12 +17,12 @@ class URALS_GetInformation : public UInterface
 /**
  * 
  */
-class RPG_API IRALS_GetInformation
+class RPG_API IRALS_GetInfo
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent)
-	static void GetCurrentALSInfo(ARCharacter* player,EMovementState& MovementState,EMovementAction& MovementAction,EGait& Gait);
+	void GetALSInfo(ARCharacter* player,EMovementState& MovementState,EMovementAction& MovementAction,EGait& Gait);
 };
