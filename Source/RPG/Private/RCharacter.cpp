@@ -14,7 +14,6 @@
 #include "RInputMoveConfig.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
-#include "ALS/ALSStateEnum.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -61,34 +60,6 @@ void ARCharacter::BeginPlay()
 void ARCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	float MaxWalkSpeed = GetMovementComponent()->Velocity.Length();
-	if (MaxWalkSpeed == 0)
-	{
-		Gait = EGait::ALS_Gait_Idle;
-	}
-	else if(MaxWalkSpeed > 0 && MaxWalkSpeed < 600)
-	{
-		Gait = EGait::ALS_Gait_Walking;
-	}
-	else if (MaxWalkSpeed >= 600)
-	{
-		Gait = EGait::ALS_Gait_Spring;
-	}
-
-	switch (Gait)
-	{
-	case EGait::ALS_Gait_Idle:
-		LogOnScreen(this,"Idle",FColor::Red,0);
-		break;
-	case EGait::ALS_Gait_Walking:
-		LogOnScreen(this,"Walking",FColor::Red,0);
-		break;
-	case EGait::ALS_Gait_Spring:
-		LogOnScreen(this,"Spring",FColor::Red,0);
-		break;
-	}
-
-	LogOnScreen(this,FString::Printf(TEXT("%hhd,%f"),Gait,MaxWalkSpeed),FColor::Red,0);
 }
 
 
@@ -261,15 +232,8 @@ void ARCharacter::PostInitializeComponents()
 
 void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
 {
-	switch (MovementAction)
-	{
-	case EMovementAction::ALS_MovementAction_Jump:
-		LogOnScreen(this,"Already In Air");
-		return ;
-		break;
-	}
 	Jump();
-	SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
+	//SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
 	
 }
 
@@ -375,7 +339,7 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 }
 
 
-void ARCharacter::SetALSMovementAction_Implementation(EMovementAction NewMovementAction)
+/*void ARCharacter::SetALSMovementAction_Implementation(EMovementAction NewMovementAction)
 {
 	IRALS_Interface::SetALSMovementAction_Implementation(NewMovementAction);
 
@@ -402,5 +366,5 @@ void ARCharacter::SetALSMovementState_Implementation(EMovementState NewMovementS
 	{
 		LogOnScreen(this,"MovementStateNotChanged");
 	}
-}
+}*/
 

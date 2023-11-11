@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "InputAction.h"
-#include "ALS/RALS_Interface.h"
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
-enum class EGait : uint8;
 class URInputAbilityConfig;
 class URInputMoveConfig;
 class UShowingAimTarget;
@@ -22,12 +20,12 @@ class USpringArmComponent;
  * 玩家角色，用于玩家操控
  */
 UCLASS()
-class RPG_API ARCharacter : public ACharacter,public IRALS_Interface
+class RPG_API ARCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	virtual void SetALSMovementAction_Implementation(EMovementAction NewMovementAction) override;
-	virtual void SetALSMovementState_Implementation(EMovementState NewMovementState) override;
+	//virtual void SetALSMovementAction_Implementation(EMovementAction NewMovementAction) override;
+	//virtual void SetALSMovementState_Implementation(EMovementState NewMovementState) override;
 public:
 	// Sets default values for this character's properties
 	ARCharacter();
@@ -136,14 +134,6 @@ protected:
 	 */
 	void Die();
 public:
-	UPROPERTY(BlueprintReadWrite)
-	EMovementState MovementState;
-
-	UPROPERTY(BlueprintReadWrite)
-	EMovementAction MovementAction;
-
-	UPROPERTY(BlueprintReadWrite)
-	EGait Gait;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	URActionComponent* ActionComp;
 	
