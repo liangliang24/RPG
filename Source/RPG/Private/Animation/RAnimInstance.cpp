@@ -5,6 +5,7 @@
 
 #include "RAttributeComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 URAttributeComponent* URAnimInstance::SetAttributeComponent(APawn* pawn)
 {
@@ -68,19 +69,23 @@ bool URAnimInstance::SetIsInAir()
 	return false;
 }
 
-bool URAnimInstance::SetSpeed()
+float URAnimInstance::SetSpeed()
 {
+	if (!PawnOwner)
+	{
+		return 0.0f;
+	}
+	return PawnOwner->GetVelocity().Length();
+}
+
+FRotator URAnimInstance::SetRotation()
+{
+	if (!PawnOwner)
+	{
+		return FRotator::ZeroRotator;
+	}
+	return UKismetMathLibrary::NormalizedDeltaRotator(PawnOwner->GetBaseAimRotation(),PawnOwner->GetActorRotation());
 	
 }
 
-bool URAnimInstance::SetPitch()
-{
-}
 
-bool URAnimInstance::SetYaw()
-{
-}
-
-bool URAnimInstance::SetRoll()
-{
-}

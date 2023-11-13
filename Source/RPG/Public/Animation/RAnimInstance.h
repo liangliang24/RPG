@@ -36,18 +36,13 @@ public:
 	bool SetIsInAir();
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	bool SetSpeed();
+	float SetSpeed();
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	bool SetPitch();
+	FRotator SetRotation();
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	bool SetYaw();
-	
-	UFUNCTION(BlueprintCallable,BlueprintPure)
-	bool SetRoll();
-
-	
+	float SetYawDelta();
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")
@@ -73,7 +68,10 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="CharacterInfo")
 	float Yaw;
-
+	
+	UPROPERTY(BlueprintReadWrite,Category="CharacterInfo")
+	float YawDelta;
+	
 	UPROPERTY(BlueprintReadWrite,Category="CharacterInfo")
 	FRotator RotationLastTick;
 
