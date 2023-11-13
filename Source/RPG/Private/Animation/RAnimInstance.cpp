@@ -4,6 +4,7 @@
 #include "Animation/RAnimInstance.h"
 
 #include "RAttributeComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 URAttributeComponent* URAnimInstance::SetAttributeComponent(APawn* pawn)
 {
@@ -20,13 +21,66 @@ URAttributeComponent* URAnimInstance::SetAttributeComponent(APawn* pawn)
 	return nullptr;
 }
 
-bool URAnimInstance::SetIsAlive(APawn* pawn)
+UPawnMovementComponent* URAnimInstance::SetCharacterMovementComponent(APawn* pawn)
 {
-	if (ensure(OwnerAttributeComponent))
+	if (!pawn)
 	{
-		
+		return nullptr;
+	}
+	
+	return pawn->GetMovementComponent();
+}
+
+bool URAnimInstance::SetIsAlive()
+{
+	if (OwnerAttributeComponent)
+	{
 		return OwnerAttributeComponent->IsAlive();
-		
 	}
 	return false;
+}
+
+bool URAnimInstance::SetIsStunned()
+{
+	if (OwnerAttributeComponent)
+	{
+		return OwnerAttributeComponent->IsStunned();
+	}
+	return false;
+}
+
+bool URAnimInstance::SetIsSprint()
+{
+	if (OwnerAttributeComponent)
+	{
+		return OwnerAttributeComponent->IsSprintting();
+	}
+	return false;
+}
+
+bool URAnimInstance::SetIsInAir()
+{
+	if (OwnerCharacterMovement)
+	{
+		return OwnerCharacterMovement->IsFalling();
+	}
+
+	return false;
+}
+
+bool URAnimInstance::SetSpeed()
+{
+	
+}
+
+bool URAnimInstance::SetPitch()
+{
+}
+
+bool URAnimInstance::SetYaw()
+{
+}
+
+bool URAnimInstance::SetRoll()
+{
 }

@@ -6,6 +6,7 @@
 #include "Animation/AnimInstance.h"
 #include "RAnimInstance.generated.h"
 
+class UCharacterMovementComponent;
 class URAttributeComponent;
 /**
  * 
@@ -19,11 +20,45 @@ public:
 	URAttributeComponent* SetAttributeComponent(APawn* pawn);
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	bool SetIsAlive(APawn* pawn);
+	UPawnMovementComponent* SetCharacterMovementComponent(APawn* pawn);
+
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetIsAlive();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetIsStunned();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetIsSprint();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetIsInAir();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetSpeed();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetPitch();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetYaw();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetRoll();
+
+	
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")
+	APawn* PawnOwner;
+	
+	UPROPERTY(BlueprintReadWrite,Category="Component")
 	URAttributeComponent* OwnerAttributeComponent;
+
+	UPROPERTY(BlueprintReadWrite,Category="Component")
+	UPawnMovementComponent* OwnerCharacterMovement;
+	
 	UPROPERTY(BlueprintReadWrite,Category="CharacterInfo")
 	float Speed;
 
