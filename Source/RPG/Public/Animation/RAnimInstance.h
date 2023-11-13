@@ -42,7 +42,10 @@ public:
 	FRotator SetRotation();
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	float SetYawDelta();
+	float SetYawDelta(float DeltaTime);
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	FRotator SetRotationLastTick();
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")

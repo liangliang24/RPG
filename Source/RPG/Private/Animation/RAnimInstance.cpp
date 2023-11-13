@@ -88,4 +88,27 @@ FRotator URAnimInstance::SetRotation()
 	
 }
 
+float URAnimInstance::SetYawDelta(float DeltaTime)
+{
+	if (!PawnOwner)
+	{
+		return 0.0f;
+	}
+	float Target =
+		UKismetMathLibrary::NormalizedDeltaRotator(RotationLastTick,
+			PawnOwner->GetActorRotation()).Yaw /
+		DeltaTime / 10;
+
+	return UKismetMathLibrary::FInterpTo(YawDelta,Target,DeltaTime,6);
+}
+
+
+FRotator URAnimInstance::SetRotationLastTick()
+{
+	if (!PawnOwner)
+	{
+		return FRotator::ZeroRotator;
+	}
+	return PawnOwner->GetActorRotation();
+}
 
