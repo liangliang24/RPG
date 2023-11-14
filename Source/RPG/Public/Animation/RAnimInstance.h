@@ -21,7 +21,6 @@ public:
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	UPawnMovementComponent* SetCharacterMovementComponent(APawn* pawn);
-
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool SetIsAlive();
