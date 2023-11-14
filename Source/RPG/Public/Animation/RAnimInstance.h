@@ -49,6 +49,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool SetIsAcceleration();
+
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")
@@ -95,6 +96,7 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
 	bool IsSprinting;
+
 private:
 	
 };
