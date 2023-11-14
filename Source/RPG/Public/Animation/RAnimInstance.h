@@ -46,6 +46,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	FRotator SetRotationLastTick();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetIsAcceleration();
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")

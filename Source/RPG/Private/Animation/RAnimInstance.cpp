@@ -4,6 +4,7 @@
 #include "Animation/RAnimInstance.h"
 
 #include "RAttributeComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -110,5 +111,17 @@ FRotator URAnimInstance::SetRotationLastTick()
 		return FRotator::ZeroRotator;
 	}
 	return PawnOwner->GetActorRotation();
+}
+
+bool URAnimInstance::SetIsAcceleration()
+{
+	UCharacterMovementComponent* MovementComponent = Cast<UCharacterMovementComponent>(OwnerCharacterMovement);
+
+	if (MovementComponent)
+	{
+		return MovementComponent->GetCurrentAcceleration().Length() > 0;
+	}
+
+	return false;
 }
 
