@@ -56,7 +56,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 		{
 			if(action->CanStart(instigator))
 			{
-				UE_LOG(LogTemp,Log,TEXT("Find Action"));
+				//UE_LOG(LogTemp,Log,TEXT("Find Action"));
 				if (action->hasPreAction)
 				{
 					action->PreAction(instigator);
@@ -68,6 +68,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 				//action->StartAction(instigator);
 				return true;
 			}
+			break;
 		}
 	}
 	return false;
@@ -79,12 +80,13 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 	{
 		if (action&&action->ActionName == actionName)
 		{
-			ServerStopAction(instigator,action);
-			/*if (action->IsRunning())
+			
+			if (action->IsRunning())
 			{
-				action->StopAction(instigator);
+				ServerStopAction(instigator,action);
+				//action->StopAction(instigator);
                 return true;
-			}*/
+			}
 			
 		}
 	}
@@ -145,18 +147,18 @@ void URActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	
 	// ...
 
-	/*for (URAction* action:actions)
+	for (URAction* action:actions)
 	{
 		FColor textColor = action->IsRunning() ? FColor::Blue : FColor::White;
 
 		FString actionMsg = FString::Printf(TEXT("[%s] Action: %s : IsRunning: %s : Outer: %s"),
 			*GetNameSafe(GetOwner()),
-			*action->actionName.ToString(),
+			*action->ActionName.ToString(),
 			action->IsRunning() ? TEXT("True") : TEXT("False"),
 			*GetNameSafe(action->GetOuter()));
 
 		LogOnScreen(this,actionMsg,textColor, 0.0f);
-	}*/
+	}
 }
 
 bool URActionComponent::ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch,

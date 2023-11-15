@@ -77,9 +77,10 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 
 	if (comp->activeGameplayTags.HasAny(blockedTags))
 	{
+		UE_LOG(LogTemp,Log,TEXT("Block, Can't Start"));
 		return false;
 	}
-
+	UE_LOG(LogTemp,Log,TEXT("Can Start"));
 	return true;
 }
 
