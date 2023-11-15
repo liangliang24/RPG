@@ -3,8 +3,6 @@
 
 #include "RCharacter.h"
 
-#include <string>
-
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "ObjectStringName.h"
@@ -14,6 +12,7 @@
 #include "RInputMoveConfig.h"
 #include "RInteractionComponent.h"
 #include "RPlayerState.h"
+#include "Animation/RAnimInstance.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -232,7 +231,15 @@ void ARCharacter::PostInitializeComponents()
 
 void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
 {
-	Jump();
+	//UE_LOG(LogTemp,Log,TEXT("Input_Jump"));
+	//ActionComp->StartActionByName(this,"Jump");
+	if (!attributeComp->IsSprintting())
+	{
+		Jump();
+	}
+	
+	
+	
 	//SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
 	
 }
@@ -337,34 +344,3 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->QStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStop);
 	
 }
-
-
-/*void ARCharacter::SetALSMovementAction_Implementation(EMovementAction NewMovementAction)
-{
-	IRALS_Interface::SetALSMovementAction_Implementation(NewMovementAction);
-
-	if(NewMovementAction!=MovementAction)
-	{
-		//LogOnScreen(this,"MovementActionChanged");
-		MovementAction = NewMovementAction;
-	}
-	else
-	{
-		//LogOnScreen(this,"MovementActionNotChanged");
-	}
-}
-
-void ARCharacter::SetALSMovementState_Implementation(EMovementState NewMovementState)
-{
-	IRALS_Interface::SetALSMovementState_Implementation(NewMovementState);
-
-	if (NewMovementState != MovementState)
-	{
-		LogOnScreen(this,"MovementStateChanged");
-	}
-	else
-	{
-		LogOnScreen(this,"MovementStateNotChanged");
-	}
-}*/
-

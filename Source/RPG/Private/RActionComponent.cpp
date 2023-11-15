@@ -56,6 +56,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 		{
 			if(action->CanStart(instigator))
 			{
+				UE_LOG(LogTemp,Log,TEXT("Find Action"));
 				if (action->hasPreAction)
 				{
 					action->PreAction(instigator);
