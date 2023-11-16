@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InputAction.h"
+#include "RAction.h"
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
@@ -52,6 +53,7 @@ protected:
 	TSubclassOf<UUserWidget> playerUIClass;
 	UPROPERTY(EditAnywhere)
 	const UInputAction* IA_P;
+
 
 
 	// Called when the game starts or when spawned
@@ -153,12 +155,21 @@ public:
 
 	UFUNCTION()
 	void OnCreditChanged(AActor* InstigatorActor, URAttributeComponent* OwningComp, int NewCredit, int Delta);
-	
+
+	UFUNCTION()
+	void OnActionStart(URActionComponent* OwningComp, URAction* Action);
+	UFUNCTION()
+	void OnActionStop(URActionComponent* OwningComp, URAction* Action);
 	virtual void PostInitializeComponents() override;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool PressF;
+	bool PressE;
+	bool PressQ;
+	bool PressR;
+	bool PressLeftbutton;
 
 	/*
 	 * 绑定事件，当血量属性发生变化时被调用

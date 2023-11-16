@@ -55,7 +55,8 @@ protected:
 public:
 
 	bool hasPreAction;
-	
+
+	char ActionKey;
 	
 	UFUNCTION(BlueprintNativeEvent, Category="Action")
 	void PreAction(AActor* instigator);

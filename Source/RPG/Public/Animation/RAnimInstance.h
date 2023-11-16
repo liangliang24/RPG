@@ -16,6 +16,7 @@ class RPG_API URAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
+	URAnimInstance();
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	URAttributeComponent* SetAttributeComponent(APawn* pawn);
 	
@@ -49,6 +50,20 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool SetIsAcceleration();
 
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetFAction();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetEAction();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetQAction();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetRAction();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool SetLeftButtonAction();
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")
@@ -95,6 +110,21 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
 	bool IsSprinting;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
+	bool FAction;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
+	bool EAction;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
+	bool QAction;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
+	bool RAction;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
+	bool LeftButtonAction;
 
 private:
 	

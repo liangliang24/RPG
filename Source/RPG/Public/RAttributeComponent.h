@@ -95,6 +95,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Attributes")
 	bool ApplyRageChange(AActor* instigatorActor, int delta);
+
+	UFUNCTION()
+	void OnActionStart(URActionComponent* OwningComp,URAction* Action);
 	
 	float GetHealth();
 

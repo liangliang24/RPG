@@ -4,9 +4,15 @@
 #include "Animation/RAnimInstance.h"
 
 #include "RAttributeComponent.h"
+#include "RCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+
+URAnimInstance::URAnimInstance()
+{
+	FAction = false;
+}
 
 URAttributeComponent* URAnimInstance::SetAttributeComponent(APawn* pawn)
 {
@@ -125,3 +131,52 @@ bool URAnimInstance::SetIsAcceleration()
 	return false;
 }
 
+bool URAnimInstance::SetFAction()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->PressF;
+	}
+	return false;
+}
+
+bool URAnimInstance::SetEAction()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->PressE;
+	}
+	return false;
+}
+
+bool URAnimInstance::SetQAction()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->PressQ;
+	}
+	return false;
+}
+
+bool URAnimInstance::SetRAction()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->PressR;
+	}
+	return false;
+}
+
+bool URAnimInstance::SetLeftButtonAction()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->PressLeftbutton;
+	}
+	return false;
+}

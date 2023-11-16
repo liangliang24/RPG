@@ -31,7 +31,7 @@ void URAction::StartAction_Implementation(AActor* Instigator)
 
 	repData.bIsRunning = true;
 	repData.instigator = Instigator;
-	
+	Comp->OnActionStarted.Broadcast(Comp,this);
 }
 
 void URAction::StopAction_Implementation(AActor* instigator)
@@ -45,13 +45,14 @@ void URAction::StopAction_Implementation(AActor* instigator)
 	Comp->activeGameplayTags.RemoveTags(grantTags);
 
 	repData.bIsRunning = false;
+	Comp->OnActionStoped.Broadcast(Comp,this);
 }
 
 URAction::URAction()
 {
 	bAutoStart = false;
 	hasPreAction = false;
-	
+	ActionKey = ' ';
 }
 
 URActionComponent* URAction::GetOwningComponent() const

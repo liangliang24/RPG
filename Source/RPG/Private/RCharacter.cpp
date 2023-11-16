@@ -43,6 +43,12 @@ ARCharacter::ARCharacter()
 
 	
     bUseControllerRotationYaw = false;
+
+	PressF = false;
+	PressE = false;
+	PressQ = false;
+	PressR = false;
+	PressLeftbutton = false;
 }
 
 // Called when the game starts or when spawned
@@ -157,8 +163,6 @@ void ARCharacter::PrimaryInteract()
 
 void ARCharacter::Dash_Start()
 {
-	
-
 	ActionComp->StartActionByName(this,Gideon_Portal);
 }
 
@@ -214,6 +218,50 @@ void ARCharacter::OnCreditChanged(AActor* InstigatorActor, URAttributeComponent*
 	}
 }
 
+void ARCharacter::OnActionStart(URActionComponent* OwningComp, URAction* Action)
+{
+	switch (Action->ActionKey)
+	{
+	case 'F':
+		PressF = true;
+		break;
+	case 'E':
+		PressE = true;
+		break;
+	case 'Q':
+		PressQ = true;
+		break;
+	case 'R':
+		PressR = true;
+		break;
+	default:
+		PressLeftbutton = true;
+			
+	}
+}
+
+void ARCharacter::OnActionStop(URActionComponent* OwningComp, URAction* Action)
+{
+	switch (Action->ActionKey)
+	{
+	case 'F':
+		PressF = false;
+		break;
+	case 'E':
+		PressE = false;
+		break;
+	case 'Q':
+		PressQ = false;
+		break;
+	case 'R':
+		PressR = false;
+		break;
+	default:
+		PressLeftbutton = false;
+			
+	}
+}
+
 void ARCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -221,8 +269,10 @@ void ARCharacter::PostInitializeComponents()
 	attributeComp->OnHealthChange.AddDynamic(this,&ARCharacter::OnHealthChange);
 
 	attributeComp->OnCreditChanged.AddDynamic(this,&ARCharacter::OnCreditChanged);
-
 	
+	ActionComp->OnActionStarted.AddDynamic(this,&ARCharacter::OnActionStart);
+
+	ActionComp->OnActionStoped.AddDynamic(this,&ARCharacter::OnActionStop);
 	
 	//UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(GetController()->GetComponentByClass(UEnhancedInputComponent::StaticClass()));
 	

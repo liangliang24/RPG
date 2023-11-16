@@ -35,7 +35,7 @@ void URAction_Aim_Gideon_E_Ability::StopAction_Implementation(AActor* instigator
 
 void URAction_Aim_Gideon_E_Ability::NetMulticastAnimMontage_Implementation(ARCharacter* Instigator)
 {
-	Instigator->PlayAnimMontage(SpawnAnimMontage);
+	//Instigator->PlayAnimMontage(SpawnAnimMontage);
 }
 
 

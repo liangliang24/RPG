@@ -12,6 +12,7 @@
 URAction_Gideon_Portal::URAction_Gideon_Portal()
 {
 	ActionName = "Gideon_Portal";
+	ActionKey = 'F';
 }
 
 void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
@@ -57,7 +58,7 @@ void URAction_Gideon_Portal::StopAction_Implementation(AActor* instigator)
 
 void URAction_Gideon_Portal::NetMulticast_PlayAnimMontage_Implementation(ARCharacter* Instigator)
 {
-	Instigator->PlayAnimMontage(Anim);
+	//Instigator->PlayAnimMontage(Anim);
 }
 
 

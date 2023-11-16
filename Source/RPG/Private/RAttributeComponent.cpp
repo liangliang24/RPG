@@ -153,6 +153,10 @@ bool URAttributeComponent::ApplyRageChange(AActor* instigatorActor, int delta)
 	return true;
 }
 
+void URAttributeComponent::OnActionStart(URActionComponent* OwningComp, URAction* Action)
+{
+}
+
 float URAttributeComponent::GetHealth()
 {
 	return health;
