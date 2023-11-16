@@ -22,10 +22,14 @@ void URAction_Gideon_Portal::StartAction_Implementation(AActor* instigator)
 void URAction_Gideon_Portal::SpawnPortal_Implementation(ARCharacter* Instigator)
 {
 	FVector Portal1Location = Instigator->GetMesh()->GetSocketLocation(Gideon_HandSocketName);
-	Portal1Location.Z-=50;
-	ARGideon_Portal* Portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,Portal1Location,Instigator->cameraComp->GetComponentRotation());
-	ARGideon_Portal* Portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,ResultLocation,Instigator->cameraComp->GetComponentRotation());
-
+	FRotator SpawnRotator = Instigator->cameraComp->GetComponentRotation();
+	SpawnRotator.Pitch = 0;
+	FActorSpawnParameters spawnParam;
+	spawnParam.Instigator = Instigator;
+	spawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	ARGideon_Portal* Portal1 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,Portal1Location,SpawnRotator);
+	ARGideon_Portal* Portal2 = GetWorld()->SpawnActor<ARGideon_Portal>(Portal,ResultLocation + FVector(0,0,50.0f),SpawnRotator);
+	UE_LOG(LogTemp,Log,TEXT("%f,%f,%f"),ResultLocation.X,ResultLocation.Y,ResultLocation.Z);
 	Portal1->BindingPortal = Portal2;
 	Portal2->BindingPortal = Portal1;
 }
