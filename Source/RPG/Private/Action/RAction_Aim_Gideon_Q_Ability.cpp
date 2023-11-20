@@ -9,6 +9,7 @@
 URAction_Aim_Gideon_Q_Ability::URAction_Aim_Gideon_Q_Ability()
 {
 	ActionName = Gideon_QAbility;
+	ActionKey = 'Q';
 }
 
 void URAction_Aim_Gideon_Q_Ability::StartAction_Implementation(AActor* instigator)

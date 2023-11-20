@@ -28,7 +28,7 @@ protected:
 	TSubclassOf<AActor> BlackHole;
 
 	UPROPERTY(EditDefaultsOnly)
-	UAnimMontage* SpawnAnimMontage;
+	UAnimMontage* StopActionAnimMontage;
 
 	UFUNCTION(NetMulticast,Reliable)
 	void NetMulticastAnimMontage(ARCharacter* Instigator);

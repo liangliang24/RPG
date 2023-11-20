@@ -11,6 +11,7 @@
 URAction_Aim_Gideon_E_Ability::URAction_Aim_Gideon_E_Ability()
 {
 	ActionName = Gideon_BlackHole;
+	ActionKey = 'E';
 }
 
 void URAction_Aim_Gideon_E_Ability::StartAction_Implementation(AActor* instigator)
@@ -30,12 +31,12 @@ void URAction_Aim_Gideon_E_Ability::StopAction_Implementation(AActor* instigator
 	ARCharacter* owner = Cast<ARCharacter>(instigator);
 	NetMulticastAnimMontage(owner);
 	FTimerHandle SpawnBlackHole_TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(SpawnBlackHole_TimerHandle,this,&URAction_Aim_Gideon_E_Ability::SpawnBlackHole,0.17,false);
+	GetWorld()->GetTimerManager().SetTimer(SpawnBlackHole_TimerHandle,this,&URAction_Aim_Gideon_E_Ability::SpawnBlackHole,0.24,false);
 }
 
 void URAction_Aim_Gideon_E_Ability::NetMulticastAnimMontage_Implementation(ARCharacter* Instigator)
 {
-	//Instigator->PlayAnimMontage(SpawnAnimMontage);
+	//Instigator->PlayAnimMontage(StopActionAnimMontage);
 }
 
 
