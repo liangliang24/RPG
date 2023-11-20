@@ -23,7 +23,7 @@ URActionComponent::URActionComponent()
 void URActionComponent::ServerStopAction_Implementation(AActor* instigator, URAction* action)
 {
 	action->StopAction(instigator);
-	OnActionStoped.Broadcast(this,action);
+	//OnActionStoped.Broadcast(this,action);
 }
 
 void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* instigator)
@@ -84,6 +84,7 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 			if (action->IsRunning())
 			{
 				ServerStopAction(instigator,action);
+				OnActionStoped.Broadcast(this,action);
 				//action->StopAction(instigator);
                 return true;
 			}
