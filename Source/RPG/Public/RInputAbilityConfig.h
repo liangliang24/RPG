@@ -40,7 +40,9 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	UInputAction* QStop_Ability;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* R_Ability;
 	
-	
-	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	UInputAction* RStop_Ability;
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "InputAction.h"
-#include "RAction.h"
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
@@ -187,7 +186,9 @@ public:
 	void CharacterSpeedSet(float Speed);
 	void Q_AbilityStart(const FInputActionValue& InputActionValue);
 	void Q_AbilityStop(const FInputActionValue& InputActionValue);
-	
+
+	void R_AbilityStart(const FInputActionValue& InputActionValue);
+	void R_AbilityStop(const FInputActionValue& InputActionValue);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

@@ -331,6 +331,16 @@ void ARCharacter::Q_AbilityStop(const FInputActionValue& InputActionValue)
 	ActionComp->StopActionByName(this,Gideon_QAbility);
 }
 
+void ARCharacter::R_AbilityStart(const FInputActionValue& InputActionValue)
+{
+	ActionComp->StartActionByName(this,Gideon_RAbility);
+}
+
+void ARCharacter::R_AbilityStop(const FInputActionValue& InputActionValue)
+{
+	ActionComp->StopActionByName(this,Gideon_RAbility);
+}
+
 // Called to bind functionality to input
 void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -392,5 +402,6 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->EStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::BlackHole_Stop);
 	Input->BindAction(InputAbilityAction->Q_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStart);
 	Input->BindAction(InputAbilityAction->QStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStop);
-	
+	Input->BindAction(InputAbilityAction->R_Ability,ETriggerEvent::Triggered,this,&ARCharacter::R_AbilityStart);
+	Input->BindAction(InputAbilityAction->RStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::R_AbilityStop);
 }
