@@ -83,6 +83,7 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 			
 			if (action->IsRunning())
 			{
+				LogOnScreen(this,"Stop");
 				ServerStopAction(instigator,action);
 				OnActionStoped.Broadcast(this,action);
 				//action->StopAction(instigator);

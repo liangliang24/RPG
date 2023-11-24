@@ -16,4 +16,16 @@ class RPG_API URAction_Gideon_R_Ability : public URAction_Aim
 
 public:
 	URAction_Gideon_R_Ability();
+
+	virtual void StartAction_Implementation(AActor* instigator) override;
+	virtual void StopAction_Implementation(AActor* instigator) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly,Category="Animation")
+	UAnimMontage* AnimStart;
+	UPROPERTY(EditDefaultsOnly,Category="Animation")
+	UAnimMontage* AnimLoop;
+	
+	UFUNCTION(NetMulticast,Reliable)
+	void  NetMulticastAnimMontage(ACharacter* Instigator, UAnimMontage* AnimToPlay);
 };
