@@ -22,6 +22,8 @@ public:
 	virtual void StopAction_Implementation(AActor* instigator) override;
 
 protected:
+	UPROPERTY(EditDefaultsOnly)
+	UParticleSystem* BlackHole;
 	UPROPERTY(EditDefaultsOnly,Category="Animation")
 	UAnimMontage* AnimStart;
 	UPROPERTY(EditDefaultsOnly,Category="Animation")
@@ -29,10 +31,13 @@ protected:
 	FTimerHandle DamageRepeatlyHandle;
 	UFUNCTION(NetMulticast,Reliable)
 	void NetMulticastAnimMontage(ACharacter* Instigator, UAnimMontage* AnimToPlay);
-
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMulticastEmitter(FVector SpawnLocation);
 	UFUNCTION()
 	void DamageRepeatly(ACharacter* Instigator);
 
 	UFUNCTION()
 	void StopDamage();
 };
+
+

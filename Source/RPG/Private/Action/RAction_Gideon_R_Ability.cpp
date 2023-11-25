@@ -6,6 +6,7 @@
 #include "RAttributeComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "RPG/RPG.h"
@@ -46,10 +47,16 @@ void URAction_Gideon_R_Ability::StopAction_Implementation(AActor* instigator)
 	}
 
 	FTimerDelegate DamageRepeatlyDelegate;
+	NetMulticastEmitter(instigator->GetActorLocation()+FVector(0,0,100));
 	DamageRepeatlyDelegate.BindUFunction(this,"DamageRepeatly",InstigatorCharacter);
 	GetWorld()->GetTimerManager().SetTimer(DamageRepeatlyHandle,DamageRepeatlyDelegate,0.2,true);
 	FTimerHandle StopDamageHandle;
 	GetWorld()->GetTimerManager().SetTimer(StopDamageHandle,this,&URAction_Gideon_R_Ability::StopDamage,5,false,5);
+}
+
+void URAction_Gideon_R_Ability::NetMulticastEmitter_Implementation(FVector SpawnLocation)
+{
+	UGameplayStatics::SpawnEmitterAtLocation(this,BlackHole,SpawnLocation);
 }
 
 void URAction_Gideon_R_Ability::DamageRepeatly(ACharacter* Instigator)
@@ -74,7 +81,7 @@ void URAction_Gideon_R_Ability::DamageRepeatly(ACharacter* Instigator)
 			if (iAttribtueComp)
 			{
 				iAttribtueComp->ApplyHealthChange(Instigator,-10);
-				DrawDebugSphere(GetWorld(),i.ImpactPoint,30,8,FColor::Purple,false,2,0,1);
+				//DrawDebugSphere(GetWorld(),i.ImpactPoint,30,8,FColor::Purple,false,2,0,1);
 
 			}
 		}
