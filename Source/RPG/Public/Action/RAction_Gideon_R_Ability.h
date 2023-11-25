@@ -6,6 +6,7 @@
 #include "RAction_Aim.h"
 #include "RAction_Gideon_R_Ability.generated.h"
 
+class UCapsuleComponent;
 /**
  * 
  */
@@ -25,7 +26,13 @@ protected:
 	UAnimMontage* AnimStart;
 	UPROPERTY(EditDefaultsOnly,Category="Animation")
 	UAnimMontage* AnimLoop;
-	
+	FTimerHandle DamageRepeatlyHandle;
 	UFUNCTION(NetMulticast,Reliable)
-	void  NetMulticastAnimMontage(ACharacter* Instigator, UAnimMontage* AnimToPlay);
+	void NetMulticastAnimMontage(ACharacter* Instigator, UAnimMontage* AnimToPlay);
+
+	UFUNCTION()
+	void DamageRepeatly(ACharacter* Instigator);
+
+	UFUNCTION()
+	void StopDamage();
 };

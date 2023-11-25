@@ -3,6 +3,8 @@
 
 #include "Action/RAction_Gideon_R_Ability.h"
 
+#include "RAttributeComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -12,6 +14,7 @@ URAction_Gideon_R_Ability::URAction_Gideon_R_Ability()
 {
 	ActionName = "Gideon_RAbility";
 	ActionKey = 'R';
+	
 }
 
 void URAction_Gideon_R_Ability::StartAction_Implementation(AActor* instigator)
@@ -41,6 +44,47 @@ void URAction_Gideon_R_Ability::StopAction_Implementation(AActor* instigator)
 		GetWorld()->GetTimerManager().SetTimer(AnimLoopTimerHandle,AnimLoopTimerDelegate,3.6,false,3.6);
 		
 	}
+
+	FTimerDelegate DamageRepeatlyDelegate;
+	DamageRepeatlyDelegate.BindUFunction(this,"DamageRepeatly",InstigatorCharacter);
+	GetWorld()->GetTimerManager().SetTimer(DamageRepeatlyHandle,DamageRepeatlyDelegate,0.2,true);
+	FTimerHandle StopDamageHandle;
+	GetWorld()->GetTimerManager().SetTimer(StopDamageHandle,this,&URAction_Gideon_R_Ability::StopDamage,5,false,5);
+}
+
+void URAction_Gideon_R_Ability::DamageRepeatly(ACharacter* Instigator)
+{
+	TArray<FHitResult> OutHits;
+	FVector Start;
+	Start = Instigator->GetActorLocation();
+	FVector End = Start;
+	FCollisionShape CollisionShape;
+	CollisionShape.SetCapsule(400,300);
+	UE_LOG(LogTemp,Log,TEXT("5"));
+	FCollisionQueryParams CollisionQueryParams;
+	CollisionQueryParams.AddIgnoredActor(Instigator);
+	GetWorld()->SweepMultiByChannel(OutHits,Start,End,FQuat::Identity,ECC_Pawn,CollisionShape,CollisionQueryParams);
+
+	for(FHitResult& i:OutHits)
+	{
+		AActor* HitPawn = i.GetActor();
+		if (HitPawn)
+		{
+			URAttributeComponent* iAttribtueComp = Cast<URAttributeComponent>(HitPawn->GetComponentByClass(URAttributeComponent::StaticClass()));
+			if (iAttribtueComp)
+			{
+				iAttribtueComp->ApplyHealthChange(Instigator,-10);
+				DrawDebugSphere(GetWorld(),i.ImpactPoint,30,8,FColor::Purple,false,2,0,1);
+
+			}
+		}
+	}
+}
+
+void URAction_Gideon_R_Ability::StopDamage()
+{
+	LogOnScreen(this,FString("StopDamage"));
+	GetWorld()->GetTimerManager().ClearTimer(DamageRepeatlyHandle);
 }
 
 void URAction_Gideon_R_Ability::NetMulticastAnimMontage_Implementation(ACharacter* Instigator, UAnimMontage* AnimToPlay)
