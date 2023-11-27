@@ -38,7 +38,7 @@ void URAction_Aim::StopAction_Implementation(AActor* instigator)
 	{
 		ResultLocation+=ResultLocationBias;
 	}
-	LogOnScreen(this,(TEXT("SpawnLocation:%s"),ResultLocation.ToString()));
+	//LogOnScreen(this,(TEXT("SpawnLocation:%s"),ResultLocation.ToString()));
 }
 
 void URAction_Aim::SpawnDecalActor_Implementation(ARCharacter* Instigator)

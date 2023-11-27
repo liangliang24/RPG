@@ -2,8 +2,10 @@
 
 
 #include "RAction.h"
-
 #include "RActionComponent.h"
+#include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
 
@@ -32,6 +34,7 @@ void URAction::StartAction_Implementation(AActor* Instigator)
 	repData.bIsRunning = true;
 	repData.instigator = Instigator;
 	Comp->OnActionStarted.Broadcast(Comp,this);
+	//LogOnScreen(this,FString::Printf(TEXT("time between:%s"),*UKismetStringLibrary::Conv_DoubleToString(GetWorld()->GetTimeSeconds()-LastTimeStart)));
 }
 
 void URAction::StopAction_Implementation(AActor* instigator)
@@ -46,6 +49,7 @@ void URAction::StopAction_Implementation(AActor* instigator)
 
 	repData.bIsRunning = false;
 	Comp->OnActionStoped.Broadcast(Comp,this);
+	LastTimeStart = GetWorld()->GetTimeSeconds();
 }
 
 URAction::URAction()
@@ -53,6 +57,7 @@ URAction::URAction()
 	bAutoStart = false;
 	hasPreAction = false;
 	ActionKey = ' ';
+	LastTimeStart = 0.0f;
 }
 
 URActionComponent* URAction::GetOwningComponent() const
@@ -76,12 +81,17 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 {
 	URActionComponent* comp = GetOwningComponent();
 
-	if (comp->activeGameplayTags.HasAny(blockedTags))
+	float CurTime = UGameplayStatics::GetGameState(this)->GetServerWorldTimeSeconds();
+	if ((LastTimeStart != 0&&CurTime-LastTimeStart < CD)
+		||comp->activeGameplayTags.HasAny(blockedTags))
 	{
-		UE_LOG(LogTemp,Log,TEXT("Block, Can't Start"));
+		/*LogOnScreen(this,FString::Printf(TEXT("CurTime:%s,LastTimeStart:%s,Rest:%s"),
+			*UKismetStringLibrary::Conv_DoubleToString(CurTime),
+			*UKismetStringLibrary::Conv_DoubleToString(LastTimeStart),
+			*UKismetStringLibrary::Conv_DoubleToString(CD-(CurTime-LastTimeStart))));*/
 		return false;
 	}
-	UE_LOG(LogTemp,Log,TEXT("Can Start"));
+	LogOnScreen(this,"Can Start");
 	return true;
 }
 
@@ -147,6 +157,7 @@ void URAction::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetime
 
 	DOREPLIFETIME(URAction,repData);
 	DOREPLIFETIME(URAction,actionComp);
+	DOREPLIFETIME(URAction,LastTimeStart);
 }
 
 

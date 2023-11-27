@@ -29,12 +29,19 @@ UCLASS(Blueprintable)
 class RPG_API URAction : public UObject
 {
 	GENERATED_BODY()
+public:
+	URAction();
 protected:
+	UPROPERTY(EditDefaultsOnly)
+	float CD;
 
+	UPROPERTY(Replicated)
+	float LastTimeStart;
+	
 	UPROPERTY(Replicated)
 	URActionComponent* actionComp;
 	
-	URAction();
+	
 	
 	UFUNCTION(BlueprintCallable, Category="Action")
 	URActionComponent* GetOwningComponent() const;
