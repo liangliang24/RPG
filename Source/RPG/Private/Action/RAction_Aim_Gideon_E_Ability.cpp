@@ -22,16 +22,27 @@ void URAction_Aim_Gideon_E_Ability::StartAction_Implementation(AActor* instigato
 void URAction_Aim_Gideon_E_Ability::StopAction_Implementation(AActor* instigator)
 {
 	Super::StopAction_Implementation(instigator);
-
-	if (ResultLocation == FVector::Zero())
+	if (AbilityResult == false)
 	{
-		LogOnScreen(this,"Won't Spawn");
 		return ;
 	}
+	
 	ARCharacter* owner = Cast<ARCharacter>(instigator);
 	NetMulticastAnimMontage(owner);
 	FTimerHandle SpawnBlackHole_TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(SpawnBlackHole_TimerHandle,this,&URAction_Aim_Gideon_E_Ability::SpawnBlackHole,0.24,false);
+}
+
+void URAction_Aim_Gideon_E_Ability::AbilitySuccess_Implementation()
+{
+	Super::AbilitySuccess_Implementation();
+	if (ResultLocation == FVector::Zero())
+	{
+		LogOnScreen(this,"Won't Spawn");
+		AbilityResult = false;
+		return ;
+	}
+	AbilityResult = true;
 }
 
 void URAction_Aim_Gideon_E_Ability::NetMulticastAnimMontage_Implementation(ARCharacter* Instigator)
@@ -42,9 +53,5 @@ void URAction_Aim_Gideon_E_Ability::NetMulticastAnimMontage_Implementation(ARCha
 
 void URAction_Aim_Gideon_E_Ability::SpawnBlackHole_Implementation()
 {
-	
-	
 	GetWorld()->SpawnActor<AActor>(BlackHole,ResultLocation,FRotator::ZeroRotator);
-
-	
 }

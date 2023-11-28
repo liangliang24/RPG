@@ -26,7 +26,7 @@ void URAction_Aim_Gideon_Q_Ability::SpawnMeteor()
 void URAction_Aim_Gideon_Q_Ability::StopAction_Implementation(AActor* instigator)
 {
 	Super::StopAction_Implementation(instigator);
-	if (ResultLocation == FVector::Zero())
+	if (AbilityResult == false)
 	{
 		return ;
 	}
@@ -35,6 +35,19 @@ void URAction_Aim_Gideon_Q_Ability::StopAction_Implementation(AActor* instigator
 	FTimerHandle SpawnMeteor_TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(SpawnMeteor_TimerHandle,this,&URAction_Aim_Gideon_Q_Ability::SpawnMeteor,0.17,false);
 	
+}
+
+void URAction_Aim_Gideon_Q_Ability::AbilitySuccess_Implementation()
+{
+	Super::AbilitySuccess_Implementation();
+	if (ResultLocation == FVector::Zero())
+	{
+		
+		AbilityResult = false;
+		return ;
+	}
+	
+	AbilityResult = true;
 }
 
 void URAction_Aim_Gideon_Q_Ability::NetMulticastAnimMontage_Implementation(ARCharacter* Instigator)

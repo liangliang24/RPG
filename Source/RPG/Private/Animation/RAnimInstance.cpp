@@ -180,3 +180,23 @@ bool URAnimInstance::SetLeftButtonAction()
 	}
 	return false;
 }
+
+bool URAnimInstance::CanESuccess()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->EResult;
+	}
+	return false;
+}
+
+bool URAnimInstance::CanQSuccess()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->QResult;
+	}
+	return false;
+}

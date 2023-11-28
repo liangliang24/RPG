@@ -21,6 +21,8 @@ public:
 
 	
 protected:
+	virtual void AbilitySuccess_Implementation() override;
+	
 	UFUNCTION(Server,Reliable)
 	void SpawnBlackHole();
 	

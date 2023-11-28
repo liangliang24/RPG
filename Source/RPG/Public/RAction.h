@@ -32,6 +32,12 @@ class RPG_API URAction : public UObject
 public:
 	URAction();
 protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void AbilitySuccess();
+
+	UFUNCTION(NetMulticast,Reliable)
+	void SetAbilityResult(bool in);
+	
 	UPROPERTY(EditDefaultsOnly)
 	float CD;
 
@@ -60,7 +66,9 @@ protected:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:
-
+	UPROPERTY(Replicated)
+	bool AbilityResult;
+	
 	bool hasPreAction;
 
 	char ActionKey;

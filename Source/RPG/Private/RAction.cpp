@@ -5,7 +5,6 @@
 #include "RActionComponent.h"
 #include "GameFramework/GameStateBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
 #include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
 
@@ -48,8 +47,14 @@ void URAction::StopAction_Implementation(AActor* instigator)
 	Comp->activeGameplayTags.RemoveTags(grantTags);
 
 	repData.bIsRunning = false;
+	AbilitySuccess();
+	//LogOnScreen(this,FString::Printf(TEXT("Result:%s"),AbilityResult?TEXT("true"):TEXT("false")));
 	Comp->OnActionStoped.Broadcast(Comp,this);
-	LastTimeStart = GetWorld()->GetTimeSeconds();
+	if (AbilityResult)
+	{
+		LastTimeStart = GetWorld()->GetTimeSeconds();
+	}
+	
 }
 
 URAction::URAction()
@@ -58,6 +63,15 @@ URAction::URAction()
 	hasPreAction = false;
 	ActionKey = ' ';
 	LastTimeStart = 0.0f;
+}
+
+void URAction::SetAbilityResult_Implementation(bool in)
+{
+	AbilityResult = in;
+}
+
+void URAction::AbilitySuccess_Implementation()
+{
 }
 
 URActionComponent* URAction::GetOwningComponent() const
@@ -155,9 +169,10 @@ void URAction::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(URAction,repData);
-	DOREPLIFETIME(URAction,actionComp);
-	DOREPLIFETIME(URAction,LastTimeStart);
+	DOREPLIFETIME(URAction,repData)
+	DOREPLIFETIME(URAction,actionComp)
+	DOREPLIFETIME(URAction,LastTimeStart)
+	DOREPLIFETIME(URAction,AbilityResult)
 }
 
 

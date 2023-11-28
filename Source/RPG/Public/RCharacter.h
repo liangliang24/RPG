@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "RCharacter.generated.h"
 
+class URAction;
 class URInputAbilityConfig;
 class URInputMoveConfig;
 class UShowingAimTarget;
@@ -15,6 +16,21 @@ class URAttributeComponent;
 class URInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
+
+USTRUCT()
+struct FRAbilityState
+{
+	GENERATED_USTRUCT_BODY()
+	bool PressF;
+	bool PressE;
+	bool PressQ;
+	bool PressR;
+	bool PressLeftbutton;
+	bool FResult;
+	bool EResult;
+	bool QResult;
+	bool RResult;
+};
 
 /*
  * 玩家角色，用于玩家操控
@@ -159,17 +175,35 @@ public:
 	void OnActionStart(URActionComponent* OwningComp, URAction* Action);
 	UFUNCTION()
 	void OnActionStop(URActionComponent* OwningComp, URAction* Action);
+	
+	
 	virtual void PostInitializeComponents() override;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	bool PressF;
-	bool PressE;
-	bool PressQ;
-	bool PressR;
-	bool PressLeftbutton;
+	/*UPROPERTY(Replicated)
+	FRAbilityState AbilityState;*/
 
+	UPROPERTY(Replicated)
+	bool PressF;
+	UPROPERTY(Replicated)
+	bool PressE;
+	UPROPERTY(Replicated)
+	bool PressQ;
+	UPROPERTY(Replicated)
+	bool PressR;
+	UPROPERTY(Replicated)
+	bool PressLeftbutton;
+	UPROPERTY(Replicated)
+	bool FResult;
+	UPROPERTY(Replicated)
+	bool EResult;
+	UPROPERTY(Replicated)
+	bool QResult;
+	UPROPERTY(Replicated)
+	bool RResult;
+	
 	/*
 	 * 绑定事件，当血量属性发生变化时被调用
 	 */
@@ -192,5 +226,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

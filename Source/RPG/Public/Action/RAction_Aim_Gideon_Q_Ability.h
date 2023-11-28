@@ -30,5 +30,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> Damage_Meteor;
+	
+	virtual void AbilitySuccess_Implementation() override;
 private:
 };

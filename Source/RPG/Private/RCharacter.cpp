@@ -17,6 +17,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "RPG/RPG.h"
 
 
@@ -44,11 +45,13 @@ ARCharacter::ARCharacter()
 	
     bUseControllerRotationYaw = false;
 
+	
 	PressF = false;
 	PressE = false;
 	PressQ = false;
 	PressR = false;
 	PressLeftbutton = false;
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned
@@ -246,15 +249,19 @@ void ARCharacter::OnActionStop(URActionComponent* OwningComp, URAction* Action)
 	{
 	case 'F':
 		PressF = false;
+		FResult = Action->AbilityResult;
 		break;
 	case 'E':
 		PressE = false;
+		EResult = Action->AbilityResult;
 		break;
 	case 'Q':
 		PressQ = false;
+		QResult = Action->AbilityResult;
 		break;
 	case 'R':
 		PressR = false;
+		RResult = Action->AbilityResult;
 		break;
 	default:
 		PressLeftbutton = false;
@@ -287,9 +294,6 @@ void ARCharacter::Input_Jump(const FInputActionValue& InputActionValue)
 	{
 		Jump();
 	}
-	
-	
-	
 	//SetALSMovementAction_Implementation(EMovementAction::ALS_MovementAction_Jump);
 	
 }
@@ -404,4 +408,20 @@ void ARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Input->BindAction(InputAbilityAction->QStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::Q_AbilityStop);
 	Input->BindAction(InputAbilityAction->R_Ability,ETriggerEvent::Triggered,this,&ARCharacter::R_AbilityStart);
 	Input->BindAction(InputAbilityAction->RStop_Ability,ETriggerEvent::Triggered,this,&ARCharacter::R_AbilityStop);
+}
+
+void ARCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	//DOREPLIFETIME(ARCharacter,AbilityState);
+	DOREPLIFETIME(ARCharacter,PressE);
+	DOREPLIFETIME(ARCharacter,PressF);
+	DOREPLIFETIME(ARCharacter,PressQ);
+	DOREPLIFETIME(ARCharacter,PressR);
+	DOREPLIFETIME(ARCharacter,PressLeftbutton);
+	DOREPLIFETIME(ARCharacter,EResult);
+	DOREPLIFETIME(ARCharacter,FResult);
+	DOREPLIFETIME(ARCharacter,RResult);
+	DOREPLIFETIME(ARCharacter,QResult);
 }

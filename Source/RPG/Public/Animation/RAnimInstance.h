@@ -64,6 +64,13 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool SetLeftButtonAction();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool CanESuccess();
+	
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool CanQSuccess();
+
 protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Component")
@@ -125,6 +132,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="CharacterState")
 	bool LeftButtonAction;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterResult")
+	bool QResult;
 
 private:
 	
