@@ -2,23 +2,27 @@
 
 
 #include "RAction_ProjectileAttack.h"
-
 #include "RCharacter.h"
 #include "RMagicProjectile.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
-#include "RPG/RPG.h"
 
 URAction_ProjectileAttack::URAction_ProjectileAttack()
 {
 	attackAnimDelay = 0.17f;
 
-	handSocketName = "Muzzle_01";
+	handSocketName_1 = "Muzzle_01";
+
+	handSocketName_2 = "Muzzle_02";
 
 	ActionName = "PrimaryAttack";
 
 	hasPreAction = true;
+
+	AbilityResult = true;
+
+	RightAttack = true;
 }
 
 
@@ -30,7 +34,7 @@ void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.Instigator = instigator;
 		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		FVector LocationSpawn = instigator->GetMesh()->GetSocketLocation("Muzzle_01");
+		FVector LocationSpawn = instigator->GetMesh()->GetSocketLocation(RightAttack?handSocketName_1:handSocketName_2);
 		AActor* projectile = GetWorld()->SpawnActor<AActor>(projectileClass,LocationSpawn,(SpawnHit-LocationSpawn).Rotation(),spawnParameters);
 		//DrawDebugLine(GetWorld(),LocationSpawn,SpawnHit,FColor::Red,false,2.0f,0,2);
 		//LogOnScreen(instigator,FString::Printf(TEXT("Spawn Projectile %s"),*GetNameSafe(projectile)));
@@ -43,7 +47,7 @@ void URAction_ProjectileAttack::AttackDelay_Elasped(ARCharacter* instigator)
 
 void URAction_ProjectileAttack::NetMultiCastAnimation_Implementation(ACharacter* instigator)
 {
-	instigator->PlayAnimMontage(attackAnim);
+	instigator->PlayAnimMontage(RightAttack?attackAnim_1:attackAnim_2);
 }
 
 
@@ -72,6 +76,8 @@ void URAction_ProjectileAttack::StopAction_Implementation(AActor* instigator)
 	Super::StopAction_Implementation(instigator);
 
 	GetWorld()->GetTimerManager().ClearTimer(primaryAttackHandle);
+
+	RightAttack = !RightAttack;
 }
 
 
@@ -80,6 +86,7 @@ void URAction_ProjectileAttack::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(URAction_ProjectileAttack,SpawnHit);
+	DOREPLIFETIME(URAction_ProjectileAttack,RightAttack);
 }
 
 
@@ -154,9 +161,10 @@ void URAction_ProjectileAttack::ShowForAllClient_Implementation(AActor* instigat
 	ARCharacter* character = Cast<ARCharacter>(instigator);
 	if (character)
 	{
-		UGameplayStatics::SpawnEmitterAttached(castingEffect,character->GetMesh(),"Muzzle_01",FVector::ZeroVector,FRotator::ZeroRotator,EAttachLocation::SnapToTarget);
+		UGameplayStatics::SpawnEmitterAttached(castingEffect,character->GetMesh(),RightAttack?handSocketName_1:handSocketName_2,FVector::ZeroVector,FRotator::ZeroRotator,EAttachLocation::SnapToTarget);
 	}
-	
+	//RightAttack = !RightAttack;
+
 }
 
 void URAction_ProjectileAttack::OnRep_RepData_Implementation()

@@ -57,7 +57,7 @@ bool URActionComponent::StartActionByName(AActor* instigator, FName actionName)
 			if(action->CanStart(instigator))
 			{
 				//UE_LOG(LogTemp,Log,TEXT("Find Action"));
-				LogOnScreen(this,"Find Action");
+				//LogOnScreen(this,"Find Action");
 				if (action->hasPreAction)
 				{
 					action->PreAction(instigator);
@@ -84,7 +84,7 @@ bool URActionComponent::StopActionByName(AActor* instigator, FName actionName)
 			
 			if (action->IsRunning())
 			{
-				LogOnScreen(this,"Stop");
+				//LogOnScreen(this,"Stop");
 				ServerStopAction(instigator,action);
 				//OnActionStoped.Broadcast(this,action);
 				//action->StopAction(instigator);

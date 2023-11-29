@@ -105,13 +105,13 @@ bool URAction::CanStart_Implementation(AActor* instigator)
 			*UKismetStringLibrary::Conv_DoubleToString(CD-(CurTime-LastTimeStart))));*/
 		return false;
 	}
-	LogOnScreen(this,"Can Start");
+	//LogOnScreen(this,"Can Start");
 	return true;
 }
 
 void URAction::ShowForAllClient_Implementation(AActor* instigator)
 {
-	LogOnScreen(this,"show");
+	//LogOnScreen(this,"show");
 }
 
 UWorld* URAction::GetWorld() const

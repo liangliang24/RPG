@@ -117,9 +117,6 @@ void ARCharacter::SpawnUI()
 	{
 		playerUIInstance = CreateWidget<UUserWidget>(GetWorld(),playerUIClass);
 	}
-	
-	
-
 	playerUIInstance->AddToViewport();
 	
 }
@@ -154,7 +151,6 @@ void ARCharacter::PrimaryAttack(const FInputActionValue& InputActionValue)
 	/*PlayAnimMontage(primaryAttackAnimation);
 	GetWorld()->GetTimerManager().SetTimer(primaryAttackHandle,this,&ARCharacter::PrimaryAttack_Elasped,0.17f);*/
 	//
-	
 }
 
 

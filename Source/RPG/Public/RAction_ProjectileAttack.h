@@ -19,19 +19,27 @@ public:
 
 protected:
 
+	UPROPERTY(Replicated)
+	bool RightAttack;
 	
 	UPROPERTY(EditAnywhere, Category="Attack")
 	TSubclassOf<AActor> projectileClass;
 
 	UPROPERTY(VisibleAnywhere,Category="Efects")
-	FName handSocketName;
+	FName handSocketName_1;
+
+	UPROPERTY(VisibleAnywhere,Category="Efects")
+	FName handSocketName_2;
 
 	UPROPERTY(EditDefaultsOnly, Category="Attack")
 	float attackAnimDelay;
 
 	UPROPERTY(EditAnywhere, Category="Attack")
-	UAnimMontage* attackAnim;
+	UAnimMontage* attackAnim_1;
 
+	UPROPERTY(EditAnywhere, Category="Attack")
+	UAnimMontage* attackAnim_2;
+	
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UParticleSystem* castingEffect;
 	
