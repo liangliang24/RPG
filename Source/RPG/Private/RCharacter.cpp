@@ -248,24 +248,23 @@ void ARCharacter::OnActionStop(URActionComponent* OwningComp, URAction* Action)
 	switch (Action->ActionKey)
 	{
 	case 'F':
-		PressF = false;
 		FResult = Action->AbilityResult;
+		PressF = false;
 		break;
 	case 'E':
-		PressE = false;
 		EResult = Action->AbilityResult;
+		PressE = false;
 		break;
 	case 'Q':
-		PressQ = false;
 		QResult = Action->AbilityResult;
+		PressQ = false;
 		break;
 	case 'R':
-		PressR = false;
 		RResult = Action->AbilityResult;
+		PressR = false;
 		break;
 	default:
 		PressLeftbutton = false;
-			
 	}
 }
 

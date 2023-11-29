@@ -67,7 +67,13 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool CanESuccess();
-	
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool CanFSuccess();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool CanRSuccess();
+
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool CanQSuccess();
 
@@ -135,6 +141,15 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="CharacterResult")
 	bool QResult;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterResult")
+	bool EResult;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterResult")
+	bool FResult;
+
+	UPROPERTY(BlueprintReadWrite,Category="CharacterResult")
+	bool RResult;
 
 private:
 	

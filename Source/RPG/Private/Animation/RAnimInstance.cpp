@@ -200,3 +200,23 @@ bool URAnimInstance::CanQSuccess()
 	}
 	return false;
 }
+
+bool URAnimInstance::CanFSuccess()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->FResult;
+	}
+	return false;
+}
+
+bool URAnimInstance::CanRSuccess()
+{
+	ARCharacter* CharacterOwner = Cast<ARCharacter>(PawnOwner);
+	if (CharacterOwner)
+	{
+		return CharacterOwner->RResult;
+	}
+	return false;
+}
