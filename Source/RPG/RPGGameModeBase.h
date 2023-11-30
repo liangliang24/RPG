@@ -103,6 +103,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<AActor>> interationActors;
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TSubclassOf<APawn>> PlayerLists;
 public:
 	UFUNCTION(Exec)
 	void KillAllAI();

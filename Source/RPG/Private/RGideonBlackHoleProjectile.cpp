@@ -88,7 +88,7 @@ void ARGideonBlackHoleProjectile::Explode_Implementation()
 	suckComp->Activate();
 
 	
-	GetWorldTimerManager().SetTimer(timerHandle_Destroy,this,FTimerDelegate::TMethodPtr<ARGideonBlackHoleProjectile>(&ARGideonBlackHoleProjectile::Destroy),5.0f);
+	//GetWorldTimerManager().SetTimer(timerHandle_Destroy,this,FTimerDelegate::TMethodPtr<ARGideonBlackHoleProjectile>(&ARGideonBlackHoleProjectile::Destroy),5.0f);
 	
 	
 	//blackHole

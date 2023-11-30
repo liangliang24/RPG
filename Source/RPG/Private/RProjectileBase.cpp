@@ -40,12 +40,12 @@ void ARProjectileBase::BeginPlay()
 
 void ARProjectileBase::Explode_Implementation()
 {
-	if(ensure(!IsPendingKill()))
-	{
-		UGameplayStatics::SpawnEmitterAtLocation(this,impactVFX,GetActorLocation(),GetActorRotation());
+	/*if(ensure(!IsPendingKill()))
+	{*/
+	UGameplayStatics::SpawnEmitterAtLocation(this,impactVFX,GetActorLocation(),GetActorRotation());
 
-		Destroy();
-	}
+	Destroy();
+	//}
 }
 
 void ARProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
