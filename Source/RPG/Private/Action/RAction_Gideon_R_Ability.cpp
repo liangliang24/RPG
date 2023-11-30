@@ -15,7 +15,7 @@ URAction_Gideon_R_Ability::URAction_Gideon_R_Ability()
 {
 	ActionName = "Gideon_RAbility";
 	ActionKey = 'R';
-	
+	AbilityResult = true;
 }
 
 void URAction_Gideon_R_Ability::StartAction_Implementation(AActor* instigator)

@@ -17,21 +17,6 @@ class URInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
 
-USTRUCT()
-struct FRAbilityState
-{
-	GENERATED_USTRUCT_BODY()
-	bool PressF;
-	bool PressE;
-	bool PressQ;
-	bool PressR;
-	bool PressLeftbutton;
-	bool FResult;
-	bool EResult;
-	bool QResult;
-	bool RResult;
-};
-
 /*
  * 玩家角色，用于玩家操控
  */
@@ -55,9 +40,6 @@ protected:
 	UInputMappingContext* InputMapping;
 	/*UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UShowingAimTarget> AimTarget;*/
-	FTimerHandle primaryAttackHandle;
-	FTimerHandle dashTimerHandle;
-	FTimerHandle blackHoleTimerHandle;
 	UPROPERTY(EditDefaultsOnly,Category="Effect")
 	UParticleSystem* spawnProjectileVFX;
 	UPROPERTY(EditDefaultsOnly,Category="Attack")
@@ -83,23 +65,7 @@ protected:
 
 	
 
-	/*
-	 * 投掷物
-	 */
-	UPROPERTY(EditAnywhere,Category="Attack")
-	TSubclassOf<AActor> projectile;
 	
-	UPROPERTY(EditAnywhere,Category="Attack")
-	TSubclassOf<AActor> dashProjectile;
-
-	UPROPERTY(EditAnywhere,Category="Attack")
-	TSubclassOf<AActor> blackHoleProjectile;
-
-	/*
-	 * 普通攻击动画
-	 */
-	UPROPERTY(EditAnywhere,Category="Attack")
-	UAnimMontage* primaryAttackAnimation;
 
 	/*
 	 * 交互组件，用于和世界物体进行交互
@@ -133,15 +99,15 @@ protected:
 	/*
 	 * 冲刺操作
 	 */
-	void Dash_Start();
+	void AbilityF_Start();
 	
-	void Dash_Stop();
+	void AbilityF_Stop();
 	/*
 	 * 发射黑洞操作
 	 */
-	void BlackHole_Start(const FInputActionValue& InputActionValue);
+	void AbilityE_Start(const FInputActionValue& InputActionValue);
 
-	void BlackHole_Stop(const FInputActionValue& InputActionValue);
+	void AbilityE_Stop(const FInputActionValue& InputActionValue);
 	void SprintStart(const FInputActionValue& InputActionValue);
 
 	void SprintStop(const FInputActionValue& InputActionValue);
