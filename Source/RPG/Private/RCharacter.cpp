@@ -50,6 +50,10 @@ ARCharacter::ARCharacter()
 	PressQ = false;
 	PressR = false;
 	PressLeftbutton = false;
+
+	springArmComp->SetRelativeLocation(FVector(0,0,60));
+	springArmComp->TargetArmLength = 190;
+	springArmComp->SocketOffset = FVector(-100,90,20);
 	SetReplicates(true);
 }
 
