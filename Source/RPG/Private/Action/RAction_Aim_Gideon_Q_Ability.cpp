@@ -8,7 +8,7 @@
 
 URAction_Aim_Gideon_Q_Ability::URAction_Aim_Gideon_Q_Ability()
 {
-	ActionName = Gideon_QAbility;
+	ActionName = QActionName;
 	ActionKey = 'Q';
 }
 

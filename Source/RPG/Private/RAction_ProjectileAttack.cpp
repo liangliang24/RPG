@@ -2,6 +2,8 @@
 
 
 #include "RAction_ProjectileAttack.h"
+
+#include "ObjectStringName.h"
 #include "RCharacter.h"
 #include "RMagicProjectile.h"
 #include "Camera/CameraComponent.h"
@@ -16,7 +18,7 @@ URAction_ProjectileAttack::URAction_ProjectileAttack()
 
 	handSocketName_2 = "Muzzle_02";
 
-	ActionName = "PrimaryAttack";
+	ActionName = LeftButtonPrimaryAttack;
 
 	hasPreAction = true;
 

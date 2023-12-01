@@ -10,7 +10,7 @@
 
 URAction_Aim_Gideon_E_Ability::URAction_Aim_Gideon_E_Ability()
 {
-	ActionName = Gideon_BlackHole;
+	ActionName = EActionName;
 	ActionKey = 'E';
 }
 

@@ -3,6 +3,7 @@
 
 #include "Action/RAction_Gideon_R_Ability.h"
 
+#include "ObjectStringName.h"
 #include "RAttributeComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
@@ -13,7 +14,7 @@
 
 URAction_Gideon_R_Ability::URAction_Gideon_R_Ability()
 {
-	ActionName = "Gideon_RAbility";
+	ActionName = RActionName;
 	ActionKey = 'R';
 	AbilityResult = true;
 }

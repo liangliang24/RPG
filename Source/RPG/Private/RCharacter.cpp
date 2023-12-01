@@ -165,18 +165,18 @@ void ARCharacter::PrimaryInteract()
 
 void ARCharacter::AbilityF_Start()
 {
-	ActionComp->StartActionByName(this,Gideon_Portal);
+	ActionComp->StartActionByName(this,FActionName);
 }
 
 void ARCharacter::AbilityF_Stop()
 {
-	ActionComp->StopActionByName(this,Gideon_Portal);
+	ActionComp->StopActionByName(this,FActionName);
 }
 
 void ARCharacter::AbilityE_Start(const FInputActionValue& InputActionValue)
 {
 	
-	ActionComp->StartActionByName(this,Gideon_BlackHole);
+	ActionComp->StartActionByName(this,EActionName);
 	
 	
 	/*PlayAnimMontage(primaryAttackAnimation);
@@ -185,7 +185,7 @@ void ARCharacter::AbilityE_Start(const FInputActionValue& InputActionValue)
 
 void ARCharacter::AbilityE_Stop(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StopActionByName(this,Gideon_BlackHole);
+	ActionComp->StopActionByName(this,EActionName);
 }
 
 void ARCharacter::SprintStart(const FInputActionValue& InputActionValue)
@@ -323,22 +323,22 @@ void ARCharacter::CharacterSpeedSet(float Speed)
 
 void ARCharacter::Q_AbilityStart(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StartActionByName(this,Gideon_QAbility);
+	ActionComp->StartActionByName(this,QActionName);
 }
 
 void ARCharacter::Q_AbilityStop(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StopActionByName(this,Gideon_QAbility);
+	ActionComp->StopActionByName(this,QActionName);
 }
 
 void ARCharacter::R_AbilityStart(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StartActionByName(this,Gideon_RAbility);
+	ActionComp->StartActionByName(this,RActionName);
 }
 
 void ARCharacter::R_AbilityStop(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StopActionByName(this,Gideon_RAbility);
+	ActionComp->StopActionByName(this,RActionName);
 }
 
 // Called to bind functionality to input

@@ -11,7 +11,7 @@
 
 URAction_Gideon_Portal::URAction_Gideon_Portal()
 {
-	ActionName = "Gideon_Portal";
+	ActionName = FActionName;
 	ActionKey = 'F';
 }
 
