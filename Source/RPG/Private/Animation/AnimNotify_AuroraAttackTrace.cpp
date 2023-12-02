@@ -33,9 +33,12 @@ void UAnimNotify_AuroraAttackTrace::NotifyTick(USkeletalMeshComponent* MeshComp,
 {
 	Super::NotifyTick(MeshComp, Animation, FrameDeltaTime);
 
-
+	
 	FCollisionShape MidCollisionShape;
 	MidCollisionShape.SetBox(FVector3f(10,50,5));
+	/*DrawDebugBox(MeshComp->GetWorld(),Mid->GetSocketLocation(MeshComp),FVector(20,50,5),FColor::Red,false,2,0,8);
+	DrawDebugBox(MeshComp->GetWorld(),Base->GetSocketLocation(MeshComp),FVector(20,50,5),FColor::Red,false,2,0,8);
+	DrawDebugBox(MeshComp->GetWorld(),Tip->GetSocketLocation(MeshComp),FVector(20,50,5),FColor::Red,false,2,0,8);*/
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActors(HitActors);
 	Params.AddIgnoredActor(MeshComp->GetOwner());
@@ -45,7 +48,7 @@ void UAnimNotify_AuroraAttackTrace::NotifyTick(USkeletalMeshComponent* MeshComp,
 		TipLastLocation,
 		Tip->GetSocketLocation(MeshComp),
 		FQuat(MeshComp->GetComponentRotation()),
-		ECC_Pawn,
+		ECC_WorldDynamic,
 		MidCollisionShape,
 		Params);
 	/*TArray<FHitResult> temp;
@@ -99,13 +102,13 @@ void UAnimNotify_AuroraAttackTrace::NotifyTick(USkeletalMeshComponent* MeshComp,
 	HitResult.Empty();
 
 	FCollisionShape TipCollisionShape;
-	TipCollisionShape.SetBox(FVector3f(10,20,5));
+	TipCollisionShape.SetBox(FVector3f(10,50,5));
 	MeshComp->GetWorld()->SweepMultiByChannel(
 		HitResult,
 		TipLastLocation,
 		Tip->GetSocketLocation(MeshComp),
 		FQuat(MeshComp->GetComponentRotation()),
-		ECC_Pawn,
+		ECC_WorldDynamic,
 		TipCollisionShape,
 		Params);
 	for (FHitResult& i:HitResult)
@@ -130,7 +133,7 @@ void UAnimNotify_AuroraAttackTrace::NotifyTick(USkeletalMeshComponent* MeshComp,
 		BaseLastLocation,
 		Base->GetSocketLocation(MeshComp),
 		FQuat(MeshComp->GetComponentRotation()),
-		ECC_Pawn,
+		ECC_WorldDynamic,
 		TipCollisionShape,
 		Params);
 
@@ -149,6 +152,7 @@ void UAnimNotify_AuroraAttackTrace::NotifyTick(USkeletalMeshComponent* MeshComp,
 			}
 		}
 	}
+	BaseLastLocation = Base->GetSocketLocation(MeshComp);
 	MidLastLocation = Mid->GetSocketLocation(MeshComp);
 	TipLastLocation = Tip->GetSocketLocation(MeshComp);
 }
