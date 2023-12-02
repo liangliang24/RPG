@@ -23,6 +23,8 @@ protected:
 	USkeletalMeshSocket const* Tip;
 	FVector MidLastLocation;
 	FVector TipLastLocation;
+	USkeletalMeshSocket const* Base;
+	FVector BaseLastLocation;
 
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime) override;
