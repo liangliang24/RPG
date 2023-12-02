@@ -17,5 +17,14 @@ public:
 	URAction_AuroraPrimaryAttack();
 	virtual void StartAction_Implementation(AActor* instigator) override;
 	virtual void StopAction_Implementation(AActor* instigator) override;
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* PrimaryAttackMontage;
+
+	UFUNCTION(NetMulticast,Reliable)
+	void NetMultiCastAnimation(ACharacter* Instigator);
 	
+	FName WeaponSword_Base;
+	FName WeaponSword_Mid;
+	FName WeaponSword_Tip;
 };
