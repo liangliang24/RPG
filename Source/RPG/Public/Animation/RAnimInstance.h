@@ -77,10 +77,12 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool CanQSuccess();
 
+	UPROPERTY(BlueprintReadWrite,Category="Component")
+    APawn* PawnOwner;
+
 protected:
 
-	UPROPERTY(BlueprintReadWrite,Category="Component")
-	APawn* PawnOwner;
+	
 	
 	UPROPERTY(BlueprintReadWrite,Category="Component")
 	URAttributeComponent* OwnerAttributeComponent;

@@ -5,7 +5,6 @@
 
 #include "RAttributeComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
-#include "Kismet/KismetSystemLibrary.h"
 
 
 UAnimNotify_AuroraAttackTrace::UAnimNotify_AuroraAttackTrace()
