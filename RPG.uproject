@@ -13,7 +13,8 @@
 				"AIModule",
 				"UMG",
 				"CoreUObject",
-				"EnhancedInput"
+				"EnhancedInput",
+				"GeometryScriptingEditor"
 			]
 		}
 	],
@@ -39,6 +40,10 @@
 		},
 		{
 			"Name": "GameplayAbilities",
+			"Enabled": true
+		},
+		{
+			"Name": "GeometryScripting",
 			"Enabled": true
 		}
 	]
