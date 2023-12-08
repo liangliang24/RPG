@@ -18,11 +18,10 @@ public class RPG : ModuleRules
 			"GameplayTasks",
 			"UMG",
 			"GameplayTags",
-			"EnhancedInput",
-			"GeometryScriptingEditor",
+			"EnhancedInput"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "OpenCV", "GeometryScriptingCore" });
+		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

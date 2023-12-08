@@ -20,9 +20,9 @@ URAction_Aurora_Q_Ability::URAction_Aurora_Q_Ability()
 
 void URAction_Aurora_Q_Ability::SpawnIce_Implementation(AActor* instigator)
 {
-	/*FActorSpawnParameters Param;
+	FActorSpawnParameters Param;
 	Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	GetWorld()->SpawnActor<AActor>(IceSpawn,Foot_R->GetSocketLocation(InstigatorSkeletalMeshComponent),instigator->GetActorRotation(),Param);*/
+	GetWorld()->SpawnActor<AActor>(IceSpawn,Foot_R->GetSocketLocation(InstigatorSkeletalMeshComponent),instigator->GetActorRotation(),Param);
 }
 
 void URAction_Aurora_Q_Ability::StartAction_Implementation(AActor* instigator)
@@ -51,11 +51,11 @@ void URAction_Aurora_Q_Ability::StartAction_Implementation(AActor* instigator)
 	FTimerDelegate MoveDelegate;
 	MoveDelegate.BindUFunction(this,"MoveTick",instigator);
 	GetWorld()->GetTimerManager().SetTimer(MoveHandle,MoveDelegate,GetWorld()->GetDeltaSeconds(),true,0.33f);
-	FTimerHandle SpawnIceHandle;
+	/*FTimerHandle SpawnIceHandle;
 
 	FTimerDelegate SpawnDelegate;
 	SpawnDelegate.BindUFunction(this,"SpawnIce",instigator);
-	GetWorld()->GetTimerManager().SetTimer(SpawnIceHandle,SpawnDelegate,0.5,false);
+	GetWorld()->GetTimerManager().SetTimer(SpawnIceHandle,SpawnDelegate,0.5,false);*/
 }
 
 void URAction_Aurora_Q_Ability::StopAction_Implementation(AActor* instigator)
@@ -74,11 +74,9 @@ void URAction_Aurora_Q_Ability::MoveTick(AActor* Instigator)
 		GetWorld()->GetTimerManager().ClearTimer(MoveHandle);
 		InstigatorCharacterMovement->AddForce(-((InstigatorForwardVector)*speed+upspeed*InstigatorUpVector));
 		InstigatorCharacterMovement->StopMovementImmediately();
+		SpawnIce(Instigator);
 		return ;
 	}
 	
-	InstigatorCharacterMovement->AddForce((InstigatorForwardVector)*speed);
-	FActorSpawnParameters Param;
-	Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	GetWorld()->SpawnActor<AActor>(IceSpawn,Foot_R->GetSocketLocation(InstigatorSkeletalMeshComponent),Instigator->GetActorRotation(),Param);
+	InstigatorCharacterMovement->AddForce((InstigatorForwardVector)*speed+upspeed*InstigatorUpVector);
 }
