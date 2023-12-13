@@ -11,6 +11,7 @@ URAction_Aurora_F_Ability::URAction_Aurora_F_Ability()
 {
 	ActionKey = 'F';
 	ActionName = FActionName;
+	AbilityResult = true;
 }
 
 void URAction_Aurora_F_Ability::StartAction_Implementation(AActor* instigator)
