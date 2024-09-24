@@ -79,7 +79,7 @@ void ARPGGameModeBase::SpawnInterationTimerElasped()
 
 void ARPGGameModeBase::SpawnBotTimerElasped()
 {
-	if (!CVarSpawnBots.GetValueOnGameThread())
+	if (CVarSpawnBots.GetValueOnGameThread())
 	{
 		UE_LOG(LogTemp,Log,TEXT("CvarSpawnBots is false"));
 		return ;

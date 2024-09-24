@@ -80,7 +80,7 @@ void ARMagicProjectile::DoDamage(AActor* OtherActor, const FHitResult& hitResult
 			return ;
 		}
 		//URActionComponent* actionComp = Cast<URActionComponent>(OtherActor->GetComponentByClass(URActionComponent::StaticClass()));
-		if (actionComp)
+		if (actionComp && burningActionClass)
 		{
 			actionComp->AddAction(burningActionClass,GetInstigator());
 		}

@@ -35,7 +35,7 @@ void URActionComponent::AddAction(TSubclassOf<URAction> actionClass, AActor* ins
 
 	URAction* newAction = NewObject<URAction>(GetOwner(),actionClass);
 
-	if (ensure(newAction))
+	if (newAction)
 	{
 		newAction->InitializeActionComp(this);
 		actions.Add(newAction);
